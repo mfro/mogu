@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3126714895537492653}
   - component: {fileID: 6632470472157358687}
   - component: {fileID: 1180199155871165280}
+  - component: {fileID: 2044380180}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -44,7 +45,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 3703493050827003922}
   m_Material: {fileID: 13400000, guid: 766c4c3fd531a144a83f51a0231a529d, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2.78
   m_Direction: 1
@@ -92,14 +93,6 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 35a460d0-8cba-4bd5-a39c-1437b91082f3
-    m_ActionName: Player/Look[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0b7e1042-ceea-4626-aa52-931e9ca4d414
-    m_ActionName: Player/Fire[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: cbf8c533-df72-431c-9524-e81495aec624
     m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
@@ -138,6 +131,21 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 63d04309-446d-441a-ae99-660a2ab534cb
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1180199155871165280}
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 44c99182-0ab4-44aa-9c55-ac99c93d594b
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -154,10 +162,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 72
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!114 &1180199155871165280
 MonoBehaviour:
@@ -171,7 +179,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d45be6e5708aca4e8ab17983531734a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 10
+  MAX_FALL_SPEED: 40
+  RUNNING_SPEED_LIMIT: 11.25
+  GROUND_RUNNING_ACCELERATION: 375
+  GROUND_DECELERATION: 400
+  AIR_RUNNING_ACCELERATION: 225
+  AIR_DECELERATION: 320
+  JUMP_TIME: 0.3
+  JUMP_HEIGHT: 3.2
+  MAX_JUMP_TIME: 0.2
+  MAX_JUMP_HEIGHT: 3
+  grounded: 0
+  velocity: {x: 0, y: 0}
+  jumping: 0
+  jump_end: 0
+  jump_progress: 0
+--- !u!65 &2044380180
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3703493050827003922}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.78, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7488532321779522946
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +249,7 @@ SpriteShapeRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

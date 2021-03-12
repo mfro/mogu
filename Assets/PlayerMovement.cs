@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -18,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float MAX_JUMP_HEIGHT = 3.0f;
 
     public bool grounded;
+    public bool ceilinged;
     public Vector2 velocity;
 
     public bool jumping = false;
@@ -32,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         body = GetComponent<Rigidbody>();
+        Time.fixedDeltaTime = 1f / Screen.currentResolution.refreshRate;
+        print(Time.fixedDeltaTime);
+        print(Screen.currentResolution.refreshRate);
     }
 
     private void FixedUpdate()
@@ -105,7 +107,6 @@ public class PlayerMovement : MonoBehaviour
                 speed_change = AIR_DECELERATION;
         }
 
-        print(target);
         if (target.x > velocity.x)
         {
             velocity.x = Mathf.Min(velocity.x + speed_change * Time.fixedDeltaTime, target.x);
@@ -128,6 +129,8 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = 0;
             if (collision.contacts[0].normal.y > 0)
                 grounded = true;
+            if (collision.contacts[0].normal.y < 0)
+                ceilinged = true;
         }
     }
 
@@ -140,12 +143,15 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = 0;
             if (collision.contacts[0].normal.y > 0)
                 grounded = true;
+            if (collision.contacts[0].normal.y < 0)
+                ceilinged = true;
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         grounded = false;
+        ceilinged = false;
     }
 
     public void Move(InputAction.CallbackContext callback)

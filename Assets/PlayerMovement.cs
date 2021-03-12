@@ -27,15 +27,11 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movement_input;
     bool jumping_input;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    private Rigidbody body;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        body = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -119,7 +115,8 @@ public class PlayerMovement : MonoBehaviour
             velocity.x = Mathf.Max(velocity.x - speed_change * Time.fixedDeltaTime, target.x);
         }
 
-        transform.position += (Vector3)(velocity * Time.fixedDeltaTime);
+        body.velocity = velocity;
+        // transform.position += (Vector3)(velocity * Time.fixedDeltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)

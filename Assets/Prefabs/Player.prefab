@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6632470472157358687}
   - component: {fileID: 1180199155871165280}
   - component: {fileID: 2044380180}
+  - component: {fileID: 4373931033163170486}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -146,6 +147,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 44c99182-0ab4-44aa-9c55-ac99c93d594b
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d9823cbb-f1ac-4807-8e36-cae23f26e127
+    m_ActionName: Player/Flip[/Keyboard/upArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -190,10 +195,12 @@ MonoBehaviour:
   MAX_JUMP_TIME: 0.2
   MAX_JUMP_HEIGHT: 3
   grounded: 0
+  ceilinged: 0
   velocity: {x: 0, y: 0}
   jumping: 0
   jump_end: 0
   jump_progress: 0
+  down: -1
 --- !u!65 &2044380180
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -207,6 +214,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1896973, y: 2.0945373, z: 1}
   m_Center: {x: 0.022583127, y: -0.25548434, z: 0}
+--- !u!114 &4373931033163170486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3703493050827003922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flipping: 0
 --- !u!1 &7488532321779522946
 GameObject:
   m_ObjectHideFlags: 0

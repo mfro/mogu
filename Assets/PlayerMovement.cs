@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -22,22 +23,35 @@ public class PlayerMovement : MonoBehaviour
     public bool jumping = false;
     public float jump_end = 0;
     public float jump_progress = 0;
+    public float down = -1;
 
     Vector2 movement_input;
     bool jumping_input;
 
     private Rigidbody body;
+    private Flippable flippable;
 
     private void Start()
     {
         body = GetComponent<Rigidbody>();
+        flippable = GetComponent<Flippable>();
+
         Time.fixedDeltaTime = 1f / Screen.currentResolution.refreshRate;
-        print(Time.fixedDeltaTime);
-        print(Screen.currentResolution.refreshRate);
+
+        flippable.Flip += () => {
+            down = -down;
+            velocity.y = -velocity.y;
+        };
     }
 
     private void FixedUpdate()
     {
+        if (flippable.flipping)
+        {
+            body.velocity = Vector3.zero;
+            return;
+        }
+
         float GRAVITY = (2f * JUMP_HEIGHT) / (JUMP_TIME * JUMP_TIME);
 
         if (jumping_input && grounded)
@@ -45,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
             jumping = true;
             jump_end = MAX_JUMP_TIME;
             jump_progress = 0;
-            velocity.y = (-MAX_JUMP_TIME + Mathf.Sqrt(MAX_JUMP_TIME * MAX_JUMP_TIME - 2.0f * MAX_JUMP_HEIGHT / -GRAVITY)) * GRAVITY;
+            velocity.y = (-MAX_JUMP_TIME + Mathf.Sqrt(MAX_JUMP_TIME * MAX_JUMP_TIME - 2.0f * MAX_JUMP_HEIGHT / -GRAVITY)) * GRAVITY * -down;
         }
 
         if (!jumping_input)
@@ -72,7 +86,10 @@ public class PlayerMovement : MonoBehaviour
         else if (!grounded)
         {
             // private float JUMP_SPEED = GRAVITY * JUMP_TIME;
-            velocity.y = Mathf.Max(velocity.y - GRAVITY * Time.fixedDeltaTime, -MAX_FALL_SPEED);
+            if (down < 0)
+                velocity.y = Mathf.Max(velocity.y - GRAVITY * Time.fixedDeltaTime, -MAX_FALL_SPEED);
+            else
+                velocity.y = Mathf.Min(velocity.y + GRAVITY * Time.fixedDeltaTime, MAX_FALL_SPEED);
         }
 
         Vector3 target;
@@ -127,10 +144,10 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             velocity.y = 0;
-            if (collision.contacts[0].normal.y > 0)
-                grounded = true;
-            if (collision.contacts[0].normal.y < 0)
+            if (Mathf.Sign(collision.contacts[0].normal.y) == down)
                 ceilinged = true;
+            if (Mathf.Sign(collision.contacts[0].normal.y) == -down)
+                grounded = true;
         }
     }
 
@@ -141,10 +158,10 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             velocity.y = 0;
-            if (collision.contacts[0].normal.y > 0)
-                grounded = true;
-            if (collision.contacts[0].normal.y < 0)
+            if (Mathf.Sign(collision.contacts[0].normal.y) == down)
                 ceilinged = true;
+            if (Mathf.Sign(collision.contacts[0].normal.y) == -down)
+                grounded = true;
         }
     }
 
@@ -162,5 +179,15 @@ public class PlayerMovement : MonoBehaviour
     public void Jump(InputAction.CallbackContext callback)
     {
         jumping_input = callback.ReadValueAsButton();
+    }
+
+    public void OnFlipInput(InputAction.CallbackContext c)
+    {
+        if (c.ReadValueAsButton())
+        {
+            var cell = FindObjectsOfType<CellFlip>();
+            var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
+            closest.DoFlip();
+        }
     }
 }

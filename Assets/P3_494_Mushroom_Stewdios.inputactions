@@ -20,6 +20,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Flip",
+                    "type": "Button",
+                    "id": "d9823cbb-f1ac-4807-8e36-cae23f26e127",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -163,6 +171,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b6c94a24-be20-407d-b6da-9c6a90ffbeae",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Flip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -673,6 +692,12 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Cell",
+            "id": "df75aa90-788b-4a00-8ff3-045a29b55cab",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": [

@@ -7,7 +7,7 @@ public class Flippable : MonoBehaviour
 {
     public event Action Flip;
     public bool flipping = false;
-    public Vector3 down = Vector3.down;
+    public Vector2 down = Vector2.down;
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +21,8 @@ public class Flippable : MonoBehaviour
 
     }
 
-    public void SetDown(Vector2 down)
+    public void DoFlip()
     {
-        this.down = down;
         Flip?.Invoke();
     }
 }

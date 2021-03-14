@@ -192,12 +192,23 @@
                 },
                 {
                     "name": "",
+                    "id": "e257dd5e-a9dc-4270-8ff3-c1ec1627a8f3",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "flip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f423d56f-168d-4358-b2e1-8a573dc9a366",
                     "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad",
-                    "action": "flip cw",
+                    "action": "flip ccw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -208,18 +219,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "flip ccw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e257dd5e-a9dc-4270-8ff3-c1ec1627a8f3",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "flip",
+                    "action": "flip cw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

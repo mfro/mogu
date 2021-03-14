@@ -28,11 +28,13 @@ public class PlayerMovement : MonoBehaviour
     bool jumping_input;
 
     private Rigidbody2D body;
+    private new BoxCollider2D collider;
     private Flippable flippable;
 
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        collider = GetComponent<BoxCollider2D>();
         flippable = GetComponent<Flippable>();
 
         Time.fixedDeltaTime = 1f / Screen.currentResolution.refreshRate;
@@ -85,8 +87,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!grounded)
         {
-            // private float JUMP_SPEED = GRAVITY * JUMP_TIME;
-
             velocity.y = Mathf.Max(velocity.y - GRAVITY * Time.fixedDeltaTime, MAX_FALL_SPEED * -1);
         }
 
@@ -132,8 +132,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         body.velocity = Quaternion.FromToRotation(Vector3.down, flippable.down) * velocity;
-        print(flippable.down);
-        // transform.position += (Vector3)(velocity * Time.fixedDeltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -142,13 +140,13 @@ public class PlayerMovement : MonoBehaviour
         n.x = Mathf.Round(n.x);
         n.y = Mathf.Round(n.y);
 
-        if (n.x == -flippable.down.x)
+        if ((n.x == 0) == (flippable.down.x == 0))
         {
             velocity.y = 0;
-            if (n.y == -flippable.down.y)
-                grounded = true;
-            else if (n.y == flippable.down.y)
+            if (n == flippable.down)
                 ceilinged = true;
+            else
+                grounded = true;
         }
         else
         {
@@ -162,13 +160,13 @@ public class PlayerMovement : MonoBehaviour
         n.x = Mathf.Round(n.x);
         n.y = Mathf.Round(n.y);
 
-        if (n.x == -flippable.down.x)
+        if ((n.x == 0) == (flippable.down.x == 0))
         {
             velocity.y = 0;
-            if (n.y == -flippable.down.y)
-                grounded = true;
-            else if (n.y == flippable.down.y)
+            if (n == flippable.down)
                 ceilinged = true;
+            else
+                grounded = true;
         }
         else
         {
@@ -192,33 +190,37 @@ public class PlayerMovement : MonoBehaviour
         jumping_input = callback.ReadValueAsButton();
     }
 
+    private void DoFlip(FlipKind kind)
+    {
+        var cell = FindObjectsOfType<CellFlip>();
+        var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
+
+        var contained = collider.bounds.min.x >= closest.transform.position.x - closest.transform.lossyScale.x / 2
+            && collider.bounds.max.x <= closest.transform.position.x + closest.transform.lossyScale.x / 2
+            && collider.bounds.min.y >= closest.transform.position.y - closest.transform.lossyScale.y / 2
+            && collider.bounds.max.y <= closest.transform.position.y + closest.transform.lossyScale.y / 2;
+
+        if (contained)
+        {
+            closest.DoFlip(flippable.down, kind);
+        }
+    }
+
     public void OnFlip(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton())
-        {
-            var cell = FindObjectsOfType<CellFlip>();
-            var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
-            closest.DoFlip(0, 1);
-        }
+            DoFlip(FlipKind.Flip);
     }
 
     public void OnFlipCW(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton())
-        {
-            var cell = FindObjectsOfType<CellFlip>();
-            var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
-            closest.DoFlip(3, 0);
-        }
+            DoFlip(FlipKind.CW);
     }
 
     public void OnFlipCCW(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton())
-        {
-            var cell = FindObjectsOfType<CellFlip>();
-            var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
-            closest.DoFlip(1, 0);
-        }
+            DoFlip(FlipKind.CCW);
     }
 }

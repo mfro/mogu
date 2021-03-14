@@ -22,7 +22,23 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Flip",
+                    "name": "flip",
+                    "type": "Button",
+                    "id": "1c1ec030-6425-4564-8048-4892b77fe99e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "flip cw",
+                    "type": "Button",
+                    "id": "e26915f6-108b-41be-81ee-0eda8b5b22bd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "flip ccw",
                     "type": "Button",
                     "id": "d9823cbb-f1ac-4807-8e36-cae23f26e127",
                     "expectedControlType": "Button",
@@ -176,12 +192,34 @@
                 },
                 {
                     "name": "",
+                    "id": "f423d56f-168d-4358-b2e1-8a573dc9a366",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse;Gamepad",
+                    "action": "flip cw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b6c94a24-be20-407d-b6da-9c6a90ffbeae",
-                    "path": "<Keyboard>/upArrow",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Flip",
+                    "action": "flip ccw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e257dd5e-a9dc-4270-8ff3-c1ec1627a8f3",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "flip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

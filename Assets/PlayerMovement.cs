@@ -23,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     public bool jumping = false;
     public float jump_end = 0;
     public float jump_progress = 0;
-    public float down = -1;
 
     Vector2 movement_input;
     bool jumping_input;
@@ -37,11 +36,6 @@ public class PlayerMovement : MonoBehaviour
         flippable = GetComponent<Flippable>();
 
         Time.fixedDeltaTime = 1f / Screen.currentResolution.refreshRate;
-
-        flippable.Flip += () => {
-            down = -down;
-            velocity.y = -velocity.y;
-        };
     }
 
     private void FixedUpdate()
@@ -59,10 +53,11 @@ public class PlayerMovement : MonoBehaviour
             jumping = true;
             jump_end = MAX_JUMP_TIME;
             jump_progress = 0;
-            velocity.y = (-MAX_JUMP_TIME + Mathf.Sqrt(MAX_JUMP_TIME * MAX_JUMP_TIME - 2.0f * MAX_JUMP_HEIGHT / -GRAVITY)) * GRAVITY * -down;
+
+            velocity.y = (-MAX_JUMP_TIME + Mathf.Sqrt(MAX_JUMP_TIME * MAX_JUMP_TIME - 2.0f * MAX_JUMP_HEIGHT / -GRAVITY)) * GRAVITY;
         }
 
-        if (!jumping_input)
+        if (!jumping_input || ceilinged)
         {
             jump_end = jump_progress;
             jumping = false;
@@ -86,10 +81,8 @@ public class PlayerMovement : MonoBehaviour
         else if (!grounded)
         {
             // private float JUMP_SPEED = GRAVITY * JUMP_TIME;
-            if (down < 0)
-                velocity.y = Mathf.Max(velocity.y - GRAVITY * Time.fixedDeltaTime, -MAX_FALL_SPEED);
-            else
-                velocity.y = Mathf.Min(velocity.y + GRAVITY * Time.fixedDeltaTime, MAX_FALL_SPEED);
+
+            velocity.y = Mathf.Max(velocity.y - GRAVITY * Time.fixedDeltaTime, MAX_FALL_SPEED * -1);
         }
 
         Vector3 target;
@@ -133,35 +126,50 @@ public class PlayerMovement : MonoBehaviour
             velocity.x = Mathf.Max(velocity.x - speed_change * Time.fixedDeltaTime, target.x);
         }
 
-        body.velocity = velocity;
+        body.velocity = Quaternion.FromToRotation(Vector3.down, flippable.down) * velocity;
+        print(flippable.down);
         // transform.position += (Vector3)(velocity * Time.fixedDeltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.contacts[0].normal.y == 0)
-            velocity.x = 0;
-        else
+        var n = collision.contacts[0].normal;
+        n.x = Mathf.Round(n.x);
+        n.y = Mathf.Round(n.y);
+        n.z = Mathf.Round(n.z);
+
+        if (n.x == -flippable.down.x)
         {
             velocity.y = 0;
-            if (Mathf.Sign(collision.contacts[0].normal.y) == down)
-                ceilinged = true;
-            if (Mathf.Sign(collision.contacts[0].normal.y) == -down)
+            if (n.y == -flippable.down.y)
                 grounded = true;
+            else if (n.y == flippable.down.y)
+                ceilinged = true;
+        }
+        else
+        {
+            velocity.x = 0;
         }
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.contacts[0].normal.y == 0)
-            velocity.x = 0;
-        else
+        var n = collision.contacts[0].normal;
+        n.x = Mathf.Round(n.x);
+        n.y = Mathf.Round(n.y);
+        n.z = Mathf.Round(n.z);
+
+        if (n.x == -flippable.down.x)
         {
             velocity.y = 0;
-            if (Mathf.Sign(collision.contacts[0].normal.y) == down)
-                ceilinged = true;
-            if (Mathf.Sign(collision.contacts[0].normal.y) == -down)
+            if (n.y == -flippable.down.y)
                 grounded = true;
+            else if (n.y == flippable.down.y)
+                ceilinged = true;
+        }
+        else
+        {
+            velocity.x = 0;
         }
     }
 
@@ -181,13 +189,33 @@ public class PlayerMovement : MonoBehaviour
         jumping_input = callback.ReadValueAsButton();
     }
 
-    public void OnFlipInput(InputAction.CallbackContext c)
+    public void OnFlip(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton())
         {
             var cell = FindObjectsOfType<CellFlip>();
             var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
-            closest.DoFlip();
+            closest.DoFlip(0, 1);
+        }
+    }
+
+    public void OnFlipCW(InputAction.CallbackContext c)
+    {
+        if (c.ReadValueAsButton())
+        {
+            var cell = FindObjectsOfType<CellFlip>();
+            var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
+            closest.DoFlip(3, 0);
+        }
+    }
+
+    public void OnFlipCCW(InputAction.CallbackContext c)
+    {
+        if (c.ReadValueAsButton())
+        {
+            var cell = FindObjectsOfType<CellFlip>();
+            var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
+            closest.DoFlip(1, 0);
         }
     }
 }

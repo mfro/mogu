@@ -27,15 +27,20 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movement_input;
     bool jumping_input;
 
-    private Rigidbody body;
+    private Rigidbody2D body;
     private Flippable flippable;
 
     private void Start()
     {
-        body = GetComponent<Rigidbody>();
+        body = GetComponent<Rigidbody2D>();
         flippable = GetComponent<Flippable>();
 
         Time.fixedDeltaTime = 1f / Screen.currentResolution.refreshRate;
+
+        flippable.Flip += () =>
+        {
+            grounded = ceilinged = false;
+        };
     }
 
     private void FixedUpdate()
@@ -131,12 +136,11 @@ public class PlayerMovement : MonoBehaviour
         // transform.position += (Vector3)(velocity * Time.fixedDeltaTime);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         var n = collision.contacts[0].normal;
         n.x = Mathf.Round(n.x);
         n.y = Mathf.Round(n.y);
-        n.z = Mathf.Round(n.z);
 
         if (n.x == -flippable.down.x)
         {
@@ -152,12 +156,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         var n = collision.contacts[0].normal;
         n.x = Mathf.Round(n.x);
         n.y = Mathf.Round(n.y);
-        n.z = Mathf.Round(n.z);
 
         if (n.x == -flippable.down.x)
         {
@@ -173,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         grounded = false;
         ceilinged = false;

@@ -46,7 +46,7 @@ public class CellFlip : MonoBehaviour
         isFlipping = true;
 
         var allObjects = Resources.FindObjectsOfTypeAll<Flippable>();
-        var x = Physics.OverlapBox(transform.position, new Vector3(5, 5, 1000000));
+        var x = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale, 0);
         var parents = x.Select(o => o.transform.parent).ToArray();
 
         foreach (var o in x)

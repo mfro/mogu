@@ -22,9 +22,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "flip",
+                    "name": "flip vertical",
                     "type": "Button",
                     "id": "1c1ec030-6425-4564-8048-4892b77fe99e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "flip horizontal",
+                    "type": "Button",
+                    "id": "dc32dff1-72c7-4d64-8ecf-24fc9b81c835",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -197,7 +205,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "flip",
+                    "action": "flip vertical",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -220,6 +228,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "flip cw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d4e9e0c0-a45f-49d2-b774-e237abeadcbf",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "flip horizontal",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

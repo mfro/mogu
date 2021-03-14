@@ -7,7 +7,8 @@ public enum FlipKind
 {
     CW,
     CCW,
-    Flip,
+    Vertical,
+    Horizontal,
 }
 
 public class CellFlip : MonoBehaviour
@@ -50,7 +51,9 @@ public class CellFlip : MonoBehaviour
             delta = Quaternion.AngleAxis(90, Vector3.back);
         else if (flip == FlipKind.CCW)
             delta = Quaternion.AngleAxis(-90, Vector3.back);
-        else if (flip == FlipKind.Flip)
+        else if (flip == FlipKind.Horizontal)
+            delta = Quaternion.AngleAxis(180, Vector3.up);
+        else if (flip == FlipKind.Vertical)
         {
             var axis = Quaternion.AngleAxis(90, Vector3.back) * down;
             delta = Quaternion.AngleAxis(180, axis);

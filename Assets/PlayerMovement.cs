@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
         flippable.Flip += () =>
         {
             grounded = ceilinged = false;
+            velocity = Vector2.zero;
         };
     }
 
@@ -136,6 +137,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!collision.enabled) return;
+
         var n = collision.contacts[0].normal;
         n.x = Mathf.Round(n.x);
         n.y = Mathf.Round(n.y);
@@ -156,6 +159,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+        if (!collision.enabled) return;
+
         var n = collision.contacts[0].normal;
         n.x = Mathf.Round(n.x);
         n.y = Mathf.Round(n.y);
@@ -190,7 +195,7 @@ public class PlayerMovement : MonoBehaviour
         jumping_input = callback.ReadValueAsButton();
     }
 
-    private void DoFlip(FlipKind kind)
+    public void DoFlip(FlipKind kind)
     {
         var cell = FindObjectsOfType<CellFlip>();
         var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
@@ -206,10 +211,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void OnFlip(InputAction.CallbackContext c)
+    public void OnFlipVertical(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton())
-            DoFlip(FlipKind.Flip);
+            DoFlip(FlipKind.Vertical);
+    }
+
+    public void OnFlipHorizontal(InputAction.CallbackContext c)
+    {
+        if (c.ReadValueAsButton())
+            DoFlip(FlipKind.Horizontal);
     }
 
     public void OnFlipCW(InputAction.CallbackContext c)

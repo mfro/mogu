@@ -16,16 +16,40 @@ public class CellFlip : MonoBehaviour
     static bool isFlipping = false;
 
     [SerializeField]
-    float fade_time = 1;
+    bool can_flip = false;
+
+    [SerializeField]
+    bool can_rotate = false;
 
     [SerializeField]
     float flip_time = 1;
 
-    [SerializeField]
-    MeshRenderer cube;
-
     public async void DoFlip(Vector2 down, FlipKind flip)
     {
+        Quaternion delta;
+        if (flip == FlipKind.CW)
+        {
+            if (!can_rotate) return;
+            delta = Quaternion.AngleAxis(90, Vector3.back);
+        }
+        else if (flip == FlipKind.CCW)
+        {
+            if (!can_rotate) return;
+            delta = Quaternion.AngleAxis(-90, Vector3.back);
+        }
+        else if (flip == FlipKind.Horizontal)
+        {
+            if (!can_flip) return;
+            delta = Quaternion.AngleAxis(180, Vector3.up);
+        }
+        else if (flip == FlipKind.Vertical)
+        {
+            if (!can_flip) return;
+            var axis = Quaternion.AngleAxis(90, Vector3.back) * down;
+            delta = Quaternion.AngleAxis(180, axis);
+        }
+        else return;
+ 
         if (isFlipping) return;
         isFlipping = true;
 
@@ -45,20 +69,6 @@ public class CellFlip : MonoBehaviour
                 f.DoBeginFlip();
             }
         }
-
-        Quaternion delta;
-        if (flip == FlipKind.CW)
-            delta = Quaternion.AngleAxis(90, Vector3.back);
-        else if (flip == FlipKind.CCW)
-            delta = Quaternion.AngleAxis(-90, Vector3.back);
-        else if (flip == FlipKind.Horizontal)
-            delta = Quaternion.AngleAxis(180, Vector3.up);
-        else if (flip == FlipKind.Vertical)
-        {
-            var axis = Quaternion.AngleAxis(90, Vector3.back) * down;
-            delta = Quaternion.AngleAxis(180, axis);
-        }
-        else return;
 
         var q0 = transform.localRotation;
         var q1 = delta * q0;

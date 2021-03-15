@@ -40,7 +40,7 @@ public class CellFlip : MonoBehaviour
         else if (flip == FlipKind.Horizontal)
         {
             if (!can_flip) return;
-            delta = Quaternion.AngleAxis(180, Vector3.up);
+            delta = Quaternion.AngleAxis(180, down);
         }
         else if (flip == FlipKind.Vertical)
         {

@@ -39,8 +39,14 @@ public class PlayerMovement : MonoBehaviour
 
         Time.fixedDeltaTime = 1f / Screen.currentResolution.refreshRate;
 
-        flippable.Flip += () =>
+        flippable.BeginFlip += () =>
         {
+            collider.enabled = false;
+        };
+
+        flippable.EndFlip += () =>
+        {
+            collider.enabled = true;
             grounded = ceilinged = false;
             velocity = Vector2.zero;
         };

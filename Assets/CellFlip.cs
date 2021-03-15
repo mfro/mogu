@@ -30,7 +30,7 @@ public class CellFlip : MonoBehaviour
         isFlipping = true;
 
         var allObjects = Resources.FindObjectsOfTypeAll<Flippable>();
-        var x = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale, 0);
+        var x = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale * 0.9f, 0);
         var parents = x.Select(o => o.transform.parent).ToArray();
 
         foreach (var o in x)
@@ -42,7 +42,7 @@ public class CellFlip : MonoBehaviour
             var f = o.GetComponent<Flippable>();
             if (f != null)
             {
-                f.flipping = true;
+                f.DoBeginFlip();
             }
         }
 
@@ -81,11 +81,7 @@ public class CellFlip : MonoBehaviour
             var f = o.GetComponent<Flippable>();
             if (f != null)
             {
-                f.down = delta * f.down;
-                f.down.x = Mathf.Round(f.down.x);
-                f.down.y = Mathf.Round(f.down.y);
-                f.DoFlip();
-                f.flipping = false;
+                f.DoEndFlip(delta);
             }
         }
 

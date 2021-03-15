@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Flippable : MonoBehaviour
 {
-    public event Action Flip;
+    public event Action BeginFlip;
+    public event Action EndFlip;
     public bool flipping = false;
     public Vector2 down = Vector2.down;
 
@@ -21,8 +22,18 @@ public class Flippable : MonoBehaviour
 
     }
 
-    public void DoFlip()
+    public void DoBeginFlip()
     {
-        Flip?.Invoke();
+        BeginFlip?.Invoke();
+        flipping = true;
+    }
+
+    public void DoEndFlip(Quaternion delta)
+    {
+        down = delta * down;
+        down.x = Mathf.Round(down.x);
+        down.y = Mathf.Round(down.y);
+        flipping = false;
+        EndFlip?.Invoke();
     }
 }

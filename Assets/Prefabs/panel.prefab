@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 2343217652183063348}
   - component: {fileID: 2343217652183063349}
   m_Layer: 0
-  m_Name: cell
+  m_Name: panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,6 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f88a9bd6ccf794b815d82065144af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fade_time: 1
+  can_flip: 1
+  can_rotate: 1
   flip_time: 1
-  cube: {fileID: 2343217651943770373}

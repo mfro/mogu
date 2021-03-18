@@ -50,6 +50,9 @@ public class PlayerMovement : MonoBehaviour
             collider.enabled = true;
             grounded = ceilinged = false;
             velocity = Vector2.zero;
+            var pos = transform.position;
+            pos.z = 0;
+            transform.position = pos;
         };
     }
 

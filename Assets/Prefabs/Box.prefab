@@ -158,4 +158,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pushVelocity: 6
   gravityVelocity: 5
-  accelTime: 0.1
+  accelTime: 0.5

@@ -7,16 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Door : MonoBehaviour
 {
-
-    [SerializeField] GameObject mySwitchObject;
+    [SerializeField] Switch mySwitchObject;
 
     private Flippable flippable;
     private Collider2D col;
-#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
-    private Renderer renderer;
-#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
-
-    private iSwitch mySwitch;
+    private new Renderer renderer;
 
     private bool doorShut;
 
@@ -27,9 +22,7 @@ public class Door : MonoBehaviour
     {
         doorCanToggle = true;
 
-        mySwitch = mySwitchObject.GetComponent<iSwitch>();
-
-        if (mySwitch == null)
+        if (mySwitchObject == null)
         {
             print("error, switch is null");
             this.enabled = false;
@@ -40,7 +33,7 @@ public class Door : MonoBehaviour
         col = GetComponent<Collider2D>();
         renderer = GetComponent<Renderer>();
 
-        if (flippable != null )
+        if (flippable != null)
         {
 
             flippable.BeginFlip += () =>
@@ -56,28 +49,17 @@ public class Door : MonoBehaviour
             };
         }
 
-
-
-        mySwitch.switchDisabled += CloseDoor;
-        mySwitch.switchEnabled += OpenDoor;
+        mySwitchObject.StateChanged += OnSwitchChange;
     }
 
-    private void CloseDoor()
+    private void OnSwitchChange(bool active)
     {
-        renderer.enabled = true;
-        col.isTrigger = false;
-    }
-
-    private void OpenDoor()
-    {
-
-        renderer.enabled = false;
-        col.isTrigger = true;
+        renderer.enabled = !active;
+        col.isTrigger = active;
     }
 
     private void OnDestroy()
     {
-        mySwitch.switchEnabled -= OpenDoor;
-        mySwitch.switchDisabled -= CloseDoor;
+        mySwitchObject.StateChanged -= OnSwitchChange;
     }
 }

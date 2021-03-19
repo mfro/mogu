@@ -3,62 +3,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PressurePlate : MonoBehaviour, iSwitch
+public class PressurePlate : Switch
 {
-    public event Action switchEnabled;
-    public event Action switchDisabled;
-
     private int numObjectsPressing = 0;
 
-    [SerializeField] String[] interactibleLayers;
+    [SerializeField] GameObject cube;
 
     [SerializeField] float animDuration;
-
-    private Flippable flippable;
+    [SerializeField] string[] interactibleLayers;
 
     // Start is called before the first frame update
     void Start()
     {
-
         LayerMask layermask = LayerMask.GetMask(interactibleLayers);
         numObjectsPressing = Physics2D.OverlapBoxAll(transform.position, transform.localScale, 0, layermask).Length - 1;
         //print("Plate initialized with this many objects pressing me: " + numObjectsPressing);
 
-        if (numObjectsPressing > 0) switchEnabled?.Invoke();
-
-        flippable = GetComponent<Flippable>();
-
-        if (flippable != null)
+        StateChanged += (v) =>
         {
-            //flippable.BeginFlip += () =>
-            //{
+            var pos = cube.transform.position;
+            if (IsActive)
+                pos.y -= 2 / 32f;
+            else
+                pos.y += 2 / 32f;
 
-            //};
-
-            flippable.EndFlip += () =>
-            {
-                var pos = transform.position;
-                pos.z = 0;
-                transform.position = pos;
-            };
-        }
-
+            cube.transform.position = pos;
+        };
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         numObjectsPressing++;
 
-        if (numObjectsPressing > 0) switchEnabled?.Invoke();
+        IsActive = numObjectsPressing != 0;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (numObjectsPressing > 0)
+            numObjectsPressing--;
 
-        numObjectsPressing--;
-        numObjectsPressing = Mathf.Max(numObjectsPressing, 0);
-
-        if (numObjectsPressing == 0) switchDisabled?.Invoke();
+        IsActive = numObjectsPressing != 0;
     }
-
 }

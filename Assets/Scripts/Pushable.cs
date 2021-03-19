@@ -32,12 +32,10 @@ public class Pushable : MonoBehaviour
 
         flip.BeginFlip += () =>
         {
-            col.enabled = false;
         };
 
         flip.EndFlip += () =>
         {
-            col.enabled = true;
             var pos = transform.position;
             downVector = flip.down;
             pos.z = 0;

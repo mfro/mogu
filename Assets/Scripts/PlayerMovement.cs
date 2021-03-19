@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
         flippable.BeginFlip += () =>
         {
+            var pos = transform.position;
         };
 
         flippable.EndFlip += () =>

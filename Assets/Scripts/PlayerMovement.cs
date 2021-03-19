@@ -41,13 +41,11 @@ public class PlayerMovement : MonoBehaviour
 
         flippable.BeginFlip += () =>
         {
-            collider.enabled = false;
             var pos = transform.position;
         };
 
         flippable.EndFlip += () =>
         {
-            collider.enabled = true;
             grounded = ceilinged = false;
             velocity = Vector2.zero;
             var pos = transform.position;

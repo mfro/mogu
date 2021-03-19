@@ -272,12 +272,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0bde0e9120cbe945bac38520c3fba3a, type: 3}
---- !u!1 &273469021 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3133340173093194422, guid: bed575e0e1ff5a4429e0b67f49d8edca,
+--- !u!114 &273469022 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 867569310921465909, guid: bed575e0e1ff5a4429e0b67f49d8edca,
     type: 3}
   m_PrefabInstance: {fileID: 499839435}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf209e299aaa9944ea5b9e75da4d4183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &499839435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -913,7 +919,7 @@ PrefabInstance:
         type: 3}
       propertyPath: mySwitchObject
       value: 
-      objectReference: {fileID: 273469021}
+      objectReference: {fileID: 273469022}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d0e3aaa7464a3d418f581f9b8709962, type: 3}
 --- !u!1001 &1481384856

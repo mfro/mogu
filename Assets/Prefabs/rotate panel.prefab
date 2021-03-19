@@ -125,4 +125,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   can_flip: 0
   can_rotate: 1
-  flip_time: 1
+  flip_time: 0.5

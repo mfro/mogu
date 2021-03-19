@@ -200,11 +200,33 @@
                 },
                 {
                     "name": "",
+                    "id": "da139a66-55ff-4606-9920-755d0530da02",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e257dd5e-a9dc-4270-8ff3-c1ec1627a8f3",
                     "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "flip vertical",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8ad74b7-77c9-4631-886e-2f64b3eacdc0",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "flip vertical",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -222,6 +244,17 @@
                 },
                 {
                     "name": "",
+                    "id": "fb5fa5fe-0ec8-47dd-a64d-6c9b6e6a715d",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "flip ccw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b6c94a24-be20-407d-b6da-9c6a90ffbeae",
                     "path": "<Keyboard>/c",
                     "interactions": "",
@@ -233,11 +266,33 @@
                 },
                 {
                     "name": "",
+                    "id": "08268586-84d1-4879-aee5-251f9f754e84",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "flip cw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d4e9e0c0-a45f-49d2-b774-e237abeadcbf",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "flip horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9ebfb6a9-ae0c-4dab-abdc-71dd4784c8fd",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "flip horizontal",
                     "isComposite": false,
                     "isPartOfComposite": false

@@ -712,6 +712,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box
       objectReference: {fileID: 0}
+    - target: {fileID: 5929045657546632644, guid: 89abd0e826e761649ad2416f9245ad86,
+        type: 3}
+      propertyPath: pushVelocity
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89abd0e826e761649ad2416f9245ad86, type: 3}
 --- !u!1001 &1047178028
@@ -867,7 +872,7 @@ PrefabInstance:
     - target: {fileID: 3133340173093194418, guid: 2d0e3aaa7464a3d418f581f9b8709962,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.28
+      value: 3.35
       objectReference: {fileID: 0}
     - target: {fileID: 3133340173093194418, guid: 2d0e3aaa7464a3d418f581f9b8709962,
         type: 3}

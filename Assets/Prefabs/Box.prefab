@@ -156,6 +156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449c2a4791d275d4995cf7450fb6554e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushVelocity: 6
+  pushVelocity: 3
   gravityVelocity: 5
   accelTime: 0.5

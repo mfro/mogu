@@ -41,18 +41,12 @@ public class PlayerMovement : MonoBehaviour
 
         flippable.BeginFlip += () =>
         {
-            collider.enabled = false;
-            var pos = transform.position;
         };
 
         flippable.EndFlip += () =>
         {
-            collider.enabled = true;
             grounded = ceilinged = false;
             velocity = Vector2.zero;
-            var pos = transform.position;
-            pos.z = 0;
-            transform.position = pos;
         };
     }
 
@@ -195,53 +189,16 @@ public class PlayerMovement : MonoBehaviour
         ceilinged = false;
     }
 
-    public void Move(InputAction.CallbackContext callback)
+
+    public void SetMovement(Vector2 input)
     {
-        movement_input = callback.ReadValue<Vector2>();
+        movement_input = input;
     }
 
-    public void Jump(InputAction.CallbackContext callback)
+    public void SetJump(bool jumpPressed)
     {
-        jumping_input = callback.ReadValueAsButton();
+        jumping_input = jumpPressed;
     }
 
-    public void DoFlip(FlipKind kind)
-    {
-        var cell = FindObjectsOfType<CellFlip>();
-        var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
 
-        var contained = collider.bounds.min.x >= closest.transform.position.x - closest.transform.lossyScale.x / 2
-            && collider.bounds.max.x <= closest.transform.position.x + closest.transform.lossyScale.x / 2
-            && collider.bounds.min.y >= closest.transform.position.y - closest.transform.lossyScale.y / 2
-            && collider.bounds.max.y <= closest.transform.position.y + closest.transform.lossyScale.y / 2;
-
-        if (contained)
-        {
-            closest.DoFlip(flippable.down, kind);
-        }
-    }
-
-    public void OnFlipVertical(InputAction.CallbackContext c)
-    {
-        if (c.ReadValueAsButton())
-            DoFlip(FlipKind.Vertical);
-    }
-
-    public void OnFlipHorizontal(InputAction.CallbackContext c)
-    {
-        if (c.ReadValueAsButton())
-            DoFlip(FlipKind.Horizontal);
-    }
-
-    public void OnFlipCW(InputAction.CallbackContext c)
-    {
-        if (c.ReadValueAsButton())
-            DoFlip(FlipKind.CW);
-    }
-
-    public void OnFlipCCW(InputAction.CallbackContext c)
-    {
-        if (c.ReadValueAsButton())
-            DoFlip(FlipKind.CCW);
-    }
 }

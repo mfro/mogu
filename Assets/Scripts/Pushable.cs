@@ -82,33 +82,36 @@ public class Pushable : MonoBehaviour
 
         if (numContacts == 0) return;
 
-        if (!collision.gameObject.CompareTag("Player")) return;
-
-        foreach (var contact in contacts)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            if (flip.down.x == 0)
+            foreach (var contact in contacts)
             {
-                if (Mathf.Abs(contact.normal.x) >= 0.001f)
+                if (flip.down.x == 0)
                 {
-                    startDecreasing = false;
-                    currentPushVelocity = (pushVelocity * contact.normal);
-                    return;
+                    if (Mathf.Abs(contact.normal.x) >= 0.001f)
+                    {
+                        startDecreasing = false;
+                        currentPushVelocity = (pushVelocity * contact.normal);
+                        return;
+                    }
                 }
-            } 
-            else
-            {
-                if (Mathf.Abs(contact.normal.y) >= 0.001f)
+                else
                 {
-                    startDecreasing = false;
-                    Debug.DrawRay(contact.point, contact.normal * pushVelocity, Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f), 10f);
-                    currentPushVelocity = (pushVelocity * contact.normal);
-                    return;
+                    if (Mathf.Abs(contact.normal.y) >= 0.001f)
+                    {
+                        startDecreasing = false;
+                        Debug.DrawRay(contact.point, contact.normal * pushVelocity, Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f), 10f);
+                        currentPushVelocity = (pushVelocity * contact.normal);
+                        return;
+                    }
                 }
             }
-
         }
 
-        
+        else
+        {
+            
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)

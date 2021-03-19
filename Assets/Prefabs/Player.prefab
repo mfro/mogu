@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1978893955}
   - component: {fileID: 1978893954}
   - component: {fileID: 317959414}
+  - component: {fileID: 7040235991487599592}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -65,7 +66,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180199155871165280}
+      - m_Target: {fileID: 7040235991487599592}
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:
@@ -120,7 +121,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180199155871165280}
+      - m_Target: {fileID: 7040235991487599592}
         m_MethodName: Jump
         m_Mode: 0
         m_Arguments:
@@ -135,7 +136,7 @@ MonoBehaviour:
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180199155871165280}
+      - m_Target: {fileID: 7040235991487599592}
         m_MethodName: OnFlipCCW
         m_Mode: 0
         m_Arguments:
@@ -150,7 +151,7 @@ MonoBehaviour:
     m_ActionName: Player/Flip[/Keyboard/upArrow]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180199155871165280}
+      - m_Target: {fileID: 7040235991487599592}
         m_MethodName: OnFlipVertical
         m_Mode: 0
         m_Arguments:
@@ -165,7 +166,7 @@ MonoBehaviour:
     m_ActionName: Player/flip[/Keyboard/s]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180199155871165280}
+      - m_Target: {fileID: 7040235991487599592}
         m_MethodName: OnFlipCW
         m_Mode: 0
         m_Arguments:
@@ -180,7 +181,7 @@ MonoBehaviour:
     m_ActionName: Player/flip cw[/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1180199155871165280}
+      - m_Target: {fileID: 7040235991487599592}
         m_MethodName: OnFlipHorizontal
         m_Mode: 0
         m_Arguments:
@@ -300,6 +301,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 0}
+--- !u!114 &7040235991487599592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3703493050827003922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a908efd9984e2a47bb49950e3d84e27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6560268207314772671
 GameObject:
   m_ObjectHideFlags: 0

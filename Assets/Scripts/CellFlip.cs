@@ -49,7 +49,7 @@ public class CellFlip : MonoBehaviour
             delta = Quaternion.AngleAxis(180, axis);
         }
         else return;
- 
+
         if (isFlipping) return;
         isFlipping = true;
 
@@ -59,15 +59,18 @@ public class CellFlip : MonoBehaviour
 
         foreach (var o in x)
         {
+            var f = o.GetComponent<Flippable>();
+            if (f != null) f.flipping = true;
+        }
+
+        foreach (var o in x)
+        {
             if (o.gameObject == gameObject)
                 continue;
 
             o.transform.parent = transform;
             var f = o.GetComponent<Flippable>();
-            if (f != null)
-            {
-                f.DoBeginFlip();
-            }
+            if (f != null) f.DoBeginFlip();
         }
 
         var q0 = transform.localRotation;

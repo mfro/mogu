@@ -22,17 +22,6 @@ public class PlayerController : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         flippable = GetComponent<Flippable>();
-
-
-        flippable.BeginFlip += () =>
-        {
-
-        };
-
-        flippable.EndFlip += () =>
-        {
-
-        };
     }
 
     // Update is called once per frame

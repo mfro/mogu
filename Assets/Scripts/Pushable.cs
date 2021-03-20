@@ -79,6 +79,13 @@ public class Pushable : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
+
+            if (collision.gameObject.GetComponent<PlayerMovement>().grounded == false)
+            {
+                currentPushVelocity = Vector2.zero;
+                return;
+            }
+
             foreach (var contact in contacts)
             {
                 if (flip.down.x == 0)
@@ -116,7 +123,11 @@ public class Pushable : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        startDecreasing = true;
-        currTime = 0f;
+        if(collision.transform.CompareTag("Player"))
+        {
+            startDecreasing = true;
+            currTime = 0f;
+        }
+
     }
 }

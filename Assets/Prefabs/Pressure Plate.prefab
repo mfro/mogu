@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 540492918836541690}
-  m_Layer: 0
-  m_Name: pressure plate
+  m_Layer: 10
+  m_Name: Pressure Plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

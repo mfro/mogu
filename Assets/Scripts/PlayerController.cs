@@ -26,16 +26,12 @@ public class PlayerController : MonoBehaviour
 
         flippable.BeginFlip += () =>
         {
-            collider.enabled = false;
-            var pos = transform.position;
+
         };
 
         flippable.EndFlip += () =>
         {
-            collider.enabled = true;
-            var pos = transform.position;
-            pos.z = 0;
-            transform.position = pos;
+
         };
     }
 

@@ -15,12 +15,10 @@ public class Door : MonoBehaviour
 
     private bool doorShut;
 
-    private bool doorCanToggle;
 
     // Start is called before the first frame update
     void Start()
     {
-        doorCanToggle = true;
 
         if (mySwitchObject == null)
         {
@@ -38,14 +36,10 @@ public class Door : MonoBehaviour
 
             flippable.BeginFlip += () =>
             {
-
             };
 
             flippable.EndFlip += () =>
             {
-                var pos = transform.position;
-                pos.z = 0;
-                transform.position = pos;
             };
         }
 
@@ -54,6 +48,7 @@ public class Door : MonoBehaviour
 
     private void OnSwitchChange(bool active)
     {
+        if (flippable.flipping) return;
         renderer.enabled = !active;
         col.isTrigger = active;
     }

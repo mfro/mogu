@@ -36,10 +36,7 @@ public class Pushable : MonoBehaviour
 
         flip.EndFlip += () =>
         {
-            var pos = transform.position;
             downVector = flip.down;
-            pos.z = 0;
-            transform.position = pos;
         };
     }
 

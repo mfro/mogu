@@ -62,22 +62,40 @@ public class PlayerMovement : MonoBehaviour
             jump_progress += jump_delta;
         }
 
-        Vector3 target;
+        var target = 0f;
         if (movement_input.x > 0)
         {
-            target = new Vector3(PhysicsObject.RUNNING_SPEED_LIMIT, 0);
+            target = PhysicsObject.RUNNING_SPEED_LIMIT;
         }
         else if (movement_input.x < 0)
         {
-            target = new Vector3(-PhysicsObject.RUNNING_SPEED_LIMIT, 0);
+            target = -PhysicsObject.RUNNING_SPEED_LIMIT;
         }
-        else
+        else if (flippable.down.x > 0)
         {
-            target = new Vector3();
+            if (movement_input.y > 0)
+            {
+                target = PhysicsObject.RUNNING_SPEED_LIMIT;
+            }
+            else if (movement_input.y < 0)
+            {
+                target = -PhysicsObject.RUNNING_SPEED_LIMIT;
+            }
+        }
+        else if (flippable.down.x < 0)
+        {
+            if (movement_input.y > 0)
+            {
+                target = -PhysicsObject.RUNNING_SPEED_LIMIT;
+            }
+            else if (movement_input.y < 0)
+            {
+                target = PhysicsObject.RUNNING_SPEED_LIMIT;
+            }
         }
 
         float speed_change;
-        if (Mathf.Abs(physics.velocity.x) > PhysicsObject.RUNNING_SPEED_LIMIT && Mathf.Sign(physics.velocity.x) == Mathf.Sign(target.x))
+        if (Mathf.Abs(physics.velocity.x) > PhysicsObject.RUNNING_SPEED_LIMIT && Mathf.Sign(physics.velocity.x) == Mathf.Sign(target))
         {
             if (physics.grounded)
                 speed_change = PhysicsObject.GROUND_DECELERATION;
@@ -88,19 +106,19 @@ public class PlayerMovement : MonoBehaviour
         {
             if (physics.grounded)
                 speed_change = PhysicsObject.GROUND_RUNNING_ACCELERATION;
-            else if (Mathf.Sign(physics.velocity.x) == -Mathf.Sign(target.x))
+            else if (Mathf.Sign(physics.velocity.x) == -Mathf.Sign(target))
                 speed_change = PhysicsObject.AIR_RUNNING_ACCELERATION;
             else
                 speed_change = PhysicsObject.AIR_DECELERATION;
         }
 
-        if (target.x > physics.velocity.x)
+        if (target > physics.velocity.x)
         {
-            physics.velocity.x = Mathf.Min(physics.velocity.x + speed_change * Time.fixedDeltaTime, target.x);
+            physics.velocity.x = Mathf.Min(physics.velocity.x + speed_change * Time.fixedDeltaTime, target);
         }
         else
         {
-            physics.velocity.x = Mathf.Max(physics.velocity.x - speed_change * Time.fixedDeltaTime, target.x);
+            physics.velocity.x = Mathf.Max(physics.velocity.x - speed_change * Time.fixedDeltaTime, target);
         }
     }
 }

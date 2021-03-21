@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
@@ -66,5 +66,10 @@ public class PlayerController : MonoBehaviour
     {
         if (c.ReadValueAsButton())
             DoFlip(2);
+    }
+
+    public void OnRestart(InputAction.CallbackContext c)
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

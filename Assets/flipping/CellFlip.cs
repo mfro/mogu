@@ -43,12 +43,12 @@ public class CellFlip : MonoBehaviour
         }
         else if (flip == FlipKind.Horizontal)
         {
-            delta = Quaternion.AngleAxis(180, down);
+            delta = Quaternion.AngleAxis(-180, down);
         }
         else if (flip == FlipKind.Vertical)
         {
             var axis = Quaternion.AngleAxis(90, Vector3.back) * down;
-            delta = Quaternion.AngleAxis(180, axis);
+            delta = Quaternion.AngleAxis(-180, axis);
         }
         else return;
 

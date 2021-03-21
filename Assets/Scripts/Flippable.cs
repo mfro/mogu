@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Flippable : MonoBehaviour
@@ -14,26 +11,27 @@ public class Flippable : MonoBehaviour
     private Vector3 scaleSave;
     private bool snapPosition;
 
+    private new Collider2D collider;
+
     // Start is called before the first frame update
     void Start()
     {
         scaleSave = transform.localScale;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        collider = GetComponent<Collider2D>();
     }
 
     public void DoBeginFlip()
     {
-        BeginFlip?.Invoke();
         flipping = true;
 
         snapPosition = transform.localPosition.x % 0.5f == 0
             && transform.localPosition.x % 0.5f == 0
             && transform.localPosition.x % 0.5f == 0;
+
+        if (collider != null) collider.enabled = false;
+
+        BeginFlip?.Invoke();
     }
 
     public void DoEndFlip(Quaternion delta)
@@ -42,7 +40,8 @@ public class Flippable : MonoBehaviour
         down.x = Mathf.Round(down.x);
         down.y = Mathf.Round(down.y);
         flipping = false;
-        EndFlip?.Invoke();
+
+        if (collider != null) collider.enabled = true;
 
         transform.localScale = scaleSave;
         var angles = transform.localRotation.eulerAngles;
@@ -59,5 +58,13 @@ public class Flippable : MonoBehaviour
             pos.z = Mathf.Round(pos.z);
             transform.localPosition = pos / 2;
         }
+        else
+        {
+            var pos = transform.position;
+            pos.z = 0;
+            transform.position = pos;
+        }
+
+        EndFlip?.Invoke();
     }
 }

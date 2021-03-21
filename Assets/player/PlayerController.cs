@@ -27,17 +27,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Move(InputAction.CallbackContext callback)
     {
-        playerMovement.SetMovement(callback.ReadValue<Vector2>());
+        playerMovement.movement_input = callback.ReadValue<Vector2>();
     }
 
     public void Jump(InputAction.CallbackContext callback)
     {
-        playerMovement.SetJump(callback.ReadValueAsButton());
+        playerMovement.jumping_input = callback.ReadValueAsButton();
     }
 
     public void DoFlip(FlipKind kind)

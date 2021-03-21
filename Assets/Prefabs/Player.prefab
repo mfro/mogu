@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2169362412755323763}
   - component: {fileID: 3126714895537492653}
+  - component: {fileID: 5407428602288640494}
   - component: {fileID: 1180199155871165280}
   - component: {fileID: 4373931033163170486}
   - component: {fileID: 1978893955}
@@ -199,6 +200,21 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5407428602288640494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3703493050827003922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f60c7ec93211374aa87617a7d896325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grounded: 0
+  ceilinged: 0
+  velocity: {x: 0, y: 0}
 --- !u!114 &1180199155871165280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,22 +227,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d45be6e5708aca4e8ab17983531734a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_FALL_SPEED: 40
-  RUNNING_SPEED_LIMIT: 5
-  GROUND_RUNNING_ACCELERATION: 80
-  GROUND_DECELERATION: 240
-  AIR_RUNNING_ACCELERATION: 40
-  AIR_DECELERATION: 120
-  JUMP_TIME: 0.3
-  JUMP_HEIGHT: 1.05
-  MAX_JUMP_TIME: 0
-  MAX_JUMP_HEIGHT: 1.05
-  grounded: 0
-  ceilinged: 0
-  velocity: {x: 0, y: 0}
   jumping: 0
   jump_end: 0
   jump_progress: 0
+  movement_input: {x: 0, y: 0}
+  jumping_input: 0
 --- !u!114 &4373931033163170486
 MonoBehaviour:
   m_ObjectHideFlags: 0

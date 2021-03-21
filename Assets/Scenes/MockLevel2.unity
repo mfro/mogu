@@ -1474,22 +1474,22 @@ PrefabInstance:
     - target: {fileID: 3133340173093194418, guid: 89abd0e826e761649ad2416f9245ad86,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 3133340173093194418, guid: 89abd0e826e761649ad2416f9245ad86,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 3133340173093194418, guid: 89abd0e826e761649ad2416f9245ad86,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.5
+      value: 3.362
       objectReference: {fileID: 0}
     - target: {fileID: 3133340173093194418, guid: 89abd0e826e761649ad2416f9245ad86,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.5
+      value: 4.479
       objectReference: {fileID: 0}
     - target: {fileID: 3133340173093194418, guid: 89abd0e826e761649ad2416f9245ad86,
         type: 3}
@@ -2119,11 +2119,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3126714895537492653, guid: b0bde0e9120cbe945bac38520c3fba3a,
-        type: 3}
-      propertyPath: m_UIInputModule
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3703493050827003922, guid: b0bde0e9120cbe945bac38520c3fba3a,
         type: 3}

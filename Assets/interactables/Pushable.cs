@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -14,9 +15,9 @@ public class Pushable : MonoBehaviour
     private Rigidbody2D rb;
     private Flippable flip;
     private Collider2D col;
+    private PhysicsObject physics;
 
-    private Vector2 currentPushVelocity = Vector2.zero;
-    private Vector2 currentGravityVelocity = Vector2.zero;
+    private float currentPushVelocity = 0f;
 
     private bool startDecreasing;
     private float currTime;
@@ -28,36 +29,29 @@ public class Pushable : MonoBehaviour
 
         flip = GetComponent<Flippable>();
         col = GetComponent<Collider2D>();
+        physics = GetComponent<PhysicsObject>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, transform.localScale, 0, flip.down, 0.001f);
-
-        if (hits.Length == 1)
-        {
-            currentGravityVelocity = flip.down * gravityVelocity;
-        }
-        else
-        {
-            currentGravityVelocity = Vector2.zero;
-        }
+        if (flip.flipping)
+            return;
 
         if (startDecreasing)
         {
-            currentPushVelocity = Vector2.Lerp(currentPushVelocity, Vector2.zero, currTime / accelTime);
+            currentPushVelocity = Mathf.Lerp(currentPushVelocity, 0, currTime / accelTime);
 
             currTime += Time.fixedDeltaTime;
 
             if (currTime >= accelTime)
             {
                 startDecreasing = false;
-                currentPushVelocity = Vector2.zero;
+                currentPushVelocity = 0;
             }
         }
 
-        rb.velocity = currentGravityVelocity + currentPushVelocity;
+        physics.velocity.x = currentPushVelocity;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -70,33 +64,26 @@ public class Pushable : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
 
-            if (collision.gameObject.GetComponent<PlayerMovement>().grounded == false)
+            if (collision.gameObject.GetComponent<PhysicsObject>().grounded == false)
             {
-                currentPushVelocity = Vector2.zero;
+                currentPushVelocity = 0;
                 return;
             }
 
             foreach (var contact in contacts)
             {
-                if (flip.down.x == 0)
+                var cross = Vector3.Cross(flip.down, contact.normal);
+                if (cross.z < -0.01f)
                 {
-                    if (Mathf.Abs(contact.normal.x) >= 0.001f)
-                    {
-                        startDecreasing = false;
-                        currentPushVelocity = (pushVelocity * contact.normal);
-                        return;
-                    }
+                    startDecreasing = false;
+                    currentPushVelocity = -1;
                 }
-                else
+                else if (cross.z > 0.01f)
                 {
-                    if (Mathf.Abs(contact.normal.y) >= 0.001f)
-                    {
-                        startDecreasing = false;
-                        Debug.DrawRay(contact.point, contact.normal * pushVelocity, Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f), 10f);
-                        currentPushVelocity = (pushVelocity * contact.normal);
-                        return;
-                    }
+                    startDecreasing = false;
+                    currentPushVelocity = 1;
                 }
+
             }
         }
     }
@@ -108,11 +95,10 @@ public class Pushable : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if(collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player"))
         {
             startDecreasing = true;
             currTime = 0f;
         }
-
     }
 }

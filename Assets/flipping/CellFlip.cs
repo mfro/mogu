@@ -16,35 +16,37 @@ public class CellFlip : MonoBehaviour
     static bool isFlipping = false;
 
     [SerializeField]
-    bool can_flip = false;
+    public FlipKind flip1;
 
     [SerializeField]
-    bool can_rotate = false;
+    public FlipKind flip2;
 
     [SerializeField]
     float flip_time = 1;
 
-    public async void DoFlip(Vector2 down, FlipKind flip)
+    public async void DoFlip(Vector2 down, int input)
     {
+        FlipKind flip;
+        if (input == 1)
+            flip = flip1;
+        else
+            flip = flip2;
+
         Quaternion delta;
         if (flip == FlipKind.CW)
         {
-            if (!can_rotate) return;
             delta = Quaternion.AngleAxis(90, Vector3.back);
         }
         else if (flip == FlipKind.CCW)
         {
-            if (!can_rotate) return;
             delta = Quaternion.AngleAxis(-90, Vector3.back);
         }
         else if (flip == FlipKind.Horizontal)
         {
-            if (!can_flip) return;
             delta = Quaternion.AngleAxis(180, down);
         }
         else if (flip == FlipKind.Vertical)
         {
-            if (!can_flip) return;
             var axis = Quaternion.AngleAxis(90, Vector3.back) * down;
             delta = Quaternion.AngleAxis(180, axis);
         }

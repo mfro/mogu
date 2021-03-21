@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         playerMovement.jumping_input = callback.ReadValueAsButton();
     }
 
-    public void DoFlip(FlipKind kind)
+    public void DoFlip(int input)
     {
         var cell = FindObjectsOfType<CellFlip>();
         var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
@@ -52,31 +52,19 @@ public class PlayerController : MonoBehaviour
 
         if (contained)
         {
-            closest.DoFlip(flippable.down, kind);
+            closest.DoFlip(flippable.down, input);
         }
     }
 
-    public void OnFlipVertical(InputAction.CallbackContext c)
+    public void OnFlip1(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton())
-            DoFlip(FlipKind.Vertical);
+            DoFlip(1);
     }
 
-    public void OnFlipHorizontal(InputAction.CallbackContext c)
+    public void OnFlip2(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton())
-            DoFlip(FlipKind.Horizontal);
-    }
-
-    public void OnFlipCW(InputAction.CallbackContext c)
-    {
-        if (c.ReadValueAsButton())
-            DoFlip(FlipKind.CW);
-    }
-
-    public void OnFlipCCW(InputAction.CallbackContext c)
-    {
-        if (c.ReadValueAsButton())
-            DoFlip(FlipKind.CCW);
+            DoFlip(2);
     }
 }

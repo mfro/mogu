@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "flip vertical",
+                    "name": "flip 1",
                     "type": "Button",
                     "id": "1c1ec030-6425-4564-8048-4892b77fe99e",
                     "expectedControlType": "Button",
@@ -30,25 +30,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "flip horizontal",
+                    "name": "flip 2",
                     "type": "Button",
                     "id": "dc32dff1-72c7-4d64-8ecf-24fc9b81c835",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "flip cw",
-                    "type": "Button",
-                    "id": "e26915f6-108b-41be-81ee-0eda8b5b22bd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "flip ccw",
-                    "type": "Button",
-                    "id": "d9823cbb-f1ac-4807-8e36-cae23f26e127",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -216,7 +200,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "flip vertical",
+                    "action": "flip 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -227,62 +211,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "flip vertical",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f423d56f-168d-4358-b2e1-8a573dc9a366",
-                    "path": "<Keyboard>/z",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse;Gamepad",
-                    "action": "flip ccw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fb5fa5fe-0ec8-47dd-a64d-6c9b6e6a715d",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "flip ccw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b6c94a24-be20-407d-b6da-9c6a90ffbeae",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "flip cw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "08268586-84d1-4879-aee5-251f9f754e84",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "flip cw",
+                    "action": "flip 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "d4e9e0c0-a45f-49d2-b774-e237abeadcbf",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "flip horizontal",
+                    "groups": "Keyboard&Mouse;Gamepad",
+                    "action": "flip 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -293,7 +233,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "flip horizontal",
+                    "action": "flip 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

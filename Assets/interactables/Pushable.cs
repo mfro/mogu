@@ -72,18 +72,12 @@ public class Pushable : MonoBehaviour
 
             foreach (var contact in contacts)
             {
-                var cross = Vector3.Cross(flip.down, contact.normal);
-                if (cross.z < -0.01f)
+                var push = Quaternion.FromToRotation(flip.down, Vector3.down) * contact.normal;
+                if (Mathf.Round(push.x) != 0)
                 {
                     startDecreasing = false;
-                    currentPushVelocity = -1;
+                    currentPushVelocity = Mathf.Sign(push.x);
                 }
-                else if (cross.z > 0.01f)
-                {
-                    startDecreasing = false;
-                    currentPushVelocity = 1;
-                }
-
             }
         }
     }

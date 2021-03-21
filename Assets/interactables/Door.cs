@@ -15,15 +15,13 @@ public class Door : MonoBehaviour
 
     private bool doorShut;
 
-
     // Start is called before the first frame update
     void Start()
     {
-
         if (mySwitchObject == null)
         {
             print("error, switch is null");
-            this.enabled = false;
+            enabled = false;
             return;
         }
 
@@ -40,11 +38,15 @@ public class Door : MonoBehaviour
         };
     }
 
+    private void LateUpdate()
+    {
+        renderer.enabled = !doorShut;
+        col.isTrigger = doorShut;
+    }
+
     private void OnSwitchChange(bool active)
     {
-        if (flippable.flipping) return;
-        renderer.enabled = !active;
-        col.isTrigger = active;
+        doorShut = active;
     }
 
     private void OnDestroy()

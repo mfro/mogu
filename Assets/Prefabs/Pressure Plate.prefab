@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 7216708599172794174}
   - component: {fileID: 831493313626786350}
   m_Layer: 10
-  m_Name: old pressure plate
+  m_Name: pressure plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 3241442996498538669}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 0.9375, y: 0.1875, z: 0.9375}
+  m_LocalScale: {x: 0.875, y: 0.1875, z: 0.875}
   m_Children:
   - {fileID: 7090532092157293790}
   m_Father: {fileID: 540492918836541690}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 1098513641550345563}
   - component: {fileID: 5638113761761413614}
   m_Layer: 10
-  m_Name: Cube
+  m_Name: cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

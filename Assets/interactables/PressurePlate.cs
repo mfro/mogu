@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PressurePlate : Switch
@@ -34,8 +35,9 @@ public class PressurePlate : Switch
             cube.transform.localScale = pos;
         };
 
-        flippable.EndFlip += () =>
+        flippable.EndFlip += async () =>
         {
+            await Task.Yield();
             IsActive = numObjectsPressing != 0;
         };
     }

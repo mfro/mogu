@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ab237f7c29958944c8928caea1b7f122, type: 2}
+  - {fileID: 2100000, guid: bb06bb514387b0b41bf3247e82af6b99, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 2343217652183063348}
   - component: {fileID: 2343217652183063349}
   m_Layer: 11
-  m_Name: rotate panel
+  m_Name: flip v pannel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,6 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f88a9bd6ccf794b815d82065144af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flip1: 0
-  flip2: 1
+  flip1: 2
+  flip2: 2
   flip_time: 0.5

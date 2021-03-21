@@ -33,6 +33,11 @@ public class PressurePlate : Switch
 
             cube.transform.localScale = pos;
         };
+
+        flippable.EndFlip += () =>
+        {
+            IsActive = numObjectsPressing != 0;
+        };
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

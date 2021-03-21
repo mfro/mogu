@@ -31,19 +31,13 @@ public class Door : MonoBehaviour
         col = GetComponent<Collider2D>();
         renderer = GetComponent<Renderer>();
 
-        if (flippable != null)
-        {
-
-            flippable.BeginFlip += () =>
-            {
-            };
-
-            flippable.EndFlip += () =>
-            {
-            };
-        }
-
         mySwitchObject.StateChanged += OnSwitchChange;
+
+        flippable.EndFlip += () =>
+        {
+            renderer.enabled = !mySwitchObject.IsActive;
+            col.isTrigger = mySwitchObject.IsActive;
+        };
     }
 
     private void OnSwitchChange(bool active)

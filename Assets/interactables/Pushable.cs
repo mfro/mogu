@@ -17,7 +17,6 @@ public class Pushable : MonoBehaviour
 
     private Vector2 currentPushVelocity = Vector2.zero;
     private Vector2 currentGravityVelocity = Vector2.zero;
-    private Vector2 downVector = Vector2.down;
 
     private bool startDecreasing;
     private float currTime;
@@ -29,26 +28,18 @@ public class Pushable : MonoBehaviour
 
         flip = GetComponent<Flippable>();
         col = GetComponent<Collider2D>();
-
-        flip.BeginFlip += () =>
-        {
-        };
-
-        flip.EndFlip += () =>
-        {
-            downVector = flip.down;
-        };
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, transform.localScale, 0, downVector, 0.001f);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, transform.localScale, 0, flip.down, 0.001f);
 
         if (hits.Length == 1)
         {
-            currentGravityVelocity = downVector * gravityVelocity;
-        } else
+            currentGravityVelocity = flip.down * gravityVelocity;
+        }
+        else
         {
             currentGravityVelocity = Vector2.zero;
         }
@@ -68,7 +59,6 @@ public class Pushable : MonoBehaviour
 
         rb.velocity = currentGravityVelocity + currentPushVelocity;
     }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -108,11 +98,6 @@ public class Pushable : MonoBehaviour
                     }
                 }
             }
-        }
-
-        else
-        {
-            
         }
     }
 

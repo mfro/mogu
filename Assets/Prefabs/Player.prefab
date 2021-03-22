@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 317959414}
   - component: {fileID: 7040235991487599592}
   m_Layer: 8
-  m_Name: Player
+  m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,6 +165,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: dc32dff1-72c7-4d64-8ecf-24fc9b81c835
     m_ActionName: Player/flip horizontal[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7040235991487599592}
+        m_MethodName: OnRestart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e0b3accc-0f8a-4b3a-9f76-489484adb9d9
+    m_ActionName: Player/restart[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

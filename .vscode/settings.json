@@ -1,0 +1,14 @@
+{
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "obj": true,
+        "Library": true,
+        "ProjectSettings/": true,
+        "temp/": true,
+        "Temp/": true,
+        "*.csproj": true,
+        ".vs": true,
+        "**/*.meta": { "when": "$(basename)" }
+    }
+}

@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
 {
-
     PlayerMovement playerMovement;
     private Rigidbody2D body;
     private new BoxCollider2D collider;
@@ -43,7 +42,9 @@ public class PlayerController : MonoBehaviour
     public void DoFlip(int input)
     {
         var cell = FindObjectsOfType<CellFlip>();
-        var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).First();
+        var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).FirstOrDefault();
+        if (closest == null)
+            return;
 
         var contained = collider.bounds.min.x >= closest.transform.position.x - closest.transform.lossyScale.x / 2
             && collider.bounds.max.x <= closest.transform.position.x + closest.transform.lossyScale.x / 2
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnRestart(InputAction.CallbackContext c)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (c.ReadValueAsButton())
+            LevelManager.Restart();
     }
 }

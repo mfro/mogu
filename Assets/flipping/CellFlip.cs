@@ -77,17 +77,17 @@ public class CellFlip : MonoBehaviour
             if (f != null) f.DoBeginFlip();
         }
 
-        var q0 = transform.localRotation;
+        var q0 = transform.rotation;
         var q1 = delta * q0;
 
         float t0 = Time.time;
         while (Time.time - t0 < flip_time)
         {
-            transform.localRotation = Quaternion.Lerp(q0, q1, (Time.time - t0) / flip_time);
+            transform.rotation = Quaternion.Lerp(q0, q1, (Time.time - t0) / flip_time);
             await Task.Yield();
         }
 
-        transform.localRotation = q1;
+        transform.rotation = q1;
 
         foreach (var (o, parent) in x.Zip(parents, (l, r) => (l, r)))
         {
@@ -102,7 +102,7 @@ public class CellFlip : MonoBehaviour
             }
         }
 
-        transform.localRotation = q0;
+        transform.rotation = q0;
 
         isFlipping = false;
     }

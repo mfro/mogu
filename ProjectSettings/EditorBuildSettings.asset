@@ -6,25 +6,31 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/level container.unity
+    guid: 772ee870f1df75043a83b8980cefd849
+  - enabled: 1
     path: Assets/Scenes/level 0 - movement intro.unity
     guid: 2bb4c3339c6170d47b1cf7b0754c7da6
   - enabled: 1
     path: Assets/Scenes/level 1 - blue panel intro.unity
     guid: 88a4207a34177c5458d3f5c9a3365f3c
   - enabled: 1
-    path: Assets/Scenes/level 2 - blue panel 1.unity
+    path: Assets/Scenes/level 2 - box intro.unity
     guid: 866bd6c851151004cb65df346df15170
   - enabled: 1
-    path: Assets/Scenes/level 3 - blue panel 2.unity
+    path: Assets/Scenes/level 3 - blue panel 1.unity
+    guid: 2fa176ae315a82941b85819b89030037
+  - enabled: 1
+    path: Assets/Scenes/level 4 - blue panel 2.unity
     guid: 4498ae8956bb03d4fb230dde5220d9a0
   - enabled: 1
-    path: Assets/Scenes/level 4 - green panel intro.unity
+    path: Assets/Scenes/level 5 - green panel intro.unity
     guid: f6b104c973712bc4c8d291ccf64160d7
   - enabled: 1
-    path: Assets/Scenes/level 5 - everything 1.unity
+    path: Assets/Scenes/level 6 - everything 1.unity
     guid: b717554629591fa48a370229681727d5
   - enabled: 1
-    path: Assets/Scenes/level 6 - everything 2.unity
+    path: Assets/Scenes/level 7 - everything 2.unity
     guid: 33702fe2a5bc264499bd2c8c233fa921
   - enabled: 1
     path: Assets/Scenes/level 9999 - victory.unity

@@ -13,7 +13,7 @@ public class OffScreenDeath : MonoBehaviour
         var distance = (Vector2)camera.transform.position - (Vector2)transform.position;
         if (distance.magnitude > 2 * camera.orthographicSize)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            LevelManager.Restart();
         }
     }
 }

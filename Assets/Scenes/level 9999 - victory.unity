@@ -388,19 +388,15 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 1c1ec030-6425-4564-8048-4892b77fe99e
-    m_ActionName: Player/flip vertical[/Keyboard/x]
+    m_ActionName: Player/flip 1[/Keyboard/x]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: dc32dff1-72c7-4d64-8ecf-24fc9b81c835
-    m_ActionName: Player/flip horizontal[/Keyboard/s]
+    m_ActionName: Player/flip 2[/Keyboard/z]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e26915f6-108b-41be-81ee-0eda8b5b22bd
-    m_ActionName: Player/flip cw[/Keyboard/c]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: d9823cbb-f1ac-4807-8e36-cae23f26e127
-    m_ActionName: Player/flip ccw[/Keyboard/z]
+    m_ActionId: e0b3accc-0f8a-4b3a-9f76-489484adb9d9
+    m_ActionName: Player/restart[/Keyboard/r]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: cbf8c533-df72-431c-9524-e81495aec624
@@ -409,7 +405,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 519420030}
         m_MethodName: DoPlayAgain
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -419,7 +415,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: c1c802b0-664d-47c2-8704-2a28ee1b5ee9
-    m_ActionName: UI/Submit[/Keyboard/enter]
+    m_ActionName: UI/Submit[/Keyboard/enter,/Keyboard/enter]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 9a9d7929-9fb8-409e-9f47-27d45c5feb77
@@ -454,7 +450,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &1421549357

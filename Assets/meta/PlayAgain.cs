@@ -8,12 +8,6 @@ public class PlayAgain : MonoBehaviour
 {
     private bool playedAgain = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     public void DoPlayAgain(InputAction.CallbackContext c)
     {

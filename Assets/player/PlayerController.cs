@@ -68,10 +68,4 @@ public class PlayerController : MonoBehaviour
         if (c.ReadValueAsButton())
             DoFlip(2);
     }
-
-    public void OnRestart(InputAction.CallbackContext c)
-    {
-        if (c.ReadValueAsButton())
-            LevelManager.Restart();
-    }
 }

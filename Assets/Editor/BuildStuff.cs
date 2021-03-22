@@ -9,33 +9,31 @@ using System.IO.Compression;
 
 public class BuildStuff
 {
-    [MenuItem("mushroom/update build scenes")]
-    private static void UpdateScenes()
-    {
-        var scenesDir = "Assets/Scenes";
-        var sceneFiles = Directory.EnumerateFiles(scenesDir);
+    // [MenuItem("mushroom/update build scenes")]
+    // private static void UpdateScenes()
+    // {
+    //     var scenesDir = "Assets/Scenes";
+    //     var sceneFiles = Directory.EnumerateFiles(scenesDir);
 
-        var scenes = new List<(int, string)>();
-        foreach (var item in sceneFiles)
-        {
-            var regex = new Regex("level (\\d+) - (.*).unity$");
-            var match = regex.Match(item);
-            if (!match.Success) continue;
+    //     var scenes = new List<(int, string)>();
+    //     foreach (var item in sceneFiles)
+    //     {
+    //         var regex = new Regex("level (\\d+) - (.*).unity$");
+    //         var match = regex.Match(item);
+    //         if (!match.Success) continue;
 
-            var num = int.Parse(match.Groups[1].Value);
-            var path = item.Replace("\\", "/");
-            scenes.Add((num, path));
-        }
+    //         var num = int.Parse(match.Groups[1].Value);
+    //         var path = item.Replace("\\", "/");
+    //         scenes.Add((num, path));
+    //     }
 
-        scenes.Sort();
-        EditorBuildSettings.scenes = scenes.Select(pair => new EditorBuildSettingsScene(pair.Item2, true)).ToArray();
-    }
+    //     scenes.Sort();
+    //     EditorBuildSettings.scenes = scenes.Select(pair => new EditorBuildSettingsScene(pair.Item2, true)).ToArray();
+    // }
 
     [MenuItem("mushroom/build")]
     private static void Build()
     {
-        UpdateScenes();
-
         var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
 
         BuildPipeline.BuildPlayer(new BuildPlayerOptions

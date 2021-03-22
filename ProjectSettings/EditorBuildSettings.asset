@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MockLevel.unity
-    guid: 33702fe2a5bc264499bd2c8c233fa921
+    path: Assets/Scenes/zone 0 - milestone.unity
+    guid: 8a22698211f0ba544addc92e22dcf440
   - enabled: 1
-    path: Assets/Scenes/victory.unity
-    guid: b108e9aa01f295d478b0b28c27099bca
+    path: Assets/Scenes/level 9999 - victory.unity
+    guid: 839f4cb7039d8a940a86bfc7b4f66dcd
   m_configObjects: {}

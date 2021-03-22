@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugOnly : MonoBehaviour
+public class Checkpoint : MonoBehaviour
 {
-    void Start()
+    public void Start()
     {
         gameObject.SetActive(false);
     }

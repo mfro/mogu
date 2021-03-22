@@ -8,18 +8,32 @@ public class Level : MonoBehaviour
     public GameObject start;
 
 #if UNITY_EDITOR
-    public void OnDrawGizmos()
+    public void Start()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position + Vector3.up, 1);
+        if (Selection.activeTransform?.IsChildOf(transform) == true)
+        {
+            var controller = FindObjectOfType<LevelController>();
+
+            controller.SkipToLevel(this);
+        }
     }
 
-    [DrawGizmo(GizmoType.Active | GizmoType.NonSelected, typeof(Level))]
-    public static void MyGizmo(Level level, GizmoType type)
+    public void OnDrawGizmos()
     {
-        // Gizmos.DrawWireCube(transform.position, transform.lossyScale * 12);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(level.transform.position, level.transform.lossyScale * 12);
+        if (Selection.activeTransform?.IsChildOf(transform) == true)
+        {
+            var color = Color.yellow;
+            color.a = 0.2f;
+            Gizmos.color = color;
+            Gizmos.DrawWireCube(transform.position, transform.lossyScale * 12);
+        }
+        else
+        {
+            var color = Color.white;
+            color.a = 0.1f;
+            Gizmos.color = color;
+            Gizmos.DrawWireCube(transform.position, transform.lossyScale * 12);
+        }
     }
-    #endif
+#endif
 }

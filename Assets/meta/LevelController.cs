@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,11 +62,13 @@ public class LevelController : MonoBehaviour
 
         saveState = new SaveState(player);
 
-        initialStates = levels.Select(l => Instantiate(l.gameObject)).ToArray();
-        foreach (var clone in initialStates)
+        initialStates = levels.Select(l =>
         {
-            clone.SetActive(false);
-        }
+            var o = Instantiate(l.gameObject);
+            o.SetActive(false);
+            o.name = $"{l.name} (initial state)";
+            return o;
+        }).ToArray();
     }
 
     public async void FixedUpdate()
@@ -91,36 +94,42 @@ public class LevelController : MonoBehaviour
         }
     }
 
+    public void SkipToLevel(Level level)
+    {
+        var index = Array.IndexOf(levels, level);
+
+        var delta = levels[index].transform.position - levels[currentLevel].transform.position;
+        currentLevel = index;
+        player.transform.position = levels[currentLevel].start.transform.position;
+        player.transform.rotation = levels[currentLevel].start.transform.rotation;
+        playerFlippable.down = levels[currentLevel].start.transform.rotation * Vector2.down;
+        camera.transform.position += delta;
+        saveState = new SaveState(player);
+    }
+
     public void OnRestart(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton()) DoRestart();
     }
 
-    public async void OnCheat1(InputAction.CallbackContext c)
+    private bool dedupe = false;
+    public void OnCheat1(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton() && !moving)
         {
-            var delta = levels[currentLevel + 1].transform.position - levels[currentLevel].transform.position;
-            currentLevel += 1;
-            player.transform.position = levels[currentLevel].start.transform.position;
-            player.transform.rotation = levels[currentLevel].start.transform.rotation;
-            playerFlippable.down = levels[currentLevel].start.transform.rotation * Vector2.down;
-            await MoveCamera(delta);
-            saveState = new SaveState(player);
+            if (dedupe) { dedupe = false; return; }
+            dedupe = true;
+            SkipToLevel(levels[currentLevel + 1]);
         }
     }
 
-    public async void OnCheat2(InputAction.CallbackContext c)
+    public void OnCheat2(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton() && !moving)
         {
-            var delta = levels[currentLevel - 1].transform.position - levels[currentLevel].transform.position;
-            currentLevel -= 1;
-            player.transform.position = levels[currentLevel].start.transform.position;
-            player.transform.rotation = levels[currentLevel].start.transform.rotation;
-            playerFlippable.down = levels[currentLevel].start.transform.rotation * Vector2.down;
-            await MoveCamera(delta);
-            saveState = new SaveState(player);
+            if (dedupe) { dedupe = false; return; }
+            dedupe = true;
+            SkipToLevel(levels[currentLevel - 1]);
         }
     }
 
@@ -128,9 +137,11 @@ public class LevelController : MonoBehaviour
     {
         if (moving) return;
 
+        levels[currentLevel].gameObject.SetActive(false);
         Destroy(levels[currentLevel].gameObject);
         var replacement = Instantiate(initialStates[currentLevel]);
         replacement.SetActive(true);
+        replacement.name = levels[currentLevel].name;
         levels[currentLevel] = replacement.GetComponent<Level>();
         saveState.Apply(player);
     }

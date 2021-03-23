@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,12 +9,12 @@ public class Level : MonoBehaviour
     public GameObject start;
 
 #if UNITY_EDITOR
-    public void Start()
+    public async void Start()
     {
         if (Selection.activeTransform?.IsChildOf(transform) == true)
         {
             var controller = FindObjectOfType<LevelController>();
-
+            await Task.Yield();
             controller.SkipToLevel(this);
         }
     }

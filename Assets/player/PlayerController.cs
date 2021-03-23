@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D body;
     private new BoxCollider2D collider;
     private Flippable flippable;
+    private Animator anim;
+    private SpriteRenderer sprite;
+    private PhysicsObject physics;
 
     // Start is called before the first frame update
     void Start()
@@ -21,17 +24,72 @@ public class PlayerController : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         flippable = GetComponent<Flippable>();
+        anim = GetComponent<Animator>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
+        physics = GetComponent<PhysicsObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
 
+        Vector2 face;
+        if (flippable.down.x == 0) face = facing(playerMovement.movement_input.x, Vector2.left, Vector2.right);
+        else
+        {
+            if (playerMovement.movement_input.y != 0)
+                face = facing(playerMovement.movement_input.y, Vector2.down, Vector2.up);
+            else if (flippable.down == Vector2.right)
+                face = facing(playerMovement.movement_input.x, Vector2.down, Vector2.up);
+            else
+                face = facing(playerMovement.movement_input.x, Vector2.up, Vector2.down);
+        }
+
+        if (face != Vector2.zero)
+            Debug.DrawLine(transform.position, transform.position + (Vector3)face, Color.blue);
+
+        anim.SetBool("grounded", physics.grounded);
+        if (flippable.flipping)
+            anim.speed = 0;
+        else
+            anim.speed = 1;
+    }
+
+    private static Vector2 facing(float value, Vector2 negative, Vector2 positive)
+    {
+        if (value < 0) return negative;
+        if (value > 0) return positive;
+        return Vector2.zero;
     }
 
     public void Move(InputAction.CallbackContext callback)
     {
         playerMovement.movement_input = callback.ReadValue<Vector2>();
+        anim.SetFloat("running speed", Mathf.Abs(playerMovement.movement_input.x));
+
+        var spriteRight = (transform.rotation * Vector2.right);
+        Vector2 face;
+
+        if (flippable.down.x == 0) face = facing(playerMovement.movement_input.x, Vector2.left, Vector2.right);
+        else
+        {
+            if (playerMovement.movement_input.y != 0)
+                face = facing(playerMovement.movement_input.y, Vector2.down, Vector2.up);
+            else if (flippable.down == Vector2.right)
+                face = facing(playerMovement.movement_input.x, Vector2.down, Vector2.up);
+            else
+                face = facing(playerMovement.movement_input.x, Vector2.up, Vector2.down);
+        }
+
+        if (face != Vector2.zero)
+        {
+            Debug.DrawLine(transform.position, transform.position + (Vector3)face, Color.blue);
+            sprite.flipX = (Vector2.Dot(spriteRight, face) < 0);
+        }
+
+        if (playerMovement.movement_input.y != 0 && flippable.down.x != 0)
+            anim.SetFloat("running speed", Mathf.Abs(playerMovement.movement_input.y));
     }
 
     public void Jump(InputAction.CallbackContext callback)

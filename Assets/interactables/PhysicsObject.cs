@@ -31,7 +31,7 @@ public class PhysicsObject : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         flippable = GetComponent<Flippable>();
-
+      
         if (flippable != null)
         {
             flippable.EndFlip += () =>
@@ -69,7 +69,7 @@ public class PhysicsObject : MonoBehaviour
         if (Vector2.Dot(n, Quaternion.FromToRotation(Vector3.down, down) * velocity) > 0)
             return;
 
-        if (Vector2.Dot(n, down) == 0)
+        if (Mathf.Round(Vector2.Dot(n, down)) == 0)
         {
             velocity.x = 0;
         }
@@ -81,6 +81,7 @@ public class PhysicsObject : MonoBehaviour
             else
                 grounded = true;
         }
+
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -94,7 +95,7 @@ public class PhysicsObject : MonoBehaviour
         if (Vector2.Dot(n, Quaternion.FromToRotation(Vector3.down, down) * velocity) > 0)
             return;
 
-        if (Vector2.Dot(n, down) == 0)
+        if (Mathf.Round(Vector2.Dot(n, down)) == 0)
         {
             velocity.x = 0;
         }

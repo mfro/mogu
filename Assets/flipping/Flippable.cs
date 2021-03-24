@@ -14,7 +14,7 @@ public class Flippable : MonoBehaviour
     private new Collider2D collider;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         scaleSave = transform.localScale;
 

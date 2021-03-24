@@ -8,10 +8,16 @@ public class PlayerHealth : MonoBehaviour
 {
 
     public UnityEvent OnKillEvent = new UnityEvent();
+    LevelController levelController;
+
+    private void Awake()
+    {
+        levelController = transform.parent.GetComponent<LevelController>();
+    }
 
     public void KillPlayer()
     {
         OnKillEvent.Invoke();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        levelController.DoRestart();
     }
 }

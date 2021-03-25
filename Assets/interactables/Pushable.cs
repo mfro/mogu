@@ -7,7 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Pushable : MonoBehaviour
 {
-
     [SerializeField] float pushVelocity;
     [SerializeField] float gravityVelocity;
     [SerializeField] float accelTime;
@@ -22,6 +21,9 @@ public class Pushable : MonoBehaviour
     private bool startDecreasing;
     private float currTime;
 
+    public PhysicsObject pushing;
+    public PlayerController playerPushing;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,8 @@ public class Pushable : MonoBehaviour
         flip = GetComponent<Flippable>();
         col = GetComponent<Collider2D>();
         physics = GetComponent<PhysicsObject>();
+
+        pushing = null;
     }
 
     // Update is called once per frame
@@ -38,61 +42,63 @@ public class Pushable : MonoBehaviour
         if (flip.flipping)
             return;
 
-        if (startDecreasing)
-        {
-            currentPushVelocity = Mathf.Lerp(currentPushVelocity, 0, currTime / accelTime);
+        // if (pushing != null)
+        // {
+        //     print("being pushed");
 
-            currTime += Time.fixedDeltaTime;
+        //     physics.velocity.x = pushing.velocity.x;
+        // }
+        // else
+        // {
+        //     physics.velocity.x = 0;
 
-            if (currTime >= accelTime)
-            {
-                startDecreasing = false;
-                currentPushVelocity = 0;
-            }
-        }
+        //     // var velocity = rb.velocity;
 
-        physics.velocity.x = currentPushVelocity;
+        //     // if (flip.down.x == 0)
+        //     //     velocity.x = 0;
+        //     // else
+        //     //     velocity.y = 0;
+
+        //     // rb.velocity = velocity;
+        // }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        ContactPoint2D[] contacts = new ContactPoint2D[collision.contactCount];
-        int numContacts = collision.GetContacts(contacts);
+        var normals = collision.contacts.Where(c => Vector2.Dot(c.normal, flip.down) == 0);
 
-        if (numContacts == 0) return;
+        // var normal = collision.contacts.Any(n => Vector2.Dot(n.normal, flip.down) == 0);
+        // if (!normal) return;
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
+        // var player = collision.gameObject.GetComponent<PlayerController>();
+        // var pushing = collision.gameObject.GetComponent<PhysicsObject>();
 
-            if (collision.gameObject.GetComponent<PhysicsObject>().grounded == false)
-            {
-                currentPushVelocity = 0;
-                return;
-            }
+        // if (pushing != null && pushing.grounded)
+        // {
+        //     this.pushing = pushing;
 
-            foreach (var contact in contacts)
-            {
-                var push = Quaternion.FromToRotation(flip.down, Vector3.down) * contact.normal;
-                if (Mathf.Round(push.x) != 0)
-                {
-                    startDecreasing = false;
-                    currentPushVelocity = Mathf.Sign(push.x);
-                }
-            }
-        }
+        //     if (player != null)
+        //     {
+        //         playerPushing = player;
+        //         player.encumbered = true;
+        //     }
+        // }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        OnCollisionEnter2D(collision);
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
-        {
-            startDecreasing = true;
-            currTime = 0f;
-        }
+        // if (collision.gameObject == pushing?.gameObject)
+        // {
+        //     if (playerPushing)
+        //         playerPushing.encumbered = false;
+
+        //     playerPushing = null;
+        //     pushing = null;
+        // }
     }
 }

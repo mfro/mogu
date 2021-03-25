@@ -31,7 +31,7 @@ public class Door : MonoBehaviour
 
         mySwitchObject.StateChanged += OnSwitchChange;
 
-        flippable.EndFlip += () =>
+        flippable.EndFlip += (delta) =>
         {
             renderer.enabled = !mySwitchObject.IsActive;
             col.isTrigger = mySwitchObject.IsActive;

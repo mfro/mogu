@@ -55,6 +55,9 @@ public class CellFlip : MonoBehaviour
         if (isFlipping) return;
         isFlipping = true;
 
+        var levelController = FindObjectOfType<LevelController>();
+        levelController?.SaveUndoState();
+
         var allObjects = Resources.FindObjectsOfTypeAll<Flippable>();
         var x = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale * 0.9f, 0)
                .Where(o => o.GetComponent<Flippable>() != null);

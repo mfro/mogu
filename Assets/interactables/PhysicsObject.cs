@@ -6,6 +6,7 @@ public class PhysicsObject : MonoBehaviour
 {
     public static float MAX_FALL_SPEED = 20f;
     public static float RUNNING_SPEED_LIMIT = 5f;
+    public static float ENCUMBERED_MULTIPLIER = 0.6f;
     public static float GROUND_RUNNING_ACCELERATION = 80f;
     public static float GROUND_DECELERATION = 240f;
     public static float AIR_RUNNING_ACCELERATION = 40f;
@@ -34,7 +35,7 @@ public class PhysicsObject : MonoBehaviour
       
         if (flippable != null)
         {
-            flippable.EndFlip += () =>
+            flippable.EndFlip += (delta) =>
             {
                 grounded = ceilinged = false;
                 velocity = Vector2.zero;
@@ -71,11 +72,13 @@ public class PhysicsObject : MonoBehaviour
 
         if (Mathf.Round(Vector2.Dot(n, down)) == 0)
         {
-            velocity.x = 0;
+            if (collision.gameObject.layer != 10)
+                velocity.x = 0;
         }
         else
         {
             velocity.y = 0;
+
             if (n == down)
                 ceilinged = true;
             else
@@ -97,11 +100,13 @@ public class PhysicsObject : MonoBehaviour
 
         if (Mathf.Round(Vector2.Dot(n, down)) == 0)
         {
-            velocity.x = 0;
+            if (collision.gameObject.layer != 10)
+                velocity.x = 0;
         }
         else
         {
             velocity.y = 0;
+
             if (n == down)
                 ceilinged = true;
             else

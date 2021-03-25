@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/zone 0 - milestone.unity
+    path: Assets/Scenes/max test zone.unity
+    guid: 4316efb5e1c51b2498dc8d6696aa80db
+  - enabled: 1
+    path: Assets/Scenes/zone 1 - testing.unity
     guid: 8a22698211f0ba544addc92e22dcf440
   - enabled: 1
-    path: Assets/Scenes/level 9999 - victory.unity
+    path: Assets/Scenes/victory screen.unity
     guid: 839f4cb7039d8a940a86bfc7b4f66dcd
   m_configObjects: {}

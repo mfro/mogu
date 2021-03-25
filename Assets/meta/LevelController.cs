@@ -15,6 +15,9 @@ public class LevelController : MonoBehaviour
     public PlayerController player;
 
     [SerializeField]
+    public GameObject restartText;
+
+    [SerializeField]
     public float CameraTime;
 
     private class SaveState
@@ -22,31 +25,52 @@ public class LevelController : MonoBehaviour
         public Vector3 position;
         public Quaternion rotation;
         public Vector2 down;
+        public Level level;
 
-        public SaveState(PlayerController player)
+        public SaveState(LevelController controller)
         {
-            position = player.transform.position;
-            rotation = player.transform.rotation;
-            down = player.GetComponent<Flippable>().down;
+            position = controller.player.transform.position;
+            rotation = controller.player.transform.rotation;
+            down = controller.player.GetComponent<Flippable>().down;
+
+            level = Instantiate(controller.levels[controller.currentLevel]);
+            level.gameObject.SetActive(false);
+            level.gameObject.name = $"{controller.levels[controller.currentLevel].name} (save state)";
         }
 
-        public void Apply(PlayerController player)
+        public void Apply(LevelController controller)
         {
-            player.transform.position = position;
-            player.transform.rotation = rotation;
-            player.GetComponent<Flippable>().down = down;
+            controller.player.transform.position = position;
+            controller.player.transform.rotation = rotation;
+            controller.playerPhysics.velocity = Vector2.zero;
+            controller.player.GetComponent<Flippable>().down = down;
+            controller.player.gameObject.SetActive(true);
+            controller.restartText.SetActive(false);
+
+            controller.levels[controller.currentLevel].gameObject.SetActive(false);
+            Destroy(controller.levels[controller.currentLevel].gameObject);
+
+            var replacement = Instantiate(level);
+            replacement.gameObject.SetActive(true);
+            replacement.name = controller.levels[controller.currentLevel].name;
+            controller.levels[controller.currentLevel] = replacement.GetComponent<Level>();
+        }
+
+        public void Cleanup()
+        {
+            Destroy(level.gameObject);
         }
     }
 
     private Level[] levels;
-    private GameObject[] initialStates;
     private int currentLevel;
 
     private PhysicsObject playerPhysics => player.GetComponent<PhysicsObject>();
     private Flippable playerFlippable => player.GetComponent<Flippable>();
     private bool moving = false;
 
-    private SaveState saveState;
+    private SaveState restartState;
+    private Stack<SaveState> undoStack;
 
     public void Start()
     {
@@ -58,17 +82,18 @@ public class LevelController : MonoBehaviour
         camera.transform.position = pos;
         player.transform.position = levels[0].start.transform.position;
         player.transform.rotation = levels[0].start.transform.rotation;
+        playerPhysics.velocity = Vector2.zero;
         playerFlippable.down = levels[0].start.transform.rotation * Vector2.down;
+        player.gameObject.SetActive(true);
+        restartText.SetActive(false);
 
-        saveState = new SaveState(player);
+        restartState = new SaveState(this);
+        undoStack = new Stack<SaveState>();
+    }
 
-        initialStates = levels.Select(l =>
-        {
-            var o = Instantiate(l.gameObject);
-            o.SetActive(false);
-            o.name = $"{l.name} (initial state)";
-            return o;
-        }).ToArray();
+    public void SaveUndoState()
+    {
+        undoStack.Push(new SaveState(this));
     }
 
     public async void FixedUpdate()
@@ -89,7 +114,11 @@ public class LevelController : MonoBehaviour
                 var delta = levels[currentLevel + 1].transform.position - levels[currentLevel].transform.position;
                 await MoveCamera(delta);
                 currentLevel += 1;
-                saveState = new SaveState(player);
+
+                restartState?.Cleanup();
+                restartState = new SaveState(this);
+                foreach (var item in undoStack) item.Cleanup();
+                undoStack.Clear();
             }
         }
     }
@@ -102,48 +131,81 @@ public class LevelController : MonoBehaviour
         currentLevel = index;
         player.transform.position = levels[currentLevel].start.transform.position;
         player.transform.rotation = levels[currentLevel].start.transform.rotation;
+        playerPhysics.velocity = Vector2.zero;
         playerFlippable.down = levels[currentLevel].start.transform.rotation * Vector2.down;
         camera.transform.position += delta;
-        saveState = new SaveState(player);
+        player.gameObject.SetActive(true);
+        restartText.SetActive(false);
+
+        restartState?.Cleanup();
+        restartState = new SaveState(this);
+        foreach (var item in undoStack) item.Cleanup();
+        undoStack.Clear();
     }
 
+    private bool _onRestart = false;
     public void OnRestart(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton()) DoRestart();
+        if (c.ReadValueAsButton() && !_onRestart)
+            DoRestart();
+
+        _onRestart = c.ReadValueAsButton();
     }
 
-    private bool dedupe = false;
+    private bool _onUndo = false;
+    public void OnUndo(InputAction.CallbackContext c)
+    {
+        if (c.ReadValueAsButton() && !_onUndo)
+            DoUndo();
+
+        _onUndo = c.ReadValueAsButton();
+    }
+
+    private bool _onCheat1 = false;
     public void OnCheat1(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !moving)
-        {
-            if (dedupe) { dedupe = false; return; }
-            dedupe = true;
+        if (c.ReadValueAsButton() && !_onCheat1 && !moving)
             SkipToLevel(levels[currentLevel + 1]);
-        }
+
+        _onCheat1 = c.ReadValueAsButton();
     }
 
+    private bool _onCheat2 = false;
     public void OnCheat2(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !moving)
-        {
-            if (dedupe) { dedupe = false; return; }
-            dedupe = true;
+        if (c.ReadValueAsButton() && !_onCheat1 && !moving)
             SkipToLevel(levels[currentLevel - 1]);
-        }
+
+        _onCheat1 = c.ReadValueAsButton();
     }
 
     public void DoRestart()
     {
         if (moving) return;
 
-        levels[currentLevel].gameObject.SetActive(false);
-        Destroy(levels[currentLevel].gameObject);
-        var replacement = Instantiate(initialStates[currentLevel]);
-        replacement.SetActive(true);
-        replacement.name = levels[currentLevel].name;
-        levels[currentLevel] = replacement.GetComponent<Level>();
-        saveState.Apply(player);
+        player.gameObject.SetActive(true);
+        restartText.SetActive(false);
+
+        restartState.Apply(this);
+        foreach (var item in undoStack) item.Cleanup();
+        undoStack.Clear();
+    }
+
+    public void DoDeath()
+    {
+        if (moving) return;
+
+        player.gameObject.SetActive(false);
+        restartText.SetActive(true);
+    }
+
+    public void DoUndo()
+    {
+        if (moving || undoStack.Count == 0) return;
+
+        var state = undoStack.Pop();
+        state.Apply(this);
+        state.Cleanup();
     }
 
     private async Task MoveCamera(Vector3 delta)

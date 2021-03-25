@@ -46,6 +46,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "undo",
+                    "type": "Button",
+                    "id": "dbc7882c-40a4-4c60-b691-9ece0f1a2518",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "cheat 1",
                     "type": "Button",
                     "id": "43ad9edb-7a92-4954-ab58-2d7c84b53b4c",
@@ -57,6 +65,14 @@
                     "name": "cheat 2",
                     "type": "Button",
                     "id": "9f5bad13-2475-48fc-97ba-f70ec6f0edf2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "interact",
+                    "type": "Button",
+                    "id": "6c5526aa-b590-4ec7-b292-5a203470b03d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -302,6 +318,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "cheat 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c0915be-9958-48f9-9f73-72340b6ce806",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse;Gamepad",
+                    "action": "undo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7f1ca8f-43ea-4d9f-a9fa-7e981a7816e3",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse;Gamepad",
+                    "action": "interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

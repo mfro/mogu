@@ -4,7 +4,7 @@ using UnityEngine;
 public class Flippable : MonoBehaviour
 {
     public event Action BeginFlip;
-    public event Action EndFlip;
+    public event Action<Quaternion> EndFlip;
     public bool flipping = false;
     public Vector2 down = Vector2.down;
 
@@ -65,6 +65,6 @@ public class Flippable : MonoBehaviour
             transform.position = pos;
         }
 
-        EndFlip?.Invoke();
+        EndFlip?.Invoke(delta);
     }
 }

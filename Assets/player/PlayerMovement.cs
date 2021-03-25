@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private new BoxCollider2D collider;
     private Flippable flippable;
     private PhysicsObject physics;
+    private PlayerController controller;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         collider = GetComponent<BoxCollider2D>();
         flippable = GetComponent<Flippable>();
         physics = GetComponent<PhysicsObject>();
+        controller = GetComponent<PlayerController>();
 
         Time.fixedDeltaTime = 1f / Screen.currentResolution.refreshRate;
     }
@@ -94,6 +96,9 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        if (controller.encumbered)
+            target *= PhysicsObject.ENCUMBERED_MULTIPLIER;
+
         float speed_change;
         if (Mathf.Abs(physics.velocity.x) > PhysicsObject.RUNNING_SPEED_LIMIT && Mathf.Sign(physics.velocity.x) == Mathf.Sign(target))
         {
@@ -111,6 +116,9 @@ public class PlayerMovement : MonoBehaviour
             else
                 speed_change = PhysicsObject.AIR_DECELERATION;
         }
+
+        if (controller.encumbered)
+            speed_change *= PhysicsObject.ENCUMBERED_MULTIPLIER;
 
         if (target > physics.velocity.x)
         {

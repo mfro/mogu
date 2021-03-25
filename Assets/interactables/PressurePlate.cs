@@ -24,8 +24,8 @@ public class PressurePlate : Switch
         edgeCollider = GetComponent<EdgeCollider2D>();
 
         LayerMask layermask = LayerMask.GetMask(interactibleLayers);
-        numObjectsPressing = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale, 0, layermask)
-            .Count(o => o.gameObject != gameObject);
+        // var overlapping = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale, 0, layermask);
+        // numObjectsPressing = overlapping.Count(o => o.gameObject != gameObject);
         // print("Plate initialized with this many objects pressing me: " + numObjectsPressing);
 
         StateChanged += (v) =>
@@ -37,12 +37,6 @@ public class PressurePlate : Switch
                 pos.y = 1;
 
             cube.transform.localScale = pos;
-        };
-
-        flippable.EndFlip += async () =>
-        {
-            await Task.Yield();
-            IsActive = numObjectsPressing != 0;
         };
     }
 

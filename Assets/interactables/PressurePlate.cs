@@ -15,11 +15,13 @@ public class PressurePlate : Switch
     [SerializeField] string[] interactibleLayers;
 
     private Flippable flippable;
+    private EdgeCollider2D edgeCollider;
 
     // Start is called before the first frame update
     void Start()
     {
         flippable = GetComponent<Flippable>();
+        edgeCollider = GetComponent<EdgeCollider2D>();
 
         LayerMask layermask = LayerMask.GetMask(interactibleLayers);
         numObjectsPressing = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale, 0, layermask)
@@ -44,22 +46,35 @@ public class PressurePlate : Switch
         };
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void Update()
     {
-        numObjectsPressing++;
 
         if (flippable.flipping) return;
+
+        LayerMask layermask = LayerMask.GetMask(interactibleLayers);
+        numObjectsPressing = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale, 0, layermask)
+            .Count(o => o.gameObject != gameObject);
 
         IsActive = numObjectsPressing != 0;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (numObjectsPressing > 0)
-            numObjectsPressing--;
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    numObjectsPressing++;
 
-        if (flippable.flipping) return;
+    //    if (flippable.flipping) return;
 
-        IsActive = numObjectsPressing != 0;
-    }
+    //    IsActive = numObjectsPressing != 0;
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (numObjectsPressing > 0)
+    //        numObjectsPressing--;
+
+    //    if (flippable.flipping) return;
+
+    //    IsActive = numObjectsPressing != 0;
+    //}
 }

@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90539df1cd5704abcb25fec9f3f5f84b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Spline:
     m_IsOpenEnded: 0
     m_ControlPoints:
@@ -262,9 +262,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8833342714410636715}
-  - component: {fileID: 8833342714410636712}
   - component: {fileID: 8833342714410636710}
   - component: {fileID: 247943027}
+  - component: {fileID: 8049329875498796138}
   m_Layer: 0
   m_Name: victory
   m_TagString: Untagged
@@ -288,32 +288,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8833342714410636712
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8833342714410636714}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 0.01, y: 0.01}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.875, y: 0.875}
-  m_EdgeRadius: 0
 --- !u!114 &8833342714410636710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,8 +298,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a76e1d0b197dff745b22074f6ef3ad01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!114 &247943027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +310,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   flipping: 0
   down: {x: 0, y: -1}
+--- !u!114 &8049329875498796138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8833342714410636714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f69e733aacfe224d88141a43af4eb2c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  gravity: 0
+  size: {x: 28, y: 28}
+  offset: {x: 0, y: 0}
+  pushRatio: 0
+  grounded: 0
+  ceilinged: 0
+  velocity: {x: 0, y: 0}
+  remainder: {x: 0, y: 0}

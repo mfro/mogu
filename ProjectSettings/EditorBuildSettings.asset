@@ -6,11 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/zone 2 - testing.unity
-    guid: c3258eac181d508439ac7fdc5f183bfb
-  - enabled: 1
-    path: Assets/Scenes/max test zone.unity
-    guid: 4316efb5e1c51b2498dc8d6696aa80db
+    path: Assets/Scenes/zone 0 - milestone 2.unity
+    guid: 7d76114abfd55d44f922fdd8575154ae
   - enabled: 1
     path: Assets/Scenes/zone 1 - hard as fk.unity
     guid: 8a22698211f0ba544addc92e22dcf440

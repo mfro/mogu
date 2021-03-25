@@ -37,9 +37,9 @@ public class PressurePlate : Switch
 
     void Update()
     {
-        var area = Physics.RectFromCenterSize(Physics.FromUnity(transform.position), Physics.FromUnity(transform.lossyScale));
-        var overlapping = Physics.AllOverlaps(physics, CollideReason.PressurePlate);
+        if (!physics.enabled) return;
 
-        IsActive = overlapping.Any(c => c.Item1.pushRatio != 0);
+        var overlapping = Physics.AllOverlaps(physics, CollideReason.PressurePlate);
+        IsActive = overlapping.Any();
     }
 }

@@ -8,6 +8,7 @@ public enum CollideReason
 {
     CellFlip,
     Collision,
+    Victory,
     PressurePlate,
 }
 
@@ -80,6 +81,9 @@ public static class Physics
         if (reason == CollideReason.Collision)
         {
             if (collider.GetComponent<PressurePlate>() != null)
+                return false;
+
+            if (collider.GetComponent<Victory>() != null)
                 return false;
 
             if (collider.GetComponent<Door>()?.IsOpen == false)
@@ -260,7 +264,6 @@ public static class Physics
             else if (collider.grounded && other.pushRatio > 0)
             {
                 other.remainder.x += sign * other.pushRatio;
-                other.sleeping = false;
                 objects.Add(other);
             }
         }
@@ -293,7 +296,6 @@ public static class Physics
             else if (other.pushRatio > 0)
             {
                 other.remainder.y += sign * other.pushRatio;
-                other.sleeping = false;
                 objects.Add(other);
             }
         }

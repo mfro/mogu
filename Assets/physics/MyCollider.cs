@@ -21,9 +21,6 @@ public class MyCollider : MonoBehaviour
 
     private Flippable flip;
 
-    public bool sleeping;
-    private HashSet<MyCollider> dependents = new HashSet<MyCollider>();
-
     public Rect bounds => GetBounds(position);
 
     void OnEnable()
@@ -46,35 +43,26 @@ public class MyCollider : MonoBehaviour
 
     void Update()
     {
-        if (flip?.flipping == true || sleeping)
+        if (flip?.flipping == true)
             return;
-
-        var down = flip?.down ?? Vector2.down;
-
-        var under = Physics.AllOverlaps(bounds.Shift(down), CollideReason.Collision).Where(c => c.Item1 != this).ToList();
-        grounded = under.Any();
-
-        var above = Physics.AllOverlaps(bounds.Shift(-down), CollideReason.Collision).Where(c => c.Item1 != this).ToList();
-        ceilinged = above.Any();
 
         if (gravity)
         {
-            if (grounded)
-            {
-                foreach (var item in under)
-                    item.Item1.dependents.Add(this);
-            }
-            else
-            {
-                velocity += flip.down * Physics.GRAVITY * Time.deltaTime;
-                velocity.y = Mathf.Clamp(velocity.y, -Physics.MAX_FALL_SPEED, Physics.MAX_FALL_SPEED);
-                velocity.x = Mathf.Clamp(velocity.x, -Physics.MAX_FALL_SPEED, Physics.MAX_FALL_SPEED);
-            }
+            velocity += flip.down * Physics.GRAVITY * Time.deltaTime;
+            velocity.y = Mathf.Clamp(velocity.y, -Physics.MAX_FALL_SPEED, Physics.MAX_FALL_SPEED);
+            velocity.x = Mathf.Clamp(velocity.x, -Physics.MAX_FALL_SPEED, Physics.MAX_FALL_SPEED);
         }
 
         if (velocity != Vector2.zero)
         {
             var adjust = Physics.Move(this, velocity);
+            var down = flip?.down ?? Vector2.down;
+
+            var under = Physics.AllOverlaps(bounds.Shift(down), CollideReason.Collision).Where(c => c.Item1 != this).ToList();
+            grounded = under.Any();
+
+            var above = Physics.AllOverlaps(bounds.Shift(-down), CollideReason.Collision).Where(c => c.Item1 != this).ToList();
+            ceilinged = above.Any();
 
             if (velocity.x != 0 && !Physics.CanMove(this, new Vector2(Mathf.Sign(velocity.x), 0)))
                 velocity.x = 0;
@@ -83,14 +71,7 @@ public class MyCollider : MonoBehaviour
                 velocity.y = 0;
 
             UpdatePosition();
-
-            foreach (var item in dependents)
-                item.sleeping = false;
-            dependents.Clear();
         }
-
-        sleeping = velocity == Vector2.zero
-            && (!gravity || grounded);
     }
 
     public void UpdatePosition()
@@ -109,6 +90,7 @@ public class MyCollider : MonoBehaviour
 
         if (isChild || isParent)
         {
+            flip = GetComponent<Flippable>();
             var bounds = GetBounds(Physics.FromUnity(transform.position));
 
             var color = Color.green;

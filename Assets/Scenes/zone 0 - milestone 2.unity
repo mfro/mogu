@@ -2970,6 +2970,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: pressure plate
       objectReference: {fileID: 0}
+    - target: {fileID: 3241442996498538664, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
+        type: 3}
+      propertyPath: down.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38f221cbcefc8a54b9ab23e7ca964bd0, type: 3}
 --- !u!114 &418020452 stripped
@@ -6212,6 +6217,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: pressure plate (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3241442996498538664, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
+        type: 3}
+      propertyPath: down.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7090532092157293790, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6926,6 +6936,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 893904823}
     m_Modifications:
+    - target: {fileID: 1204623754825582643, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: size.y
+      value: 96
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952322972161770033, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: down.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952322972161770033, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: down.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3486867135220226796, guid: a11005535d7cbd043ac12cd738f37cdf,
         type: 3}
       propertyPath: m_Name
@@ -10018,6 +10043,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: pressure plate
+      objectReference: {fileID: 0}
+    - target: {fileID: 3241442996498538664, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
+        type: 3}
+      propertyPath: down.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3241442996498538664, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
+        type: 3}
+      propertyPath: down.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7090532092157293790, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
         type: 3}
@@ -16316,6 +16351,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1099942403}
     m_Modifications:
+    - target: {fileID: 1204623754825582643, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: size.y
+      value: 96
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952322972161770033, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: down.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952322972161770033, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: down.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3486867135220226796, guid: a11005535d7cbd043ac12cd738f37cdf,
         type: 3}
       propertyPath: m_Name

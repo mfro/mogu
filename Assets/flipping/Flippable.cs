@@ -21,6 +21,18 @@ public class Flippable : MonoBehaviour
         collider = GetComponent<Collider2D>();
     }
 
+
+#if UNITY_EDITOR
+    public void OnDrawGizmos()
+    {
+        if (name.Contains("platform")) return;
+
+        var color = Color.black;
+        Gizmos.color = color;
+        Gizmos.DrawLine(transform.position, transform.position + (Vector3) down);
+    }
+#endif
+
     public void DoBeginFlip()
     {
         flipping = true;

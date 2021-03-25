@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         {
             target = -Physics.RUNNING_SPEED_LIMIT;
         }
-        else if (flip.down.x > 0)
+        else if (flip.down.x != 0)
         {
             if (movement_input.y > 0)
             {
@@ -48,17 +48,6 @@ public class PlayerMovement : MonoBehaviour
             else if (movement_input.y < 0)
             {
                 target = -Physics.RUNNING_SPEED_LIMIT;
-            }
-        }
-        else if (flip.down.x < 0)
-        {
-            if (movement_input.y > 0)
-            {
-                target = -Physics.RUNNING_SPEED_LIMIT;
-            }
-            else if (movement_input.y < 0)
-            {
-                target = Physics.RUNNING_SPEED_LIMIT;
             }
         }
 
@@ -102,7 +91,5 @@ public class PlayerMovement : MonoBehaviour
                 physics.velocity.y = Mathf.Max(physics.velocity.y - speed_change * Time.deltaTime, target);
             }
         }
-
-        physics.sleeping = false;
     }
 }

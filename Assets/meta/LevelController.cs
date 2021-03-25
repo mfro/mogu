@@ -91,6 +91,19 @@ public class LevelController : MonoBehaviour
 
         restartState = new SaveState(this);
         undoStack = new Stack<SaveState>();
+
+        test();
+    }
+
+    private void test()
+    {
+        var visible = Physics.RectFromCenterSize(Physics.FromUnity(camera.transform.position), Physics.FromUnity(new Vector2(12, 12)));
+
+        foreach (var item in FindObjectsOfType<MyCollider>())
+        {
+            var overlap = Physics.Overlap(item.bounds, visible);
+            item.enabled = overlap != null;
+        }
     }
 
     public void SaveUndoState()
@@ -98,7 +111,7 @@ public class LevelController : MonoBehaviour
         undoStack.Push(new SaveState(this));
     }
 
-    public async void FixedUpdate()
+    async void Update()
     {
         if (moving) return;
 
@@ -121,6 +134,8 @@ public class LevelController : MonoBehaviour
                 restartState = new SaveState(this);
                 foreach (var item in undoStack) item.Cleanup();
                 undoStack.Clear();
+
+                test();
             }
         }
     }
@@ -144,6 +159,8 @@ public class LevelController : MonoBehaviour
         restartState = new SaveState(this);
         foreach (var item in undoStack) item.Cleanup();
         undoStack.Clear();
+
+        test();
     }
 
     private bool _onRestart = false;

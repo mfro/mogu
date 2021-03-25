@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
 {
-    public bool encumbered;
+    //public bool encumbered;
     public Vector2 facing;
 
     private PlayerMovement playerMovement;
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
             anim.speed = 1;
     }
 
-    private static Vector2 match_facing(float value, Vector2 negative, Vector2 positive)
+    private static Vector2 MatchFacing(float value, Vector2 negative, Vector2 positive)
     {
         if (value < 0) return negative;
         if (value > 0) return positive;
@@ -58,13 +58,13 @@ public class PlayerController : MonoBehaviour
         if (playerMovement.movement_input != Vector2.zero)
         {
             if (flip.down.x == 0)
-                facing = match_facing(playerMovement.movement_input.x, Vector2.left, Vector2.right);
+                facing = MatchFacing(playerMovement.movement_input.x, Vector2.left, Vector2.right);
             else if (playerMovement.movement_input.y != 0)
-                facing = match_facing(playerMovement.movement_input.y, Vector2.down, Vector2.up);
+                facing = MatchFacing(playerMovement.movement_input.y, Vector2.down, Vector2.up);
             else if (flip.down == Vector2.right)
-                facing = match_facing(playerMovement.movement_input.x, Vector2.down, Vector2.up);
+                facing = MatchFacing(playerMovement.movement_input.x, Vector2.down, Vector2.up);
             else
-                facing = match_facing(playerMovement.movement_input.x, Vector2.up, Vector2.down);
+                facing = MatchFacing(playerMovement.movement_input.x, Vector2.up, Vector2.down);
         }
 
         sprite.flipX = (Vector2.Dot(spriteRight, facing) < 0);

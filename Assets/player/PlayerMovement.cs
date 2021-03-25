@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<PlayerController>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (flip.flipping)
         {

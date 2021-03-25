@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
@@ -12,25 +11,19 @@ public class PlayerController : MonoBehaviour
     public Vector2 facing;
 
     private PlayerMovement playerMovement;
-    private PlayerBoxHolder boxHolder;
-    private Rigidbody2D body;
-    private new BoxCollider2D collider;
-    private Flippable flippable;
+    private Flippable flip;
     private Animator anim;
     private SpriteRenderer sprite;
-    private PhysicsObject physics;
+    private MyCollider physics;
 
     // Start is called before the first frame update
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        boxHolder = GetComponent<PlayerBoxHolder>();
-        body = GetComponent<Rigidbody2D>();
-        collider = GetComponent<BoxCollider2D>();
-        flippable = GetComponent<Flippable>();
+        flip = GetComponent<Flippable>();
         anim = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        physics = GetComponent<PhysicsObject>();
+        physics = GetComponent<MyCollider>();
 
         facing = Vector2.right;
     }
@@ -42,7 +35,7 @@ public class PlayerController : MonoBehaviour
         Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
 
         anim.SetBool("grounded", physics.grounded);
-        if (flippable.flipping)
+        if (flip.flipping)
             anim.speed = 0;
         else
             anim.speed = 1;
@@ -64,11 +57,11 @@ public class PlayerController : MonoBehaviour
 
         if (playerMovement.movement_input != Vector2.zero)
         {
-            if (flippable.down.x == 0)
+            if (flip.down.x == 0)
                 facing = match_facing(playerMovement.movement_input.x, Vector2.left, Vector2.right);
             else if (playerMovement.movement_input.y != 0)
                 facing = match_facing(playerMovement.movement_input.y, Vector2.down, Vector2.up);
-            else if (flippable.down == Vector2.right)
+            else if (flip.down == Vector2.right)
                 facing = match_facing(playerMovement.movement_input.x, Vector2.down, Vector2.up);
             else
                 facing = match_facing(playerMovement.movement_input.x, Vector2.up, Vector2.down);
@@ -76,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
         sprite.flipX = (Vector2.Dot(spriteRight, facing) < 0);
 
-        if (playerMovement.movement_input.y != 0 && flippable.down.x != 0)
+        if (playerMovement.movement_input.y != 0 && flip.down.x != 0)
             anim.SetFloat("running speed", Mathf.Abs(playerMovement.movement_input.y));
     }
 
@@ -95,14 +88,12 @@ public class PlayerController : MonoBehaviour
         if (closest == null)
             return;
 
-        var contained = collider.bounds.min.x >= closest.transform.position.x - closest.transform.lossyScale.x / 2
-            && collider.bounds.max.x <= closest.transform.position.x + closest.transform.lossyScale.x / 2
-            && collider.bounds.min.y >= closest.transform.position.y - closest.transform.lossyScale.y / 2
-            && collider.bounds.max.y <= closest.transform.position.y + closest.transform.lossyScale.y / 2;
+        var area = Physics.RectFromCenterSize(Physics.FromUnity(closest.transform.position), Physics.FromUnity(closest.transform.lossyScale));
+        var overlap = Physics.Overlap(physics.bounds, area);
 
-        if (contained)
+        if (overlap != null && overlap.Value == physics.bounds)
         {
-            closest.DoFlip(flippable.down, input);
+            closest.DoFlip(flip.down, input);
         }
     }
 
@@ -111,7 +102,6 @@ public class PlayerController : MonoBehaviour
     {
         if (c.ReadValueAsButton() && !_OnInteract)
         {
-            boxHolder.TryInteract();
         }
 
         _OnInteract = c.ReadValueAsButton();

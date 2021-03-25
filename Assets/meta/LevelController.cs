@@ -29,9 +29,9 @@ public class LevelController : MonoBehaviour
 
         public SaveState(LevelController controller)
         {
-            position = controller.player.transform.position;
+            position = controller.playerPhysics.position;
             rotation = controller.player.transform.rotation;
-            down = controller.player.GetComponent<Flippable>().down;
+            down = controller.playerFlippable.down;
 
             level = Instantiate(controller.levels[controller.currentLevel]);
             level.gameObject.SetActive(false);
@@ -40,10 +40,11 @@ public class LevelController : MonoBehaviour
 
         public void Apply(LevelController controller)
         {
-            controller.player.transform.position = position;
-            controller.player.transform.rotation = rotation;
+            controller.playerPhysics.position = position;
             controller.playerPhysics.velocity = Vector2.zero;
-            controller.player.GetComponent<Flippable>().down = down;
+            controller.playerPhysics.UpdatePosition();
+            controller.player.transform.rotation = rotation;
+            controller.playerFlippable.down = down;
             controller.player.gameObject.SetActive(true);
             controller.restartText.SetActive(false);
 
@@ -53,7 +54,7 @@ public class LevelController : MonoBehaviour
             var replacement = Instantiate(level);
             replacement.gameObject.SetActive(true);
             replacement.name = controller.levels[controller.currentLevel].name;
-            controller.levels[controller.currentLevel] = replacement.GetComponent<Level>();
+            controller.levels[controller.currentLevel] = replacement;
         }
 
         public void Cleanup()
@@ -65,7 +66,7 @@ public class LevelController : MonoBehaviour
     private Level[] levels;
     private int currentLevel;
 
-    private PhysicsObject playerPhysics => player.GetComponent<PhysicsObject>();
+    private MyCollider playerPhysics => player.GetComponent<MyCollider>();
     private Flippable playerFlippable => player.GetComponent<Flippable>();
     private bool moving = false;
 
@@ -80,9 +81,10 @@ public class LevelController : MonoBehaviour
         var pos = levels[0].transform.position;
         pos.z = camera.transform.position.z;
         camera.transform.position = pos;
-        player.transform.position = levels[0].start.transform.position;
         player.transform.rotation = levels[0].start.transform.rotation;
         playerPhysics.velocity = Vector2.zero;
+        playerPhysics.position = Physics.FromUnity(levels[0].start.transform.position);
+        playerPhysics.UpdatePosition();
         playerFlippable.down = levels[0].start.transform.rotation * Vector2.down;
         player.gameObject.SetActive(true);
         restartText.SetActive(false);
@@ -129,9 +131,10 @@ public class LevelController : MonoBehaviour
 
         var delta = levels[index].transform.position - levels[currentLevel].transform.position;
         currentLevel = index;
-        player.transform.position = levels[currentLevel].start.transform.position;
         player.transform.rotation = levels[currentLevel].start.transform.rotation;
         playerPhysics.velocity = Vector2.zero;
+        playerPhysics.position = Physics.FromUnity(levels[currentLevel].start.transform.position);
+        playerPhysics.UpdatePosition();
         playerFlippable.down = levels[currentLevel].start.transform.rotation * Vector2.down;
         camera.transform.position += delta;
         player.gameObject.SetActive(true);
@@ -173,10 +176,10 @@ public class LevelController : MonoBehaviour
     private bool _onCheat2 = false;
     public void OnCheat2(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onCheat1 && !moving)
+        if (c.ReadValueAsButton() && !_onCheat2 && !moving)
             SkipToLevel(levels[currentLevel - 1]);
 
-        _onCheat1 = c.ReadValueAsButton();
+        _onCheat2 = c.ReadValueAsButton();
     }
 
     public void DoRestart()

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1952322972161770032}
   - component: {fileID: 1952322972161770039}
   - component: {fileID: 1952322972161770038}
-  - component: {fileID: 6036237890084873639}
   - component: {fileID: 1952322972161770033}
   - component: {fileID: 8875887642950404152}
+  - component: {fileID: 1204623754825582643}
   m_Layer: 9
   m_Name: object
   m_TagString: Untagged
@@ -82,27 +82,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!68 &6036237890084873639
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1952322972161770036}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: 0.5, y: 0.5}
-  - {x: -0.5, y: 0.5}
-  - {x: -0.5, y: -0.5}
-  - {x: 0.5, y: -0.5}
-  - {x: 0.5, y: 0.5}
 --- !u!114 &1952322972161770033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +109,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySwitchObject: {fileID: 0}
+--- !u!114 &1204623754825582643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952322972161770036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f69e733aacfe224d88141a43af4eb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: 0
+  size: {x: 4, y: 32}
+  offset: {x: 0, y: 0}
+  pushRatio: 0
+  grounded: 0
+  ceilinged: 0
+  velocity: {x: 0, y: 0}
+  remainder: {x: 0, y: 0}
 --- !u!1 &3486867135220226796
 GameObject:
   m_ObjectHideFlags: 0

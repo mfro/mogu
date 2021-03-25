@@ -15,18 +15,13 @@ public class PressurePlate : Switch
     [SerializeField] string[] interactibleLayers;
 
     private Flippable flippable;
-    private EdgeCollider2D edgeCollider;
+    private MyCollider physics;
 
     // Start is called before the first frame update
     void Start()
     {
         flippable = GetComponent<Flippable>();
-        edgeCollider = GetComponent<EdgeCollider2D>();
-
-        LayerMask layermask = LayerMask.GetMask(interactibleLayers);
-        // var overlapping = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale, 0, layermask);
-        // numObjectsPressing = overlapping.Count(o => o.gameObject != gameObject);
-        // print("Plate initialized with this many objects pressing me: " + numObjectsPressing);
+        physics = GetComponent<MyCollider>();
 
         StateChanged += (v) =>
         {
@@ -40,35 +35,11 @@ public class PressurePlate : Switch
         };
     }
 
-
-    private void Update()
+    void Update()
     {
+        var area = Physics.RectFromCenterSize(Physics.FromUnity(transform.position), Physics.FromUnity(transform.lossyScale));
+        var overlapping = Physics.AllOverlaps(physics, CollideReason.PressurePlate);
 
-        if (flippable.flipping) return;
-
-        LayerMask layermask = LayerMask.GetMask(interactibleLayers);
-        numObjectsPressing = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale, 0, layermask)
-            .Count(o => o.gameObject != gameObject);
-
-        IsActive = numObjectsPressing != 0;
+        IsActive = overlapping.Any(c => c.Item1.pushRatio != 0);
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    numObjectsPressing++;
-
-    //    if (flippable.flipping) return;
-
-    //    IsActive = numObjectsPressing != 0;
-    //}
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (numObjectsPressing > 0)
-    //        numObjectsPressing--;
-
-    //    if (flippable.flipping) return;
-
-    //    IsActive = numObjectsPressing != 0;
-    //}
 }

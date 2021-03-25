@@ -12,9 +12,9 @@ public class Victory : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         var player = collision.GetComponent<PlayerController>();
-        var physics = collision.GetComponent<PhysicsObject>();
+        var physics = collision.GetComponent<MyCollider>();
 
-        if (player != null && physics?.grounded == true)
+        if (player != null && physics.grounded == true)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }

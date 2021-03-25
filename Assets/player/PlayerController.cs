@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sprite;
     private MyCollider physics;
 
+    private bool slipping = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,35 @@ public class PlayerController : MonoBehaviour
             anim.speed = 0;
         else
             anim.speed = 1;
+
+        bool found = false;
+        if (physics.grounded)
+        {
+            var results = Physics.BoxCast(physics.bounds, flip.down);
+            foreach (var result in results)
+            {
+                if (result.Item1.gameObject.CompareTag("Slippery"))
+                {
+                    playerMovement.enabled = false;
+
+                    slipping = true;
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (slipping)
+        {
+            var vel = Physics.Round(physics.velocity);
+
+            if (!found || vel == Vector2.zero)
+            {
+                playerMovement.enabled = true;
+                slipping = false;
+            }
+        }
+
     }
 
     private static Vector2 MatchFacing(float value, Vector2 negative, Vector2 positive)
@@ -80,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
     public void DoFlip(int input)
     {
-        if (!physics.grounded)
+        if (!physics.grounded || slipping)
             return;
 
         var cell = FindObjectsOfType<CellFlip>();

@@ -101,7 +101,9 @@ public class LevelController : MonoBehaviour
 
         foreach (var item in FindObjectsOfType<MyCollider>())
         {
-            var overlap = Physics.Overlap(item.bounds, visible);
+            item.enabled = true;
+
+            var overlap = Physics.Overlap(visible, item.bounds);
             item.enabled = overlap != null;
         }
     }
@@ -209,6 +211,8 @@ public class LevelController : MonoBehaviour
         restartState.Apply(this);
         foreach (var item in undoStack) item.Cleanup();
         undoStack.Clear();
+
+        test();
     }
 
     public void DoDeath()
@@ -226,6 +230,8 @@ public class LevelController : MonoBehaviour
         var state = undoStack.Pop();
         state.Apply(this);
         state.Cleanup();
+
+        test();
     }
 
     private async Task MoveCamera(Vector3 delta)

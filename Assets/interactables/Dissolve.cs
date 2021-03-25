@@ -10,11 +10,13 @@ public class Dissolve : MonoBehaviour
     [SerializeField] Material Cheese3;
 
     private MeshRenderer rend;
+    private Flippable flip;
 
     // Start is called before the first frame update
     void Start()
     {
         rend = GetComponent<MeshRenderer>();
+        flip = GetComponent<Flippable>();
     }
 
     private IEnumerator OnCollisionEnter2D(Collision2D collision)
@@ -25,7 +27,9 @@ public class Dissolve : MonoBehaviour
 
         while (elapsedTime < dissolveTime)
         {
-            elapsedTime += Time.deltaTime;
+            if (!flip.flipping) 
+                elapsedTime += Time.deltaTime;
+
             if (elapsedTime < dissolveTime / 3) rend.material = Cheese1;
             else if (elapsedTime < (2 * dissolveTime) / 3) rend.material = Cheese2;
             else rend.material = Cheese3;

@@ -9,29 +9,21 @@ using System.IO.Compression;
 
 public class BuildStuff
 {
-    // [MenuItem("mushroom/update build scenes")]
-    // private static void UpdateScenes()
-    // {
-    //     var scenesDir = "Assets/Scenes";
-    //     var sceneFiles = Directory.EnumerateFiles(scenesDir);
+    [MenuItem("mushroom/web build")]
+    private static void WebBuild()
+    {
+        var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
+        BuildPipeline.BuildPlayer(new BuildPlayerOptions
+        {
+            scenes = scenes,
+            locationPathName = "build/web",
+            targetGroup = BuildTargetGroup.WebGL,
+            target = BuildTarget.WebGL,
+        });
+    }
 
-    //     var scenes = new List<(int, string)>();
-    //     foreach (var item in sceneFiles)
-    //     {
-    //         var regex = new Regex("level (\\d+) - (.*).unity$");
-    //         var match = regex.Match(item);
-    //         if (!match.Success) continue;
 
-    //         var num = int.Parse(match.Groups[1].Value);
-    //         var path = item.Replace("\\", "/");
-    //         scenes.Add((num, path));
-    //     }
-
-    //     scenes.Sort();
-    //     EditorBuildSettings.scenes = scenes.Select(pair => new EditorBuildSettingsScene(pair.Item2, true)).ToArray();
-    // }
-
-    [MenuItem("mushroom/build")]
+    [MenuItem("mushroom/playtesting & canvas build")]
     private static void Build()
     {
         var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();

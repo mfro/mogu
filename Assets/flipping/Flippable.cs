@@ -4,7 +4,7 @@ using UnityEngine;
 public class Flippable : MonoBehaviour
 {
     public event Action BeginFlip;
-    public event Action EndFlip;
+    public event Action<Quaternion> EndFlip;
     public bool flipping = false;
     public Vector2 down = Vector2.down;
 
@@ -21,6 +21,18 @@ public class Flippable : MonoBehaviour
         collider = GetComponent<Collider2D>();
     }
 
+
+#if UNITY_EDITOR
+    public void OnDrawGizmos()
+    {
+        if (name.Contains("platform")) return;
+
+        var color = Color.black;
+        Gizmos.color = color;
+        Gizmos.DrawLine(transform.position, transform.position + (Vector3) down);
+    }
+#endif
+
     public void DoBeginFlip()
     {
         flipping = true;
@@ -36,27 +48,17 @@ public class Flippable : MonoBehaviour
 
     public void DoEndFlip(Quaternion delta)
     {
-        down = delta * down;
-        down.x = Mathf.Round(down.x);
-        down.y = Mathf.Round(down.y);
+        down = Physics.Round(delta * down);
         flipping = false;
 
         if (collider != null) collider.enabled = true;
 
         transform.localScale = scaleSave;
-        var angles = transform.localRotation.eulerAngles;
-        angles.x = Mathf.Round(angles.x);
-        angles.y = Mathf.Round(angles.y);
-        angles.z = Mathf.Round(angles.z);
-        transform.localRotation = Quaternion.Euler(angles);
+        transform.localRotation = Quaternion.Euler(Physics.Round(transform.localRotation.eulerAngles));
 
         if (snapPosition)
         {
-            var pos = transform.localPosition * 2;
-            pos.x = Mathf.Round(pos.x);
-            pos.y = Mathf.Round(pos.y);
-            pos.z = Mathf.Round(pos.z);
-            transform.localPosition = pos / 2;
+            transform.localPosition = Physics.Round(transform.localPosition * 2) / 2;
         }
         else
         {
@@ -65,6 +67,6 @@ public class Flippable : MonoBehaviour
             transform.position = pos;
         }
 
-        EndFlip?.Invoke();
+        EndFlip?.Invoke(delta);
     }
 }

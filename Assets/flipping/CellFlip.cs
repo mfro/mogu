@@ -55,26 +55,29 @@ public class CellFlip : MonoBehaviour
         if (isFlipping) return;
         isFlipping = true;
 
+        var levelController = FindObjectOfType<LevelController>();
+        levelController?.SaveUndoState();
+
         var allObjects = Resources.FindObjectsOfTypeAll<Flippable>();
-        var x = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale * 0.9f, 0)
-               .Where(o => o.GetComponent<Flippable>() != null);
+
+        var area = Physics.RectFromCenterSize(Physics.FromUnity(transform.position), Physics.FromUnity(transform.lossyScale));
+
+        var x = Physics.AllOverlaps(area, CollideReason.CellFlip)
+            .Where(o => o.Item2 == o.Item1.bounds)
+            .Select(o => o.Item1.GetComponent<Flippable>())
+            .Where(o => o != null);
 
         var parents = x.Select(o => o.transform.parent).ToArray();
 
         foreach (var o in x)
         {
-            var f = o.GetComponent<Flippable>();
-            if (f != null) f.flipping = true;
+            o.flipping = true;
         }
 
         foreach (var o in x)
         {
-            if (o.gameObject == gameObject)
-                continue;
-
             o.transform.parent = transform;
-            var f = o.GetComponent<Flippable>();
-            if (f != null) f.DoBeginFlip();
+            if (o != null) o.DoBeginFlip();
         }
 
         var q0 = transform.rotation;

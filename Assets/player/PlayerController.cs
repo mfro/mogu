@@ -3,60 +3,45 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
 {
-    PlayerMovement playerMovement;
-    private Rigidbody2D body;
-    private new BoxCollider2D collider;
-    private Flippable flippable;
+    //public bool encumbered;
+    public Vector2 facing;
+
+    private PlayerMovement playerMovement;
+    private Flippable flip;
     private Animator anim;
     private SpriteRenderer sprite;
-    private PhysicsObject physics;
+    private MyCollider physics;
 
     // Start is called before the first frame update
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        playerMovement.enabled = true;
-        body = GetComponent<Rigidbody2D>();
-        collider = GetComponent<BoxCollider2D>();
-        flippable = GetComponent<Flippable>();
+        flip = GetComponent<Flippable>();
         anim = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        physics = GetComponent<PhysicsObject>();
+        physics = GetComponent<MyCollider>();
+
+        facing = Vector2.right;
     }
 
     // Update is called once per frame
     void Update()
     {
         Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
-
-        Vector2 face;
-        if (flippable.down.x == 0) face = facing(playerMovement.movement_input.x, Vector2.left, Vector2.right);
-        else
-        {
-            if (playerMovement.movement_input.y != 0)
-                face = facing(playerMovement.movement_input.y, Vector2.down, Vector2.up);
-            else if (flippable.down == Vector2.right)
-                face = facing(playerMovement.movement_input.x, Vector2.down, Vector2.up);
-            else
-                face = facing(playerMovement.movement_input.x, Vector2.up, Vector2.down);
-        }
-
-        if (face != Vector2.zero)
-            Debug.DrawLine(transform.position, transform.position + (Vector3)face, Color.blue);
+        Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
 
         anim.SetBool("grounded", physics.grounded);
-        if (flippable.flipping)
+        if (flip.flipping)
             anim.speed = 0;
         else
             anim.speed = 1;
     }
 
-    private static Vector2 facing(float value, Vector2 negative, Vector2 positive)
+    private static Vector2 MatchFacing(float value, Vector2 negative, Vector2 positive)
     {
         if (value < 0) return negative;
         if (value > 0) return positive;
@@ -69,26 +54,22 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("running speed", Mathf.Abs(playerMovement.movement_input.x));
 
         var spriteRight = (transform.rotation * Vector2.right);
-        Vector2 face;
 
-        if (flippable.down.x == 0) face = facing(playerMovement.movement_input.x, Vector2.left, Vector2.right);
-        else
+        if (playerMovement.movement_input != Vector2.zero)
         {
-            if (playerMovement.movement_input.y != 0)
-                face = facing(playerMovement.movement_input.y, Vector2.down, Vector2.up);
-            else if (flippable.down == Vector2.right)
-                face = facing(playerMovement.movement_input.x, Vector2.down, Vector2.up);
+            if (flip.down.x == 0)
+                facing = MatchFacing(playerMovement.movement_input.x, Vector2.left, Vector2.right);
+            else if (playerMovement.movement_input.y != 0)
+                facing = MatchFacing(playerMovement.movement_input.y, Vector2.down, Vector2.up);
+            else if (flip.down == Vector2.right)
+                facing = MatchFacing(playerMovement.movement_input.x, Vector2.down, Vector2.up);
             else
-                face = facing(playerMovement.movement_input.x, Vector2.up, Vector2.down);
+                facing = MatchFacing(playerMovement.movement_input.x, Vector2.up, Vector2.down);
         }
 
-        if (face != Vector2.zero)
-        {
-            Debug.DrawLine(transform.position, transform.position + (Vector3)face, Color.blue);
-            sprite.flipX = (Vector2.Dot(spriteRight, face) < 0);
-        }
+        sprite.flipX = (Vector2.Dot(spriteRight, facing) < 0);
 
-        if (playerMovement.movement_input.y != 0 && flippable.down.x != 0)
+        if (playerMovement.movement_input.y != 0 && flip.down.x != 0)
             anim.SetFloat("running speed", Mathf.Abs(playerMovement.movement_input.y));
     }
 
@@ -99,31 +80,48 @@ public class PlayerController : MonoBehaviour
 
     public void DoFlip(int input)
     {
+        if (!physics.grounded)
+            return;
+
         var cell = FindObjectsOfType<CellFlip>();
         var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).FirstOrDefault();
         if (closest == null)
             return;
 
-        var contained = collider.bounds.min.x >= closest.transform.position.x - closest.transform.lossyScale.x / 2
-            && collider.bounds.max.x <= closest.transform.position.x + closest.transform.lossyScale.x / 2
-            && collider.bounds.min.y >= closest.transform.position.y - closest.transform.lossyScale.y / 2
-            && collider.bounds.max.y <= closest.transform.position.y + closest.transform.lossyScale.y / 2;
+        var area = Physics.RectFromCenterSize(Physics.FromUnity(closest.transform.position), Physics.FromUnity(closest.transform.lossyScale));
+        var overlap = Physics.Overlap(physics.bounds, area);
 
-        if (contained)
+        if (overlap != null && overlap.Value == physics.bounds)
         {
-            closest.DoFlip(flippable.down, input);
+            closest.DoFlip(flip.down, input);
         }
     }
 
-    public void OnFlip1(InputAction.CallbackContext c)
+    private bool _OnInteract = false;
+    public void OnInteract(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton())
-            DoFlip(1);
+        if (c.ReadValueAsButton() && !_OnInteract)
+        {
+        }
+
+        _OnInteract = c.ReadValueAsButton();
     }
 
+    private bool _OnFlip1 = false;
+    public void OnFlip1(InputAction.CallbackContext c)
+    {
+        if (c.ReadValueAsButton() && !_OnFlip1)
+            DoFlip(1);
+
+        _OnFlip1 = c.ReadValueAsButton();
+    }
+
+    private bool _OnFlip2 = false;
     public void OnFlip2(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton())
+        if (c.ReadValueAsButton() && !_OnFlip2)
             DoFlip(2);
+
+        _OnFlip2 = c.ReadValueAsButton();
     }
 }

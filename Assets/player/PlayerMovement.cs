@@ -1,124 +1,95 @@
-﻿using System.Linq;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public bool jumping = false;
-    public float jump_end = 0;
-    public float jump_progress = 0;
-
     public Vector2 movement_input;
     public bool jumping_input;
 
-    private Rigidbody2D body;
-    private new BoxCollider2D collider;
-    private Flippable flippable;
-    private PhysicsObject physics;
+    private Flippable flip;
+    private MyCollider physics;
+    private PlayerController controller;
 
     private void Start()
     {
-        body = GetComponent<Rigidbody2D>();
-        collider = GetComponent<BoxCollider2D>();
-        flippable = GetComponent<Flippable>();
-        physics = GetComponent<PhysicsObject>();
-
-        Time.fixedDeltaTime = 1f / Screen.currentResolution.refreshRate;
+        flip = GetComponent<Flippable>();
+        physics = GetComponent<MyCollider>();
+        controller = GetComponent<PlayerController>();
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        if (flippable.flipping)
+        if (flip.flipping)
+        {
             return;
+        }
 
         if (jumping_input && physics.grounded)
         {
-            jumping = true;
-            jump_end = PhysicsObject.MAX_JUMP_TIME;
-            jump_progress = 0;
-
-            physics.velocity.y = (-PhysicsObject.MAX_JUMP_TIME + Mathf.Sqrt(PhysicsObject.MAX_JUMP_TIME * PhysicsObject.MAX_JUMP_TIME - 2.0f * PhysicsObject.MAX_JUMP_HEIGHT / -PhysicsObject.GRAVITY)) * PhysicsObject.GRAVITY;
-        }
-
-        if (!jumping_input || physics.ceilinged)
-        {
-            jump_end = jump_progress;
-            jumping = false;
-        }
-
-        if (jumping)
-        {
-            float jump_delta;
-            if (jump_progress + Time.fixedDeltaTime >= jump_end)
-            {
-                jump_delta = jump_end - jump_progress;
-                jumping = false;
-            }
-            else
-            {
-                jump_delta = Time.fixedDeltaTime;
-            }
-
-            jump_progress += jump_delta;
+            jumping_input = false;
+            physics.velocity += Physics.JUMP_SPEED * -flip.down;
+            physics.grounded = false;
         }
 
         var target = 0f;
         if (movement_input.x > 0)
         {
-            target = PhysicsObject.RUNNING_SPEED_LIMIT;
+            target = Physics.RUNNING_SPEED_LIMIT;
         }
         else if (movement_input.x < 0)
         {
-            target = -PhysicsObject.RUNNING_SPEED_LIMIT;
+            target = -Physics.RUNNING_SPEED_LIMIT;
         }
-        else if (flippable.down.x > 0)
+        else if (flip.down.x != 0)
         {
             if (movement_input.y > 0)
             {
-                target = PhysicsObject.RUNNING_SPEED_LIMIT;
+                target = Physics.RUNNING_SPEED_LIMIT;
             }
             else if (movement_input.y < 0)
             {
-                target = -PhysicsObject.RUNNING_SPEED_LIMIT;
-            }
-        }
-        else if (flippable.down.x < 0)
-        {
-            if (movement_input.y > 0)
-            {
-                target = -PhysicsObject.RUNNING_SPEED_LIMIT;
-            }
-            else if (movement_input.y < 0)
-            {
-                target = PhysicsObject.RUNNING_SPEED_LIMIT;
+                target = -Physics.RUNNING_SPEED_LIMIT;
             }
         }
 
         float speed_change;
-        if (Mathf.Abs(physics.velocity.x) > PhysicsObject.RUNNING_SPEED_LIMIT && Mathf.Sign(physics.velocity.x) == Mathf.Sign(target))
+        if (Mathf.Abs(physics.velocity.x) > Physics.RUNNING_SPEED_LIMIT && Mathf.Sign(physics.velocity.x) == Mathf.Sign(target))
         {
             if (physics.grounded)
-                speed_change = PhysicsObject.GROUND_DECELERATION;
+                speed_change = Physics.GROUND_DECELERATION;
             else
-                speed_change = PhysicsObject.AIR_DECELERATION;
+                speed_change = Physics.AIR_DECELERATION;
         }
         else
         {
             if (physics.grounded)
-                speed_change = PhysicsObject.GROUND_RUNNING_ACCELERATION;
+                speed_change = Physics.GROUND_RUNNING_ACCELERATION;
             else if (Mathf.Sign(physics.velocity.x) == -Mathf.Sign(target))
-                speed_change = PhysicsObject.AIR_RUNNING_ACCELERATION;
+                speed_change = Physics.AIR_RUNNING_ACCELERATION;
             else
-                speed_change = PhysicsObject.AIR_DECELERATION;
+                speed_change = Physics.AIR_DECELERATION;
         }
 
-        if (target > physics.velocity.x)
+        if (flip.down.x == 0)
         {
-            physics.velocity.x = Mathf.Min(physics.velocity.x + speed_change * Time.fixedDeltaTime, target);
+            if (target > physics.velocity.x)
+            {
+                physics.velocity.x = Mathf.Min(physics.velocity.x + speed_change * Time.deltaTime, target);
+            }
+            else
+            {
+                physics.velocity.x = Mathf.Max(physics.velocity.x - speed_change * Time.deltaTime, target);
+            }
         }
         else
         {
-            physics.velocity.x = Mathf.Max(physics.velocity.x - speed_change * Time.fixedDeltaTime, target);
+            if (target > physics.velocity.x)
+            {
+                physics.velocity.y = Mathf.Min(physics.velocity.y + speed_change * Time.deltaTime, target);
+            }
+            else
+            {
+                physics.velocity.y = Mathf.Max(physics.velocity.y - speed_change * Time.deltaTime, target);
+            }
         }
     }
 }

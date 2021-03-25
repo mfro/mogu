@@ -15,16 +15,13 @@ public class PressurePlate : Switch
     [SerializeField] string[] interactibleLayers;
 
     private Flippable flippable;
+    private MyCollider physics;
 
     // Start is called before the first frame update
     void Start()
     {
         flippable = GetComponent<Flippable>();
-
-        LayerMask layermask = LayerMask.GetMask(interactibleLayers);
-        numObjectsPressing = Physics2D.OverlapBoxAll(transform.position, transform.lossyScale, 0, layermask)
-            .Count(o => o.gameObject != gameObject);
-        // print("Plate initialized with this many objects pressing me: " + numObjectsPressing);
+        physics = GetComponent<MyCollider>();
 
         StateChanged += (v) =>
         {
@@ -36,30 +33,13 @@ public class PressurePlate : Switch
 
             cube.transform.localScale = pos;
         };
-
-        flippable.EndFlip += async () =>
-        {
-            await Task.Yield();
-            IsActive = numObjectsPressing != 0;
-        };
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Update()
     {
-        numObjectsPressing++;
+        if (!physics.enabled) return;
 
-        if (flippable.flipping) return;
-
-        IsActive = numObjectsPressing != 0;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (numObjectsPressing > 0)
-            numObjectsPressing--;
-
-        if (flippable.flipping) return;
-
-        IsActive = numObjectsPressing != 0;
+        var overlapping = Physics.AllOverlaps(physics, CollideReason.PressurePlate);
+        IsActive = overlapping.Any();
     }
 }

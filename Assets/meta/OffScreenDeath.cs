@@ -15,7 +15,7 @@ public class OffScreenDeath : MonoBehaviour
         var distance = (Vector2)camera.transform.position - (Vector2)transform.position;
         if (Mathf.Abs(distance.x) > camera.orthographicSize + 0.5 || Mathf.Abs(distance.y) > camera.orthographicSize + 0.5)
         {
-            controller.DoRestart();
+            controller.DoDeath();
         }
     }
 }

@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         return Vector2.zero;
     }
 
-    private void UpdateMovement()
+    public void UpdateMovement()
     {
         if (flip.down.x != 0 && input_movement.x == 0)
         {
@@ -128,17 +128,16 @@ public class PlayerController : MonoBehaviour
         if (!dyn.grounded || slipping)
             return;
 
-        var cell = FindObjectsOfType<CellFlip>();
-        var closest = cell.OrderBy(o => (o.transform.position - transform.position).sqrMagnitude).FirstOrDefault();
-        if (closest == null)
-            return;
-
-        var area = Physics.RectFromCenterSize(Physics.FromUnity(closest.transform.position), Physics.FromUnity(closest.transform.lossyScale));
-        var overlap = Physics.Overlap(dyn.bounds, area);
-
-        if (overlap != null && overlap.Value == dyn.bounds)
+        foreach (var cell in FindObjectsOfType<CellFlip>())
         {
-            closest.DoFlip(flip.down, input);
+            var area = Physics.RectFromCenterSize(Physics.FromUnity(cell.transform.position), Physics.FromUnity(cell.transform.lossyScale));
+            var overlap = Physics.Overlap(dyn.bounds, area);
+
+            if (overlap != null && overlap.Value == dyn.bounds)
+            {
+                cell.DoFlip(flip.down, input);
+                return;
+            }
         }
     }
 

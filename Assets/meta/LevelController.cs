@@ -113,6 +113,10 @@ public class LevelController : MonoBehaviour
         }
 
         border.Move(camera.transform.position);
+
+        player.UpdateMovement();
+        playerPhysics.velocity = Vector2.zero;
+        playerPhysics.remainder = Vector2.zero;
     }
 
     public void SaveUndoState()
@@ -134,11 +138,11 @@ public class LevelController : MonoBehaviour
             var d0 = levels[currentLevel].transform.position - player.transform.position;
             var d1 = levels[currentLevel + 1].transform.position - player.transform.position;
 
-            bool goNext = d.x > d.y
+            bool goNext = Mathf.Abs(d.x) > Mathf.Abs(d.y)
                 ? Mathf.Abs(d1.x) <= Mathf.Abs(d0.x)
                 : Mathf.Abs(d1.y) <= Mathf.Abs(d0.y);
 
-            if (goNext && playerFlip.down == levels[currentLevel].exitOrientation)
+            if (d1.sqrMagnitude < d0.sqrMagnitude && goNext && playerFlip.down == levels[currentLevel].exitOrientation)
             {
                 var delta = levels[currentLevel + 1].transform.position - levels[currentLevel].transform.position;
                 await MoveCamera(delta);
@@ -237,7 +241,13 @@ public class LevelController : MonoBehaviour
 
     public void DoUndo()
     {
-        if (moving || undoStack.Count == 0) return;
+        if (moving) return;
+
+        if (!undoStack.Any())
+        {
+            DoRestart();
+            return;
+        }
 
         var state = undoStack.Pop();
         state.Apply(this);

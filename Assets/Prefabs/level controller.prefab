@@ -415,7 +415,7 @@ MonoBehaviour:
   scale: {x: 0.625, y: 0.875}
   offset: {x: 0, y: -1}
   gravity: 1
-  pushRatio: 0
+  pushRatio: 1
   velocity: {x: 0, y: 0}
 --- !u!114 &1413353435
 MonoBehaviour:

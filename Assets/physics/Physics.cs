@@ -11,6 +11,7 @@ public enum CollisionMask
     Physical = 1 << 0,
     Flipping = 1 << 1,
     Dynamic = 1 << 2,
+    PlayerOnly = 1 << 2,
 
     Any = ~0,
 }
@@ -122,7 +123,11 @@ public static class Physics
             collider.remainder[dim] -= sign;
             var shift = new Vector2 { [dim] = sign };
 
-            var (other, overlap) = objects.SelectMany(o => AllOverlaps(CollisionMask.Physical, o.bounds.Shift(shift)))
+            var mask = CollisionMask.Physical;
+            if (collider.GetComponent<PlayerController>() != null)
+                mask |= CollisionMask.PlayerOnly;
+
+            var (other, overlap) = objects.SelectMany(o => AllOverlaps(mask, o.bounds.Shift(shift)))
                 .Where(c => !objects.Contains(c.Item1))
                 .FirstOrDefault();
 

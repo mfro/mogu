@@ -13,6 +13,11 @@ public class ScreenBorder : MonoBehaviour
     void Start()
     {
         player.flip.EndFlip += (delta) => UpdateBorder();
+
+        left.mask = CollisionMask.PlayerOnly;
+        right.mask = CollisionMask.PlayerOnly;
+        top.mask = CollisionMask.PlayerOnly;
+        bottom.mask = CollisionMask.PlayerOnly;
     }
 
     public async void UpdateBorder()

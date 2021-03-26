@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
     private bool slipping = false;
 
+    private Vector2 input_movement;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
         flip.EndFlip += (delta) =>
         {
-            UpdateAnimator();
+            UpdateMovement();
         };
     }
 
@@ -84,41 +86,41 @@ public class PlayerController : MonoBehaviour
         return Vector2.zero;
     }
 
-    private void UpdateAnimator()
+    private void UpdateMovement()
     {
-        if (movement.movement_input != Vector2.zero)
+        if (flip.down.x != 0 && input_movement.x == 0)
+        {
+            movement.input_running = input_movement.y;
+        }
+        else
+        {
+            movement.input_running = input_movement.x * Mathf.Sign(flip.down.x);
+        }
+
+        if (movement.input_running != 0)
         {
             if (flip.down.x == 0)
-                facing = MatchFacing(movement.movement_input.x, Vector2.left, Vector2.right);
-            else if (movement.movement_input.y != 0)
-                facing = MatchFacing(movement.movement_input.y, Vector2.down, Vector2.up);
-            else if (flip.down == Vector2.right)
-                facing = MatchFacing(movement.movement_input.x, Vector2.down, Vector2.up);
+                facing = MatchFacing(movement.input_running, Vector2.left, Vector2.right);
             else
-                facing = MatchFacing(movement.movement_input.x, Vector2.up, Vector2.down);
+                facing = MatchFacing(movement.input_running, Vector2.down, Vector2.up);
         }
 
         var spriteRight = (transform.rotation * Vector2.right);
         sprite.flipX = (Vector2.Dot(spriteRight, facing) < 0);
 
-        anim.SetFloat("running speed", Mathf.Abs(movement.movement_input.x));
-        if (movement.movement_input.y != 0 && flip.down.x != 0)
-            anim.SetFloat("running speed", Mathf.Abs(movement.movement_input.y));
+        anim.SetFloat("running speed", Mathf.Abs(movement.input_running));
     }
 
     public void Move(InputAction.CallbackContext callback)
     {
-        movement.movement_input = callback.ReadValue<Vector2>();
-
+        input_movement = callback.ReadValue<Vector2>();
         if (!flip.flipping)
-        {
-            UpdateAnimator();
-        }
+            UpdateMovement();
     }
 
     public void Jump(InputAction.CallbackContext callback)
     {
-        movement.jumping_input = callback.ReadValueAsButton();
+        movement.input_jumping = callback.ReadValueAsButton();
     }
 
     public void DoFlip(int input)

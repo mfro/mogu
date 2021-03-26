@@ -2,8 +2,9 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Vector2 movement_input;
-    public bool jumping_input;
+    public bool input_jumping;
+    public float input_running;
+
     public bool jumping;
 
     private MyDynamic dyn;
@@ -23,9 +24,9 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         jumping = false;
-        if (jumping_input && dyn.grounded)
+        if (input_jumping && dyn.grounded)
         {
-            jumping_input = false;
+            input_jumping = false;
             if (flip.down.x != 0)
             {
                 dyn.velocity.x = 0;
@@ -42,24 +43,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         var target = 0f;
-        if (movement_input.x > 0)
+        if (input_running > 0)
         {
             target = Physics.RUNNING_SPEED_LIMIT;
         }
-        else if (movement_input.x < 0)
+        else if (input_running < 0)
         {
             target = -Physics.RUNNING_SPEED_LIMIT;
-        }
-        else if (flip.down.x != 0)
-        {
-            if (movement_input.y > 0)
-            {
-                target = Physics.RUNNING_SPEED_LIMIT;
-            }
-            else if (movement_input.y < 0)
-            {
-                target = -Physics.RUNNING_SPEED_LIMIT;
-            }
         }
 
         float horizontal;

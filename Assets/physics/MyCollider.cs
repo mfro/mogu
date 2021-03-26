@@ -70,6 +70,8 @@ public class MyCollider : MonoBehaviour
 #if UNITY_EDITOR
     public void OnDrawGizmos()
     {
+        if (!isActiveAndEnabled) return;
+
         try
         {
             GetBounds(Physics.FromUnity(transform.position));

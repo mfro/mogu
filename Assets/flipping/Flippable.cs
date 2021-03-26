@@ -38,8 +38,8 @@ public class Flippable : MonoBehaviour
         flipping = true;
 
         snapPosition = transform.localPosition.x % 0.5f == 0
-            && transform.localPosition.x % 0.5f == 0
-            && transform.localPosition.x % 0.5f == 0;
+            && transform.localPosition.y % 0.5f == 0
+            && transform.localPosition.z % 0.5f == 0;
 
         if (collider != null) collider.enabled = false;
 

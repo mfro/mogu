@@ -12,6 +12,9 @@ public class LevelController : MonoBehaviour
     public new Camera camera;
 
     [SerializeField]
+    public ScreenBorder border;
+
+    [SerializeField]
     public PlayerController player;
 
     [SerializeField]
@@ -108,6 +111,8 @@ public class LevelController : MonoBehaviour
             var overlap = Physics.Overlap(visible, item.bounds);
             item.enabled = overlap != null;
         }
+
+        border.Move(camera.transform.position);
     }
 
     public void SaveUndoState()
@@ -125,10 +130,15 @@ public class LevelController : MonoBehaviour
         }
         else
         {
+            var d = levels[currentLevel + 1].transform.position - levels[currentLevel].transform.position;
             var d0 = levels[currentLevel].transform.position - player.transform.position;
             var d1 = levels[currentLevel + 1].transform.position - player.transform.position;
 
-            if (d1.sqrMagnitude <= d0.sqrMagnitude && playerFlip.down == levels[currentLevel].exitOrientation)
+            bool goNext = d.x > d.y
+                ? Mathf.Abs(d1.x) <= Mathf.Abs(d0.x)
+                : Mathf.Abs(d1.y) <= Mathf.Abs(d0.y);
+
+            if (goNext && playerFlip.down == levels[currentLevel].exitOrientation)
             {
                 var delta = levels[currentLevel + 1].transform.position - levels[currentLevel].transform.position;
                 await MoveCamera(delta);

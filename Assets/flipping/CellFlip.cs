@@ -67,19 +67,15 @@ public class CellFlip : MonoBehaviour
         var x = Physics.AllOverlaps(CollisionMask.Flipping, area)
             .Where(o => o.Item2 == o.Item1.bounds)
             .Select(o => o.Item1.GetComponent<Flippable>())
-            .Where(o => o != null);
+            .Where(o => o != null)
+            .ToList();
 
-        var parents = x.Select(o => o.transform.parent).ToArray();
-
-        foreach (var o in x)
-        {
-            o.flipping = true;
-        }
+        var parents = x.Select(o => o.transform.parent).ToList();
 
         foreach (var o in x)
         {
             o.transform.parent = transform;
-            if (o != null) o.DoBeginFlip();
+            o.DoBeginFlip();
         }
 
         var cancelled = false;
@@ -88,9 +84,6 @@ public class CellFlip : MonoBehaviour
             cancelled = true;
             foreach (var (o, parent) in x.Zip(parents, (l, r) => (l, r)))
             {
-                if (o.gameObject == gameObject)
-                    continue;
-
                 o.transform.parent = parent;
                 o.DoEndFlip(delta);
             }

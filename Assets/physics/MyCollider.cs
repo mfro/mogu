@@ -55,14 +55,12 @@ public class MyCollider : MonoBehaviour
         if (fullScale.x % (1 / 32f) != 0) throw new Exception($"invalid scale on collider: {fullScale.x}");
         if (fullScale.y % (1 / 32f) != 0) throw new Exception($"invalid scale on collider: {fullScale.y}");
 
-        var o = offset;
-        var s = Physics.FromUnity(transform.lossyScale * scale);
+        var o = (Vector2) Physics.Round(transform.rotation * offset);
+        var s = Physics.FromUnity(transform.rotation * (transform.lossyScale * scale));
 
-        if (flip != null)
-        {
-            o = Quaternion.FromToRotation(Vector2.down, flip.down) * o;
-            if (flip.down.x != 0) s = new Vector2(s.y, s.x);
-        }
+        s = Physics.Round(s);
+        s.x = Math.Abs(s.x);
+        s.y = Math.Abs(s.y);
 
         return Physics.RectFromCenterSize(position + o, s);
     }
@@ -88,10 +86,10 @@ public class MyCollider : MonoBehaviour
         if (Selection.activeTransform == null)
             return;
 
-        var isChild = transform.IsChildOf(Selection.activeTransform);
-        var isParent = Selection.activeTransform.IsChildOf(transform);
+        var isChild = Selection.transforms.Any(c => transform.IsChildOf(c));
+        var isParent = Selection.transforms.Any(c => c.IsChildOf(transform));
 
-        if (isChild || isParent)
+        if (isChild)
         {
             flip = GetComponentInParent<Flippable>();
             var bounds = GetBounds(Physics.FromUnity(transform.position));

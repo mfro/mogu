@@ -157,7 +157,7 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-  m_SpriteShape: {fileID: 0}
+  m_SpriteShape: {fileID: 11400000, guid: 60b0a0d98f232da4f8fdbed02e5d8b52, type: 2}
   m_FillPixelPerUnit: 100
   m_StretchTiling: 1
   m_SplineDetail: 16
@@ -312,8 +312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!114 &8049329875498796138
 MonoBehaviour:
   m_ObjectHideFlags: 0

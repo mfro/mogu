@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
         flip.EndFlip += (delta) =>
         {
+            facing = delta * facing;
             UpdateMovement();
         };
     }
@@ -44,13 +45,9 @@ public class PlayerController : MonoBehaviour
             anim.speed = 0;
         else
             anim.speed = 1;
-    }
 
-    void FixedUpdate()
-    {
-        // Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
-        // Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
-
+        Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
+        Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
     }
 
     private static Vector2 MatchFacing(float value, Vector2 negative, Vector2 positive)

@@ -5,31 +5,54 @@ public class Flippable : MonoBehaviour
 {
     public event Action BeginFlip;
     public event Action<Quaternion> EndFlip;
-    public bool flipping = false;
-    public Vector2 down = Vector2.down;
+
+    [NonSerialized] public bool flipping = false;
+    [NonSerialized] public Vector2 down;
 
     private Vector3 scaleSave;
     private bool snapPosition;
-
-    private new Collider2D collider;
 
     // Start is called before the first frame update
     void Awake()
     {
         scaleSave = transform.localScale;
-
-        collider = GetComponent<Collider2D>();
+        down = Physics.Round(transform.rotation * Vector2.down);
     }
 
 
 #if UNITY_EDITOR
     public void OnDrawGizmos()
     {
-        if (name.Contains("platform")) return;
+        var dyn = GetComponent<MyDynamic>();
+        if (dyn?.gravity != true) return;
+
+        var down = Physics.Round(transform.rotation * Vector3.down);
+        var o = transform.position;
+        var points = new Vector2[] {
+            new Vector2(-2, 12),
+            new Vector2(2, 12),
+            new Vector2(2, -2),
+            new Vector2(8, -2),
+            new Vector2(0, -12),
+            new Vector2(-8, -2),
+            new Vector2(-2, -2),
+            new Vector2(-2, 12),
+        };
 
         var color = Color.black;
+        color.a = 0.5f;
         Gizmos.color = color;
-        Gizmos.DrawLine(transform.position, transform.position + (Vector3) down);
+
+        for (var i = 1; i < points.Length; ++i)
+        {
+            var p1 = o + transform.rotation * points[i - 1] / 32;
+            var p2 = o + transform.rotation * points[i] / 32;
+
+            p1.z = -1;
+            p2.z = -1;
+
+            Gizmos.DrawLine(p1, p2);
+        }
     }
 #endif
 
@@ -41,8 +64,6 @@ public class Flippable : MonoBehaviour
             && transform.localPosition.y % 0.5f == 0
             && transform.localPosition.z % 0.5f == 0;
 
-        if (collider != null) collider.enabled = false;
-
         BeginFlip?.Invoke();
     }
 
@@ -50,8 +71,6 @@ public class Flippable : MonoBehaviour
     {
         down = Physics.Round(delta * down);
         flipping = false;
-
-        if (collider != null) collider.enabled = true;
 
         transform.localScale = scaleSave;
         transform.localRotation = Quaternion.Euler(Physics.Round(transform.localRotation.eulerAngles));

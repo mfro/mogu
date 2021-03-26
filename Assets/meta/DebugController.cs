@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DebugController : MonoBehaviour
 {
@@ -17,6 +18,15 @@ public class DebugController : MonoBehaviour
 
     private PlayerMovement player;
     private MyCollider playerPhysics => player.GetComponent<MyCollider>();
+
+    private bool _onDebug = false;
+    public void OnDebug(InputAction.CallbackContext c)
+    {
+        if (c.ReadValueAsButton() && !_onDebug)
+            enabled = !enabled;
+
+        _onDebug = c.ReadValueAsButton();
+    }
 
     void OnGUI()
     {

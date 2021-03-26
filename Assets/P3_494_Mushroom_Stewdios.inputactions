@@ -76,6 +76,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "debug",
+                    "type": "Button",
+                    "id": "861fd82e-cc94-487f-9510-ac4b3eeb8433",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -342,6 +350,17 @@
                     "action": "interact",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "914811e2-bc6c-4968-ba25-779e0a951bce",
+                    "path": "<Keyboard>/f12",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Keyboard&Mouse",
+                    "action": "debug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -351,7 +370,7 @@
             "actions": [
                 {
                     "name": "Navigate",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "cbf8c533-df72-431c-9524-e81495aec624",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -359,7 +378,7 @@
                 },
                 {
                     "name": "Submit",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "c1c802b0-664d-47c2-8704-2a28ee1b5ee9",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -367,7 +386,7 @@
                 },
                 {
                     "name": "Cancel",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "9a9d7929-9fb8-409e-9f47-27d45c5feb77",
                     "expectedControlType": "Button",
                     "processors": "",

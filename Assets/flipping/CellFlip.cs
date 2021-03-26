@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,7 +14,8 @@ public enum FlipKind
 
 public class CellFlip : MonoBehaviour
 {
-    static bool isFlipping = false;
+    public static bool isFlipping = false;
+    public static Action cancelFlip;
 
     [SerializeField]
     public FlipKind flip1;
@@ -80,6 +82,20 @@ public class CellFlip : MonoBehaviour
             if (o != null) o.DoBeginFlip();
         }
 
+        var cancelled = false;
+        cancelFlip = () =>
+        {
+            cancelled = true;
+            foreach (var (o, parent) in x.Zip(parents, (l, r) => (l, r)))
+            {
+                if (o.gameObject == gameObject)
+                    continue;
+
+                o.transform.parent = parent;
+                o.DoEndFlip(delta);
+            }
+        };
+
         var q0 = transform.rotation;
         var q1 = delta * q0;
 
@@ -88,18 +104,18 @@ public class CellFlip : MonoBehaviour
         {
             transform.rotation = Quaternion.Lerp(q0, q1, (Time.time - t0) / flip_time);
             await Task.Yield();
+
+            if (cancelled)
+            {
+                isFlipping = false;
+                return;
+            }
         }
 
         transform.rotation = q1;
 
-        foreach (var (o, parent) in x.Zip(parents, (l, r) => (l, r)))
-        {
-            if (o.gameObject == gameObject)
-                continue;
-
-            o.transform.parent = parent;
-            o.DoEndFlip(delta);
-        }
+        cancelFlip();
+        cancelFlip = null;
 
         foreach (var o in x)
         {

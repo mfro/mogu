@@ -40,6 +40,8 @@ public class LevelController : MonoBehaviour
 
         public void Apply(LevelController controller)
         {
+            CellFlip.cancelFlip?.Invoke();
+
             controller.playerPhysics.position = position;
             controller.playerPhysics.velocity = Vector2.zero;
             controller.playerPhysics.UpdatePosition();

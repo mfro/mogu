@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4898848414973905272}
   - component: {fileID: 4898848414973905275}
   - component: {fileID: 4898848414973905274}
-  - component: {fileID: 4898848414973905278}
   - component: {fileID: 4898848414973905279}
+  - component: {fileID: 3307698645680647888}
   m_Layer: 0
   m_Name: dissolving platform
   m_TagString: Untagged
@@ -96,27 +96,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flipping: 0
   down: {x: 0, y: -1}
---- !u!68 &4898848414973905278
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4898848414973905253}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: 0.5, y: 0.5}
-  - {x: -0.5, y: 0.5}
-  - {x: -0.5, y: -0.5}
-  - {x: 0.5, y: -0.5}
-  - {x: 0.5, y: 0.5}
 --- !u!114 &4898848414973905279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,3 +112,23 @@ MonoBehaviour:
   Cheese1: {fileID: 2100000, guid: 2d8dba365480d6f49bc9a8123086428d, type: 2}
   Cheese2: {fileID: 2100000, guid: 8b43b68492fed9e46bfae4b82de0d622, type: 2}
   Cheese3: {fileID: 2100000, guid: a1c236c42f35a8a4d86b1ff1bf943b13, type: 2}
+--- !u!114 &3307698645680647888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4898848414973905253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f69e733aacfe224d88141a43af4eb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: 0
+  size: {x: 32, y: 32}
+  offset: {x: 0, y: 0}
+  pushRatio: 0
+  grounded: 0
+  ceilinged: 0
+  velocity: {x: 0, y: 0}
+  remainder: {x: 0, y: 0}

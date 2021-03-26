@@ -384,7 +384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a908efd9984e2a47bb49950e3d84e27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  encumbered: 0
   facing: {x: 0, y: 0}
 --- !u!114 &1413353433
 MonoBehaviour:
@@ -400,6 +399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement_input: {x: 0, y: 0}
   jumping_input: 0
+  jumping: 0
 --- !u!114 &1413353435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,6 +541,7 @@ GameObject:
   - component: {fileID: 4811372266002696930}
   - component: {fileID: 4811372266002696957}
   - component: {fileID: 972564985466276716}
+  - component: {fileID: 5696842686851089957}
   m_Layer: 0
   m_Name: level controller
   m_TagString: Untagged
@@ -788,6 +789,18 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5696842686851089957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811372266002696931}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a101a179d20acc54390a9d3dc8248b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4811372266514909688
 GameObject:
   m_ObjectHideFlags: 0

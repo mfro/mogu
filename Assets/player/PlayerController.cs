@@ -28,25 +28,34 @@ public class PlayerController : MonoBehaviour
         physics = GetComponent<MyCollider>();
 
         facing = Vector2.right;
+
+        Time.fixedDeltaTime = 1 / 60f;
+
+        flip.EndFlip += (delta) =>
+        {
+            UpdateAnimator();
+        };
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
-        Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
-
         anim.SetBool("grounded", physics.grounded);
         if (flip.flipping)
             anim.speed = 0;
         else
             anim.speed = 1;
+    }
+
+    void FixedUpdate()
+    {
+        // Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
+        // Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
 
         bool found = false;
         if (physics.grounded)
         {
-            var results = Physics.BoxCast(physics.bounds, flip.down);
-            foreach (var result in results)
+            var under = Physics.AllOverlaps(physics.bounds.Shift(flip.down), CollideReason.Collision).Where(c => c.Item1 != this).ToList();
+            foreach (var result in under)
             {
                 if (result.Item1.gameObject.CompareTag("Slippery"))
                 {
@@ -69,7 +78,6 @@ public class PlayerController : MonoBehaviour
                 slipping = false;
             }
         }
-
     }
 
     private static Vector2 MatchFacing(float value, Vector2 negative, Vector2 positive)
@@ -79,13 +87,8 @@ public class PlayerController : MonoBehaviour
         return Vector2.zero;
     }
 
-    public void Move(InputAction.CallbackContext callback)
+    private void UpdateAnimator()
     {
-        playerMovement.movement_input = callback.ReadValue<Vector2>();
-        anim.SetFloat("running speed", Mathf.Abs(playerMovement.movement_input.x));
-
-        var spriteRight = (transform.rotation * Vector2.right);
-
         if (playerMovement.movement_input != Vector2.zero)
         {
             if (flip.down.x == 0)
@@ -98,10 +101,22 @@ public class PlayerController : MonoBehaviour
                 facing = MatchFacing(playerMovement.movement_input.x, Vector2.up, Vector2.down);
         }
 
+        var spriteRight = (transform.rotation * Vector2.right);
         sprite.flipX = (Vector2.Dot(spriteRight, facing) < 0);
 
+        anim.SetFloat("running speed", Mathf.Abs(playerMovement.movement_input.x));
         if (playerMovement.movement_input.y != 0 && flip.down.x != 0)
             anim.SetFloat("running speed", Mathf.Abs(playerMovement.movement_input.y));
+    }
+
+    public void Move(InputAction.CallbackContext callback)
+    {
+        playerMovement.movement_input = callback.ReadValue<Vector2>();
+
+        if (!flip.flipping)
+        {
+            UpdateAnimator();
+        }
     }
 
     public void Jump(InputAction.CallbackContext callback)

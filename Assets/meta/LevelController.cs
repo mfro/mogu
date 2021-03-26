@@ -31,11 +31,17 @@ public class LevelController : MonoBehaviour
         {
             position = controller.playerPhysics.position;
             rotation = controller.player.transform.rotation;
-            down = controller.playerFlippable.down;
+            down = controller.playerFlip.down;
 
             level = Instantiate(controller.levels[controller.currentLevel]);
             level.gameObject.SetActive(false);
             level.gameObject.name = $"{controller.levels[controller.currentLevel].name} (save state)";
+
+            foreach (var item in level.GetComponentsInChildren<Door>())
+            {
+                if (item.renderer != null)
+                    item.renderer.enabled = true;
+            }
         }
 
         public void Apply(LevelController controller)
@@ -44,7 +50,7 @@ public class LevelController : MonoBehaviour
             controller.playerPhysics.velocity = Vector2.zero;
             controller.playerPhysics.UpdatePosition();
             controller.player.transform.rotation = rotation;
-            controller.playerFlippable.down = down;
+            controller.playerFlip.down = down;
             controller.player.gameObject.SetActive(true);
             controller.restartText.SetActive(false);
 
@@ -67,7 +73,7 @@ public class LevelController : MonoBehaviour
     private int currentLevel;
 
     private MyCollider playerPhysics => player.GetComponent<MyCollider>();
-    private Flippable playerFlippable => player.GetComponent<Flippable>();
+    private Flippable playerFlip => player.GetComponent<Flippable>();
     private bool moving = false;
 
     private SaveState restartState;
@@ -85,7 +91,7 @@ public class LevelController : MonoBehaviour
         playerPhysics.velocity = Vector2.zero;
         playerPhysics.position = Physics.FromUnity(levels[0].start.transform.position);
         playerPhysics.UpdatePosition();
-        playerFlippable.down = levels[0].start.transform.rotation * Vector2.down;
+        playerFlip.down = levels[0].start.transform.rotation * Vector2.down;
         player.gameObject.SetActive(true);
         restartText.SetActive(false);
 
@@ -113,7 +119,7 @@ public class LevelController : MonoBehaviour
         undoStack.Push(new SaveState(this));
     }
 
-    async void Update()
+    async void FixedUpdate()
     {
         if (moving) return;
 
@@ -126,7 +132,7 @@ public class LevelController : MonoBehaviour
             var d0 = levels[currentLevel].transform.position - player.transform.position;
             var d1 = levels[currentLevel + 1].transform.position - player.transform.position;
 
-            if (d1.sqrMagnitude <= d0.sqrMagnitude && playerPhysics.grounded)
+            if (d1.sqrMagnitude <= d0.sqrMagnitude && playerFlip.down == levels[currentLevel].exitOrientation)
             {
                 var delta = levels[currentLevel + 1].transform.position - levels[currentLevel].transform.position;
                 await MoveCamera(delta);
@@ -152,7 +158,7 @@ public class LevelController : MonoBehaviour
         playerPhysics.velocity = Vector2.zero;
         playerPhysics.position = Physics.FromUnity(levels[currentLevel].start.transform.position);
         playerPhysics.UpdatePosition();
-        playerFlippable.down = levels[currentLevel].start.transform.rotation * Vector2.down;
+        playerFlip.down = levels[currentLevel].start.transform.rotation * Vector2.down;
         camera.transform.position += delta;
         player.gameObject.SetActive(true);
         restartText.SetActive(false);
@@ -237,7 +243,7 @@ public class LevelController : MonoBehaviour
     private async Task MoveCamera(Vector3 delta)
     {
         moving = true;
-        playerFlippable.flipping = true;
+        playerFlip.flipping = true;
         var p0 = camera.transform.position;
         var p1 = p0 + delta;
 
@@ -251,7 +257,7 @@ public class LevelController : MonoBehaviour
         }
 
         camera.transform.position = p1;
-        playerFlippable.flipping = false;
+        playerFlip.flipping = false;
         moving = false;
     }
 }

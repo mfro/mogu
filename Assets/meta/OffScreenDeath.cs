@@ -8,7 +8,7 @@ public class OffScreenDeath : MonoBehaviour
     public LevelController controller;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         var camera = controller.camera;
 

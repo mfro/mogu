@@ -17,7 +17,7 @@ public class Victory : MonoBehaviour
         physics = GetComponent<MyCollider>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!physics.enabled) return;
 

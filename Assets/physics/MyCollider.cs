@@ -41,27 +41,28 @@ public class MyCollider : MonoBehaviour
         Physics.allColliders.Remove(this);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (flip?.flipping == true)
             return;
 
         if (gravity)
         {
-            velocity += flip.down * Physics.GRAVITY * Time.deltaTime;
+            velocity += flip.down * Physics.GRAVITY * Time.fixedDeltaTime;
             velocity.y = Mathf.Clamp(velocity.y, -Physics.MAX_FALL_SPEED, Physics.MAX_FALL_SPEED);
             velocity.x = Mathf.Clamp(velocity.x, -Physics.MAX_FALL_SPEED, Physics.MAX_FALL_SPEED);
         }
 
         if (velocity != Vector2.zero)
         {
-            var adjust = Physics.Move(this, velocity);
+            Physics.Move(this, velocity);
+
             var down = flip?.down ?? Vector2.down;
 
-            var under = Physics.AllOverlaps(bounds.Shift(down), CollideReason.Collision).Where(c => c.Item1 != this).ToList();
+            var under = Physics.AllOverlaps(bounds.Shift(down), CollideReason.Collision).Where(c => c.Item1 != this);
             grounded = under.Any();
 
-            var above = Physics.AllOverlaps(bounds.Shift(-down), CollideReason.Collision).Where(c => c.Item1 != this).ToList();
+            var above = Physics.AllOverlaps(bounds.Shift(-down), CollideReason.Collision).Where(c => c.Item1 != this);
             ceilinged = above.Any();
 
             if (velocity.x != 0 && !Physics.CanMove(this, new Vector2(Mathf.Sign(velocity.x), 0)))

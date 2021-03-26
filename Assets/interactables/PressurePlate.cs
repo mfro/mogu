@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class PressurePlate : Switch
 {
-    private int numObjectsPressing = 0;
-
     [SerializeField] GameObject cube;
 
     [SerializeField] float animDuration;
@@ -35,7 +33,7 @@ public class PressurePlate : Switch
         };
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!physics.enabled) return;
 

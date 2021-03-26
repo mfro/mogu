@@ -8,6 +8,8 @@ public class Level : MonoBehaviour
 {
     public GameObject start;
 
+    public Vector2 exitOrientation;
+
 #if UNITY_EDITOR
     public async void Start()
     {

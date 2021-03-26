@@ -1621,7 +1621,7 @@ PrefabInstance:
     - target: {fileID: 540492918836541690, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 540492918836541690, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
         type: 3}
@@ -1667,6 +1667,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pressure Plate (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908669191653252536, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
+        type: 3}
+      propertyPath: down.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3241442996498538664, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
         type: 3}
@@ -1766,24 +1771,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 450c6533073aa954c8bcf7f07a2a77c4, type: 3}
---- !u!1 &611733211 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4811372266002696931, guid: a1ded91701baf864cb93c8355436f9f7,
-    type: 3}
-  m_PrefabInstance: {fileID: 4811372267555918093}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &611733212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 611733211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a101a179d20acc54390a9d3dc8248b72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &643144624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3908,6 +3895,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6591443183897482374, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: down.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6591443183897482374, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: down.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8875887642950404152, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: Switch
+      value: 
+      objectReference: {fileID: 566532973}
     - target: {fileID: 8875887642950404152, guid: a11005535d7cbd043ac12cd738f37cdf,
         type: 3}
       propertyPath: mySwitchObject
@@ -5264,16 +5266,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3494262569346444191}
     m_Modifications:
-    - target: {fileID: 1952322972161770032, guid: a11005535d7cbd043ac12cd738f37cdf,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.44
-      objectReference: {fileID: 0}
-    - target: {fileID: 1952322972161770032, guid: a11005535d7cbd043ac12cd738f37cdf,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0
-      objectReference: {fileID: 0}
     - target: {fileID: 1952322972161770033, guid: a11005535d7cbd043ac12cd738f37cdf,
         type: 3}
       propertyPath: down.x
@@ -5302,7 +5294,7 @@ PrefabInstance:
     - target: {fileID: 3486867135220226797, guid: a11005535d7cbd043ac12cd738f37cdf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.5
+      value: -4.5
       objectReference: {fileID: 0}
     - target: {fileID: 3486867135220226797, guid: a11005535d7cbd043ac12cd738f37cdf,
         type: 3}
@@ -5344,6 +5336,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6591443183897482374, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: down.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6591443183897482374, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: down.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8875887642950404152, guid: a11005535d7cbd043ac12cd738f37cdf,
+        type: 3}
+      propertyPath: Switch
+      value: 
+      objectReference: {fileID: 2054735181}
     - target: {fileID: 8875887642950404152, guid: a11005535d7cbd043ac12cd738f37cdf,
         type: 3}
       propertyPath: mySwitchObject
@@ -5440,7 +5447,7 @@ PrefabInstance:
     - target: {fileID: 540492918836541690, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 540492918836541690, guid: 38f221cbcefc8a54b9ab23e7ca964bd0,
         type: 3}
@@ -5721,6 +5728,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: level controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696842686851089957, guid: a1ded91701baf864cb93c8355436f9f7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7611434339646209452, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}

@@ -36,12 +36,6 @@ public class LevelController : MonoBehaviour
             level = Instantiate(controller.levels[controller.currentLevel]);
             level.gameObject.SetActive(false);
             level.gameObject.name = $"{controller.levels[controller.currentLevel].name} (save state)";
-
-            foreach (var item in level.GetComponentsInChildren<Door>())
-            {
-                if (item.renderer != null)
-                    item.renderer.enabled = true;
-            }
         }
 
         public void Apply(LevelController controller)
@@ -72,7 +66,7 @@ public class LevelController : MonoBehaviour
     private Level[] levels;
     private int currentLevel;
 
-    private MyCollider playerPhysics => player.GetComponent<MyCollider>();
+    private MyDynamic playerPhysics => player.GetComponent<MyDynamic>();
     private Flippable playerFlip => player.GetComponent<Flippable>();
     private bool moving = false;
 

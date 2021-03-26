@@ -6,31 +6,30 @@ using UnityEngine;
 [RequireComponent(typeof(Renderer))]
 public class Door : MonoBehaviour
 {
-    [SerializeField] Switch mySwitchObject;
+    [SerializeField] Switch Switch;
 
-    public bool IsOpen => mySwitchObject.IsActive;
+    public bool IsOpen => Switch.IsActive;
 
-    private MyCollider physics;
-    private Flippable flippable;
-    public new Renderer renderer;
+    private new Renderer renderer;
+    private new MyStatic collider;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (mySwitchObject == null)
+        if (Switch == null)
         {
             print("error, switch is null");
             enabled = false;
             return;
         }
 
-        flippable = GetComponent<Flippable>();
         renderer = GetComponent<Renderer>();
-        physics = GetComponent<MyCollider>();
+        collider = GetComponent<MyStatic>();
     }
 
     void Update()
     {
         renderer.enabled = !IsOpen;
+        collider.enabled = !IsOpen;
     }
 }

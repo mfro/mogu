@@ -10,22 +10,22 @@ public class PlayerController : MonoBehaviour
     //public bool encumbered;
     public Vector2 facing;
 
-    private PlayerMovement playerMovement;
+    private PlayerMovement movement;
     private Flippable flip;
     private Animator anim;
+    private MyDynamic dyn;
     private SpriteRenderer sprite;
-    private MyCollider physics;
 
     private bool slipping = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
+        movement = GetComponent<PlayerMovement>();
         flip = GetComponent<Flippable>();
         anim = GetComponent<Animator>();
+        dyn = GetComponent<MyDynamic>();
         sprite = GetComponentInChildren<SpriteRenderer>();
-        physics = GetComponent<MyCollider>();
 
         facing = Vector2.right;
 
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        anim.SetBool("grounded", physics.grounded);
+        anim.SetBool("grounded", dyn.grounded);
         if (flip.flipping)
             anim.speed = 0;
         else
@@ -52,29 +52,26 @@ public class PlayerController : MonoBehaviour
         // Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
 
         bool found = false;
-        if (physics.grounded)
+        if (dyn.grounded)
         {
-            var under = Physics.AllOverlaps(physics.bounds.Shift(flip.down), CollideReason.Collision).Where(c => c.Item1 != this).ToList();
-            foreach (var result in under)
-            {
-                if (result.Item1.gameObject.CompareTag("Slippery"))
-                {
-                    playerMovement.enabled = false;
+            slipping = Physics.AllOverlaps(CollisionMask.Physical, dyn.bounds.Shift(flip.down))
+                .Where(c => c.Item1.CompareTag("Slippery"))
+                .Any();
 
-                    slipping = true;
-                    found = true;
-                    break;
-                }
+            if (slipping)
+            {
+                movement.enabled = false;
+                found = true;
             }
         }
 
         if (slipping)
         {
-            var vel = Physics.Round(physics.velocity);
+            var vel = Physics.Round(dyn.velocity);
 
             if (!found || vel == Vector2.zero)
             {
-                playerMovement.enabled = true;
+                movement.enabled = true;
                 slipping = false;
             }
         }
@@ -89,29 +86,29 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateAnimator()
     {
-        if (playerMovement.movement_input != Vector2.zero)
+        if (movement.movement_input != Vector2.zero)
         {
             if (flip.down.x == 0)
-                facing = MatchFacing(playerMovement.movement_input.x, Vector2.left, Vector2.right);
-            else if (playerMovement.movement_input.y != 0)
-                facing = MatchFacing(playerMovement.movement_input.y, Vector2.down, Vector2.up);
+                facing = MatchFacing(movement.movement_input.x, Vector2.left, Vector2.right);
+            else if (movement.movement_input.y != 0)
+                facing = MatchFacing(movement.movement_input.y, Vector2.down, Vector2.up);
             else if (flip.down == Vector2.right)
-                facing = MatchFacing(playerMovement.movement_input.x, Vector2.down, Vector2.up);
+                facing = MatchFacing(movement.movement_input.x, Vector2.down, Vector2.up);
             else
-                facing = MatchFacing(playerMovement.movement_input.x, Vector2.up, Vector2.down);
+                facing = MatchFacing(movement.movement_input.x, Vector2.up, Vector2.down);
         }
 
         var spriteRight = (transform.rotation * Vector2.right);
         sprite.flipX = (Vector2.Dot(spriteRight, facing) < 0);
 
-        anim.SetFloat("running speed", Mathf.Abs(playerMovement.movement_input.x));
-        if (playerMovement.movement_input.y != 0 && flip.down.x != 0)
-            anim.SetFloat("running speed", Mathf.Abs(playerMovement.movement_input.y));
+        anim.SetFloat("running speed", Mathf.Abs(movement.movement_input.x));
+        if (movement.movement_input.y != 0 && flip.down.x != 0)
+            anim.SetFloat("running speed", Mathf.Abs(movement.movement_input.y));
     }
 
     public void Move(InputAction.CallbackContext callback)
     {
-        playerMovement.movement_input = callback.ReadValue<Vector2>();
+        movement.movement_input = callback.ReadValue<Vector2>();
 
         if (!flip.flipping)
         {
@@ -121,12 +118,12 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext callback)
     {
-        playerMovement.jumping_input = callback.ReadValueAsButton();
+        movement.jumping_input = callback.ReadValueAsButton();
     }
 
     public void DoFlip(int input)
     {
-        if (!physics.grounded || slipping)
+        if (!dyn.grounded || slipping)
             return;
 
         var cell = FindObjectsOfType<CellFlip>();
@@ -135,9 +132,9 @@ public class PlayerController : MonoBehaviour
             return;
 
         var area = Physics.RectFromCenterSize(Physics.FromUnity(closest.transform.position), Physics.FromUnity(closest.transform.lossyScale));
-        var overlap = Physics.Overlap(physics.bounds, area);
+        var overlap = Physics.Overlap(dyn.bounds, area);
 
-        if (overlap != null && overlap.Value == physics.bounds)
+        if (overlap != null && overlap.Value == dyn.bounds)
         {
             closest.DoFlip(flip.down, input);
         }

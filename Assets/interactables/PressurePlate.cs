@@ -9,16 +9,11 @@ public class PressurePlate : Switch
 {
     [SerializeField] GameObject cube;
 
-    [SerializeField] float animDuration;
-    [SerializeField] string[] interactibleLayers;
-
-    private Flippable flippable;
     private MyCollider physics;
 
     // Start is called before the first frame update
     void Start()
     {
-        flippable = GetComponent<Flippable>();
         physics = GetComponent<MyCollider>();
 
         StateChanged += (v) =>
@@ -37,7 +32,7 @@ public class PressurePlate : Switch
     {
         if (!physics.enabled) return;
 
-        var overlapping = Physics.AllOverlaps(physics, CollideReason.PressurePlate);
+        var overlapping = Physics.AllOverlaps(CollisionMask.Dynamic, physics);
         IsActive = overlapping.Any();
     }
 }

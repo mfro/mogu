@@ -62,7 +62,7 @@ public class CellFlip : MonoBehaviour
 
         var area = Physics.RectFromCenterSize(Physics.FromUnity(transform.position), Physics.FromUnity(transform.lossyScale));
 
-        var x = Physics.AllOverlaps(area, CollideReason.CellFlip)
+        var x = Physics.AllOverlaps(CollisionMask.Flipping, area)
             .Where(o => o.Item2 == o.Item1.bounds)
             .Select(o => o.Item1.GetComponent<Flippable>())
             .Where(o => o != null);
@@ -98,10 +98,16 @@ public class CellFlip : MonoBehaviour
                 continue;
 
             o.transform.parent = parent;
-            var f = o.GetComponent<Flippable>();
-            if (f != null)
+            o.DoEndFlip(delta);
+        }
+
+        foreach (var o in x)
+        {
+            var dyn = o.GetComponentInChildren<MyDynamic>();
+            if (dyn != null && Physics.AllOverlaps(CollisionMask.Physical, dyn).Any())
             {
-                f.DoEndFlip(delta);
+                levelController.DoUndo();
+                break;
             }
         }
 

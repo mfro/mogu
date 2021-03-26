@@ -82,5 +82,10 @@ PrefabInstance:
       propertyPath: size.y
       value: 48
       objectReference: {fileID: 0}
+    - target: {fileID: 8576002607326130952, guid: 89abd0e826e761649ad2416f9245ad86,
+        type: 3}
+      propertyPath: size.y
+      value: 48
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89abd0e826e761649ad2416f9245ad86, type: 3}

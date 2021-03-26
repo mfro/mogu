@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3133340173093194421}
   - component: {fileID: 3133340173093194420}
   - component: {fileID: 3133340173093194419}
-  - component: {fileID: 7463237461871761747}
+  - component: {fileID: 8576002607326130952}
   m_Layer: 10
   m_Name: Box
   m_TagString: Untagged
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flipping: 0
   down: {x: 0, y: -1}
---- !u!114 &7463237461871761747
+--- !u!114 &8576002607326130952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,14 +104,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3133340173093194422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f69e733aacfe224d88141a43af4eb2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 78019d1798857f3469439d61d24f6110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 1
-  size: {x: 28, y: 28}
+  scale: {x: 1, y: 1}
   offset: {x: 0, y: 0}
+  gravity: 1
   pushRatio: 0.5
-  grounded: 0
-  ceilinged: 0
   velocity: {x: 0, y: 0}
-  remainder: {x: 0, y: 0}

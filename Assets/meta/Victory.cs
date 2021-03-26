@@ -21,10 +21,10 @@ public class Victory : MonoBehaviour
     {
         if (!physics.enabled) return;
 
-        var (player, _) = Physics.AllOverlaps(physics, CollideReason.Victory)
+        var (player, _) = Physics.AllOverlaps(CollisionMask.Dynamic, physics)
             .FirstOrDefault(c => c.Item1.GetComponent<PlayerController>() != null);
 
-        if (player != null && player.grounded == true)
+        if (player is MyDynamic dyn && dyn.grounded)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }

@@ -6,39 +6,38 @@ public class PlayerMovement : MonoBehaviour
     public bool jumping_input;
     public bool jumping;
 
+    private MyDynamic dyn;
     private Flippable flip;
-    private MyCollider physics;
     private PlayerController controller;
 
     private void Start()
     {
         flip = GetComponent<Flippable>();
-        physics = GetComponent<MyCollider>();
+        dyn = GetComponent<MyDynamic>();
         controller = GetComponent<PlayerController>();
     }
 
     void FixedUpdate()
     {
-        if (flip.flipping || !physics.enabled)
+        if (flip.flipping || !dyn.enabled)
             return;
 
         jumping = false;
-        if (jumping_input && physics.grounded)
+        if (jumping_input && dyn.grounded)
         {
             jumping_input = false;
             if (flip.down.x != 0)
             {
-                physics.velocity.x = 0;
-                physics.remainder.x = 0;
+                dyn.velocity.x = 0;
+                dyn.remainder.x = 0;
             }
             else
             {
-                physics.velocity.y = 0;
-                physics.remainder.y = 0;
+                dyn.velocity.y = 0;
+                dyn.remainder.y = 0;
             }
 
-            physics.velocity += Physics.JUMP_SPEED * -flip.down;
-            physics.grounded = false;
+            dyn.velocity += Physics.JUMP_SPEED * -flip.down;
             jumping = true;
         }
 
@@ -65,21 +64,21 @@ public class PlayerMovement : MonoBehaviour
 
         float horizontal;
         if (flip.down.y != 0)
-            horizontal = physics.velocity.x;
+            horizontal = dyn.velocity.x;
         else
-            horizontal = physics.velocity.y;
+            horizontal = dyn.velocity.y;
 
         float speed_change;
         if (Mathf.Abs(horizontal) > Physics.RUNNING_SPEED_LIMIT && Mathf.Sign(horizontal) == Mathf.Sign(target))
         {
-            if (physics.grounded)
+            if (dyn.grounded)
                 speed_change = Physics.GROUND_DECELERATION;
             else
                 speed_change = Physics.AIR_DECELERATION;
         }
         else
         {
-            if (physics.grounded)
+            if (dyn.grounded)
                 speed_change = Physics.GROUND_RUNNING_ACCELERATION;
             else if (Mathf.Sign(horizontal) == -Mathf.Sign(target))
                 speed_change = Physics.AIR_RUNNING_ACCELERATION;
@@ -89,24 +88,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (flip.down.x == 0)
         {
-            if (target > physics.velocity.x)
+            if (target > dyn.velocity.x)
             {
-                physics.velocity.x = Mathf.Min(physics.velocity.x + speed_change * Time.fixedDeltaTime, target);
+                dyn.velocity.x = Mathf.Min(dyn.velocity.x + speed_change * Time.fixedDeltaTime, target);
             }
             else
             {
-                physics.velocity.x = Mathf.Max(physics.velocity.x - speed_change * Time.fixedDeltaTime, target);
+                dyn.velocity.x = Mathf.Max(dyn.velocity.x - speed_change * Time.fixedDeltaTime, target);
             }
         }
         else
         {
-            if (target > physics.velocity.x)
+            if (target > dyn.velocity.x)
             {
-                physics.velocity.y = Mathf.Min(physics.velocity.y + speed_change * Time.fixedDeltaTime, target);
+                dyn.velocity.y = Mathf.Min(dyn.velocity.y + speed_change * Time.fixedDeltaTime, target);
             }
             else
             {
-                physics.velocity.y = Mathf.Max(physics.velocity.y - speed_change * Time.fixedDeltaTime, target);
+                dyn.velocity.y = Mathf.Max(dyn.velocity.y - speed_change * Time.fixedDeltaTime, target);
             }
         }
     }

@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum CollideReason
+public enum CollisionMask
 {
-    CellFlip,
-    Collision,
-    Victory,
-    PressurePlate,
+    None = 0,
+
+    Physical = 1 << 0,
+    Flipping = 1 << 1,
+    Dynamic = 1 << 2,
+
+    Any = ~0,
 }
 
 public static class Physics
@@ -45,7 +48,7 @@ public static class Physics
     }
 
     public static Vector2 ToUnity(Vector2 v) => v / SCALE;
-    public static Vector2 FromUnity(Vector2 raw) => Round(raw * SCALE);
+    public static Vector2 FromUnity(Vector2 raw) => Round(raw * SCALE / UNIT) * UNIT;
 
     public static Rect RectFromCenterSize(Vector2 center, Vector2 size) => new Rect(center - size / 2, size);
 
@@ -56,9 +59,6 @@ public static class Physics
         rect.position += offset;
         return rect;
     }
-
-    public static Vector2 ScaleX(this Vector2 v, float x) => new Vector2(v.x * x, v.y);
-    public static Vector2 ScaleY(this Vector2 v, float y) => new Vector2(v.x, v.y * y);
 
     public static HashSet<MyCollider> allColliders = new HashSet<MyCollider>();
 
@@ -76,61 +76,38 @@ public static class Physics
         return Rect.MinMaxRect(xMin, yMin, xMax, yMax);
     }
 
-    public static bool DoCollide(CollideReason reason, MyCollider collider)
-    {
-        if (reason == CollideReason.Collision)
-        {
-            if (collider.GetComponent<PressurePlate>() != null)
-                return false;
-
-            if (collider.GetComponent<Victory>() != null)
-                return false;
-
-            if (collider.GetComponent<Door>()?.IsOpen == true)
-                return false;
-        }
-
-        if (reason == CollideReason.PressurePlate)
-        {
-            if (collider.pushRatio == 0)
-                return false;
-        }
-
-        return true;
-    }
-
-    public static IEnumerable<(MyCollider, Rect)> AllOverlaps(Rect a, CollideReason reason)
+    public static IEnumerable<(MyCollider, Rect)> AllOverlaps(CollisionMask mask, Rect a)
     {
         foreach (var collider in allColliders)
         {
-            var overlap = Overlap(collider.bounds, a);
-            if (overlap != null && DoCollide(reason, collider))
+            if ((collider.mask & mask) != CollisionMask.None)
             {
-                yield return (collider, overlap.Value);
+                var overlap = Overlap(collider.bounds, a);
+                if (overlap != null)
+                {
+                    yield return (collider, overlap.Value);
+                }
             }
         }
     }
 
-    public static IEnumerable<(MyCollider, Rect)> AllOverlaps(MyCollider collider, CollideReason reason)
+    public static IEnumerable<(MyCollider, Rect)> AllOverlaps(CollisionMask reason, MyCollider collider)
     {
-        return AllOverlaps(collider.bounds, reason)
+        return AllOverlaps(reason, collider.bounds)
             .Where(o => o.Item1 != collider);
     }
 
-    public static bool CanMove(MyCollider collider, Vector2 motion)
+    public static bool CanMove(MyDynamic collider, Vector2 motion)
     {
-        if (collider.pushRatio == 0)
-            return false;
-
-        var collisions = AllOverlaps(collider.bounds.Shift(motion), CollideReason.Collision)
-            .Where(c => c.Item1 != collider);
-
-        return collisions.All(c => CanMove(c.Item1, motion));
+        return AllOverlaps(CollisionMask.Physical, collider.bounds.Shift(motion))
+            .Where(c => c.Item1 != collider)
+            .Select(c => c.Item1 as MyDynamic)
+            .All(d => d != null && CanMove(d, motion));
     }
 
-    private static void MoveScaled(MyCollider collider, int dim)
+    private static void MoveScaled(MyDynamic collider, int dim)
     {
-        var objects = new List<MyCollider> { collider };
+        var objects = new List<MyDynamic> { collider };
 
         while (true)
         {
@@ -141,11 +118,11 @@ public static class Physics
                 o.remainder[dim] = 0;
             collider.remainder[dim] = totalRemainder;
 
-            var sign = Mathf.Sign(collider.remainder[dim]);
+            var sign = Mathf.Sign(collider.remainder[dim]) * UNIT;
             collider.remainder[dim] -= sign;
             var shift = new Vector2 { [dim] = sign };
 
-            var (other, overlap) = objects.SelectMany(o => AllOverlaps(o.bounds.Shift(shift), CollideReason.Collision))
+            var (other, overlap) = objects.SelectMany(o => AllOverlaps(CollisionMask.Physical, o.bounds.Shift(shift)))
                 .Where(c => !objects.Contains(c.Item1))
                 .FirstOrDefault();
 
@@ -157,17 +134,16 @@ public static class Physics
                     o.UpdatePosition();
                 }
             }
-            else if (collider.grounded && other.pushRatio > 0)
+            else if (other is MyDynamic pushee && collider.grounded && pushee.pushRatio > 0)
             {
-                other.remainder[dim] += sign * other.pushRatio;
-                collider.remainder[dim] *= other.pushRatio;
-                objects.Add(other);
+                pushee.remainder[dim] += sign * pushee.pushRatio;
+                collider.remainder[dim] *= pushee.pushRatio;
+                objects.Add(pushee);
             }
         }
-
     }
 
-    private static void MoveScaled(MyCollider collider, Vector2 motion)
+    private static void MoveScaled(MyDynamic collider, Vector2 motion)
     {
         collider.remainder += motion;
 
@@ -175,7 +151,7 @@ public static class Physics
         MoveScaled(collider, 1);
     }
 
-    public static void Move(MyCollider collider, Vector2 motion)
+    public static void Move(MyDynamic collider, Vector2 motion)
     {
         var scaled = motion * Time.fixedDeltaTime;
         MoveScaled(collider, scaled);

@@ -16,8 +16,6 @@ public class PlayerController : MonoBehaviour
     private MyDynamic dyn;
     private SpriteRenderer sprite;
 
-    private bool slipping = false;
-
     private Vector2 input_movement;
 
     // Start is called before the first frame update
@@ -53,30 +51,6 @@ public class PlayerController : MonoBehaviour
         // Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
         // Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
 
-        bool found = false;
-        if (dyn.grounded)
-        {
-            slipping = Physics.AllOverlaps(CollisionMask.Physical, dyn.bounds.Shift(flip.down))
-                .Where(c => c.Item1.CompareTag("Slippery"))
-                .Any();
-
-            if (slipping)
-            {
-                movement.enabled = false;
-                found = true;
-            }
-        }
-
-        if (slipping)
-        {
-            var vel = Physics.Round(dyn.velocity);
-
-            if (!found || vel == Vector2.zero)
-            {
-                movement.enabled = true;
-                slipping = false;
-            }
-        }
     }
 
     private static Vector2 MatchFacing(float value, Vector2 negative, Vector2 positive)
@@ -125,7 +99,7 @@ public class PlayerController : MonoBehaviour
 
     public void DoFlip(int input)
     {
-        if (!dyn.grounded || slipping)
+        if (!dyn.grounded)
             return;
 
         foreach (var cell in FindObjectsOfType<CellFlip>())

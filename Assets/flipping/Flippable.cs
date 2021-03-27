@@ -64,6 +64,11 @@ public class Flippable : MonoBehaviour
             && transform.localPosition.y % 0.5f == 0
             && transform.localPosition.z % 0.5f == 0;
 
+        foreach (var physics in GetComponentsInChildren<MyCollider>())
+        {
+            physics.enabled = false;
+        }
+
         BeginFlip?.Invoke();
     }
 
@@ -84,6 +89,11 @@ public class Flippable : MonoBehaviour
             var pos = transform.position;
             pos.z = 0;
             transform.position = pos;
+        }
+
+        foreach (var physics in GetComponentsInChildren<MyCollider>())
+        {
+            physics.enabled = true;
         }
 
         EndFlip?.Invoke(delta);

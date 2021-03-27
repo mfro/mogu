@@ -87,6 +87,7 @@ public class CellFlip : MonoBehaviour
                 o.transform.parent = parent;
                 o.DoEndFlip(delta);
             }
+            cancelFlip = null;
         };
 
         var q0 = transform.rotation;
@@ -108,7 +109,6 @@ public class CellFlip : MonoBehaviour
         transform.rotation = q1;
 
         cancelFlip();
-        cancelFlip = null;
 
         foreach (var o in x)
         {

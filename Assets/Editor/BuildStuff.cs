@@ -9,40 +9,11 @@ using System.IO.Compression;
 
 public class BuildStuff
 {
-    [MenuItem("mushroom/web build")]
-    private static void WebBuild()
+    [MenuItem("mushroom/build - playtesting")]
+    private static void PlaytestingBuild()
     {
-        var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
-        BuildPipeline.BuildPlayer(new BuildPlayerOptions
-        {
-            scenes = scenes,
-            locationPathName = "build/web",
-            targetGroup = BuildTargetGroup.WebGL,
-            target = BuildTarget.WebGL,
-        });
-    }
-
-
-    [MenuItem("mushroom/playtesting & canvas build")]
-    private static void Build()
-    {
-        var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
-
-        BuildPipeline.BuildPlayer(new BuildPlayerOptions
-        {
-            scenes = scenes,
-            locationPathName = "build/win/mushroom.exe",
-            targetGroup = BuildTargetGroup.Standalone,
-            target = BuildTarget.StandaloneWindows64,
-        });
-
-        BuildPipeline.BuildPlayer(new BuildPlayerOptions
-        {
-            scenes = scenes,
-            locationPathName = "build/mac.app",
-            targetGroup = BuildTargetGroup.Standalone,
-            target = BuildTarget.StandaloneOSX,
-        });
+        WindowsBuild();
+        MacBuild();
 
         using (var zip = ZipFile.Open("mushroom windows.zip", ZipArchiveMode.Create))
         {
@@ -53,6 +24,13 @@ public class BuildStuff
         {
             MakeZip(zip, "build/mac.app", "mushroom.app");
         }
+    }
+
+    [MenuItem("mushroom/build - canvas")]
+    private static void CanvasBuild()
+    {
+        WindowsBuild();
+        MacBuild();
 
         using (var zip = ZipFile.Open("lbitzer mfroehli miczhang rkiv ssscrazy.zip", ZipArchiveMode.Create))
         {
@@ -67,6 +45,45 @@ public class BuildStuff
                 MakeZip(zip, item, name);
             }
         }
+    }
+
+    [MenuItem("mushroom/build - windows")]
+    private static void WindowsBuild()
+    {
+        var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
+        BuildPipeline.BuildPlayer(new BuildPlayerOptions
+        {
+            scenes = scenes,
+            locationPathName = "build/win/mushroom.exe",
+            targetGroup = BuildTargetGroup.Standalone,
+            target = BuildTarget.StandaloneWindows64,
+        });
+    }
+
+    [MenuItem("mushroom/build - mac")]
+    private static void MacBuild()
+    {
+        var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
+        BuildPipeline.BuildPlayer(new BuildPlayerOptions
+        {
+            scenes = scenes,
+            locationPathName = "build/mac.app",
+            targetGroup = BuildTargetGroup.Standalone,
+            target = BuildTarget.StandaloneOSX,
+        });
+    }
+
+    [MenuItem("mushroom/build - web")]
+    private static void WebBuild()
+    {
+        var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
+        BuildPipeline.BuildPlayer(new BuildPlayerOptions
+        {
+            scenes = scenes,
+            locationPathName = "build/web",
+            targetGroup = BuildTargetGroup.WebGL,
+            target = BuildTarget.WebGL,
+        });
     }
 
     private static void MakeZip(ZipArchive zip, string src, string dst)

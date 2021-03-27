@@ -18120,11 +18120,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: level controller
       objectReference: {fileID: 0}
-    - target: {fileID: 4811372266002696957, guid: a1ded91701baf864cb93c8355436f9f7,
-        type: 3}
-      propertyPath: LevelTransitionSound
-      value: 
-      objectReference: {fileID: 8300000, guid: c15ad0c1b50d1d141a5adf243a0ade2f, type: 3}
     - target: {fileID: 8960252265163800664, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}
       propertyPath: m_Volume

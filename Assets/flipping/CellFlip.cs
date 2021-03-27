@@ -18,6 +18,11 @@ public class CellFlip : MonoBehaviour
     public static Action cancelFlip;
 
     [SerializeField]
+    AudioClip FlipSound;
+
+    AudioSource audioSource;
+
+    [SerializeField]
     public FlipKind flip1;
 
     [SerializeField]
@@ -26,6 +31,11 @@ public class CellFlip : MonoBehaviour
     [SerializeField]
     float flip_time = 1;
 
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     public async void DoFlip(Vector2 down, int input)
     {
         FlipKind flip;
@@ -33,6 +43,7 @@ public class CellFlip : MonoBehaviour
             flip = flip1;
         else
             flip = flip2;
+
 
         Quaternion delta;
         if (flip == FlipKind.CW)
@@ -56,6 +67,7 @@ public class CellFlip : MonoBehaviour
 
         if (isFlipping) return;
         isFlipping = true;
+        audioSource.PlayOneShot(FlipSound);
 
         var levelController = FindObjectOfType<LevelController>();
         levelController?.SaveUndoState();

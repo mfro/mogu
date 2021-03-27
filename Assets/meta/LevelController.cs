@@ -23,6 +23,10 @@ public class LevelController : MonoBehaviour
     [SerializeField]
     public float CameraTime;
 
+    [SerializeField]
+    AudioClip LevelTransitionSound;
+    AudioSource audioSource;
+
     private class SaveState
     {
         public Vector3 position;
@@ -77,6 +81,11 @@ public class LevelController : MonoBehaviour
 
     private SaveState restartState;
     private Stack<SaveState> undoStack;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void Start()
     {
@@ -145,6 +154,7 @@ public class LevelController : MonoBehaviour
             if (d1.sqrMagnitude < d0.sqrMagnitude && goNext && playerFlip.down == levels[currentLevel].exitOrientation)
             {
                 var delta = levels[currentLevel + 1].transform.position - levels[currentLevel].transform.position;
+                if(LevelTransitionSound != null) audioSource.PlayOneShot(LevelTransitionSound);
                 await MoveCamera(delta);
                 currentLevel += 1;
 

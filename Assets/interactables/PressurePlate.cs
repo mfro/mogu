@@ -9,6 +9,12 @@ public class PressurePlate : Switch
 {
     [SerializeField] GameObject cube;
 
+    [SerializeField]
+    AudioClip DepressSound;
+    [SerializeField]
+    AudioClip ReleaseSound;
+    AudioSource audioSource;
+
     private MyCollider physics;
 
     // Start is called before the first frame update
@@ -16,13 +22,23 @@ public class PressurePlate : Switch
     {
         physics = GetComponent<MyCollider>();
 
+        audioSource = GetComponent<AudioSource>();
+
         StateChanged += (v) =>
         {
             var pos = cube.transform.localScale;
             if (IsActive)
+            {
                 pos.y = 1 / 3f;
+                if(DepressSound != null)
+                    audioSource.PlayOneShot(DepressSound);
+            }
             else
+            {
                 pos.y = 1;
+                if(ReleaseSound != null)
+                    audioSource.PlayOneShot(ReleaseSound);
+            }
 
             cube.transform.localScale = pos;
         };

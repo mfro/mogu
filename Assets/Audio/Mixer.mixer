@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-8915980963170374183
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 2112ecd4be806a04bb17477aed617a7a
+  m_EffectName: Attenuation
+  m_MixLevel: de14e571809807f4cb4ed2831a4a1bd4
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &-8837534004785020105
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -90,6 +104,28 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &-2894808964745247221
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SFX
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 283a0b82692ee0d478eb619bbf138f66
+  m_Children:
+  - {fileID: -5738780369139405453}
+  - {fileID: 5995227013817385323}
+  - {fileID: 6941961940575960115}
+  m_Volume: 562f2a03654ee0a4abaa4b3f11aef9c4
+  m_Pitch: 65b5bfd639533674e9bd18e8910af675
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -8915980963170374183}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -113,6 +149,7 @@ AudioMixerController:
     - b58d70eedba1400418460ce80d0e157d
     - ef9e60a9904acc147bd09126ac2a7418
     - de797db0a8d82d740901312dfe320949
+    - 283a0b82692ee0d478eb619bbf138f66
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -126,9 +163,7 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 2597e46ed6f3dc04299310dc79901a06
   m_Children:
-  - {fileID: 6941961940575960115}
-  - {fileID: 5995227013817385323}
-  - {fileID: -5738780369139405453}
+  - {fileID: -2894808964745247221}
   - {fileID: -8837534004785020105}
   m_Volume: 1d36ef751c1780b4f96ade8ac997a90a
   m_Pitch: cf1aee312a5fa8c44a20acacaddd4f2a
@@ -164,6 +199,7 @@ AudioMixerSnapshotController:
   m_SnapshotID: 6934789c81f01cf4eb53e43afccb43fa
   m_FloatValues:
     d2286a21196135f4fa7659104a66975b: -25
+    562f2a03654ee0a4abaa4b3f11aef9c4: 0
     7e5ea69652f41374797239f15e2c537d: 250
     30215447dc0c93c46a38a4c56b8423ec: 1000
     cc412dd8ed2e37d46a1b97875610879d: 250

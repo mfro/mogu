@@ -15,8 +15,16 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private MyDynamic dyn;
     private SpriteRenderer sprite;
+    [SerializeField]
+    private AudioSource walkAudioSource;
+    [SerializeField]
+    private AudioSource landAudioSource;
+    [SerializeField]
+    AudioClip LandSound;
+
 
     private Vector2 input_movement;
+    private bool previouslyGrounded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +34,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         dyn = GetComponent<MyDynamic>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+
 
         facing = Vector2.right;
 
@@ -45,6 +54,29 @@ public class PlayerController : MonoBehaviour
             anim.speed = 0;
         else
             anim.speed = 1;
+
+
+        if(dyn.grounded && !flip.flipping)
+        {
+            if(!previouslyGrounded)
+            {
+                landAudioSource.PlayOneShot(LandSound);
+            }
+            if(dyn.velocity.magnitude > 0)
+            {
+                if (!walkAudioSource.isPlaying) walkAudioSource.Play();
+            }
+            else
+            {
+                if (walkAudioSource.isPlaying) walkAudioSource.Pause();
+            }
+        }
+        else
+        {
+            if (walkAudioSource.isPlaying) walkAudioSource.Pause();
+        }
+
+        previouslyGrounded = dyn.grounded;
 
         Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
         Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);

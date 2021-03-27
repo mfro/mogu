@@ -45,13 +45,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d45be6e5708aca4e8ab17983531734a, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input_jumping: 0
+  input_running: 0
   jumping: 0
-  jump_end: 0
-  jump_progress: 0
-  movement_input: {x: 0, y: 0}
-  jumping_input: 0
 --- !u!114 &4373931033163170486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,10 +60,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  flipping: 0
-  down: {x: 0, y: -1}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7040235991487599592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,10 +72,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a908efd9984e2a47bb49950e3d84e27, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  encumbered: 0
+  m_Name: 
+  m_EditorClassIdentifier: 
   facing: {x: 0, y: 0}
+  LandSound: {fileID: 0}
 --- !u!114 &3722602204561235064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,13 +86,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f69e733aacfe224d88141a43af4eb2c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  gravity: 1
-  size: {x: 0.625, y: 0.9375}
-  grounded: 0
-  ceilinged: 0
-  velocity: {x: 0, y: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: {x: 1, y: 1}
+  offset: {x: 0, y: 0}
 --- !u!1 &6560268207314772671
 GameObject:
   m_ObjectHideFlags: 0

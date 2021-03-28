@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Flippable : MonoBehaviour
@@ -56,6 +58,8 @@ public class Flippable : MonoBehaviour
     }
 #endif
 
+    private List<MyCollider> disabled;
+
     public void DoBeginFlip()
     {
         flipping = true;
@@ -64,10 +68,12 @@ public class Flippable : MonoBehaviour
             && transform.localPosition.y % 0.5f == 0
             && transform.localPosition.z % 0.5f == 0;
 
-        foreach (var physics in GetComponentsInChildren<MyCollider>())
-        {
+        disabled = GetComponentsInChildren<MyCollider>()
+            .Where(p => p.enabled)
+            .ToList();
+
+        foreach (var physics in disabled)
             physics.enabled = false;
-        }
 
         BeginFlip?.Invoke();
     }
@@ -91,10 +97,10 @@ public class Flippable : MonoBehaviour
             transform.position = pos;
         }
 
-        foreach (var physics in GetComponentsInChildren<MyCollider>())
-        {
+        foreach (var physics in disabled)
             physics.enabled = true;
-        }
+
+        disabled = null;
 
         EndFlip?.Invoke(delta);
     }

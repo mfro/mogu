@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class MainMenuController : MonoBehaviour
 {
+
+    [SerializeField] GameObject MainScreen;
+    [SerializeField] GameObject OptionsScreen;
+
+    public AudioMixer audioMixer;
+
     public void OnPlay()
     {
         SceneManager.LoadScene(1);
@@ -13,7 +20,8 @@ public class MainMenuController : MonoBehaviour
 
     public void OnOptions()
     {
-        print("options");
+        MainScreen.SetActive(false);
+        OptionsScreen.SetActive(true);
     }
 
     public void OnCredits()
@@ -25,4 +33,31 @@ public class MainMenuController : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void OnOptionsReturn()
+    {
+        MainScreen.SetActive(true);
+        OptionsScreen.SetActive(false);
+    }
+    
+
+    public void SetMusicVolume(float volume)
+    {
+
+        float volumeOfMixer = Mathf.Lerp(-80, 20, volume / 100f);
+        audioMixer.SetFloat("MusicVolume", volumeOfMixer);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        float volumeOfMixer = Mathf.Lerp(-80, 20, volume / 100f);
+        audioMixer.SetFloat("SFXVolume", volumeOfMixer);
+    }
+
+    public void SetMasterVolume(float volume)
+    {
+        float volumeOfMixer = Mathf.Lerp(-80, 20, volume / 100f);
+        audioMixer.SetFloat("MasterVolume", volumeOfMixer);
+    }
+
 }

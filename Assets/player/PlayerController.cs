@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour
         else
             anim.speed = 1;
 
-
         if (dyn.grounded && !flip.flipping)
         {
             if (!previouslyGrounded)
@@ -80,6 +79,13 @@ public class PlayerController : MonoBehaviour
 
         Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
         Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
+        Debug.DrawLine(transform.position, transform.position + (Vector3) dyn.velocity, Color.green);
+
+        var isPushing = dyn.grounded
+            && Vector2.Dot(facing, dyn.velocity) > 0
+            && Physics.AllOverlaps(CollisionMask.Physical, dyn.bounds.Shift(facing)).Where(c => c.Item1 != dyn).Any();
+
+        anim.SetBool("pushing", isPushing);
     }
 
     private static Vector2 MatchFacing(float value, Vector2 negative, Vector2 positive)

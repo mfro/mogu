@@ -56,13 +56,13 @@ public class PlayerController : MonoBehaviour
             anim.speed = 1;
 
 
-        if(dyn.grounded && !flip.flipping)
+        if (dyn.grounded && !flip.flipping)
         {
-            if(!previouslyGrounded)
+            if (!previouslyGrounded)
             {
                 landAudioSource.PlayOneShot(LandSound);
             }
-            if(dyn.velocity.magnitude > 0)
+            if (dyn.velocity.magnitude > 0)
             {
                 if (!walkAudioSource.isPlaying) walkAudioSource.Play();
             }
@@ -136,11 +136,18 @@ public class PlayerController : MonoBehaviour
             var area = Physics.RectFromCenterSize(Physics.FromUnity(cell.transform.position), Physics.FromUnity(cell.transform.lossyScale));
             var overlap = Physics.Overlap(dyn.bounds, area);
 
-            if (overlap != null && overlap.Value == dyn.bounds)
+            if (overlap == null) continue;
+
+            if (overlap.Value == dyn.bounds)
             {
                 cell.DoFlip(flip.down, input);
-                return;
             }
+            else
+            {
+                cell.ShowFlipError(overlap.Value);
+            }
+
+            return;
         }
     }
 

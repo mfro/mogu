@@ -124,6 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f88a9bd6ccf794b815d82065144af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FlipError: {fileID: 8389389663875197185, guid: d23acc73427ffd5499d983c12253d940,
+    type: 3}
   FlipSound: {fileID: 8300000, guid: 60b570011053fa24b9e86a41d56a4ae8, type: 3}
   flip1: 3
   flip2: 3

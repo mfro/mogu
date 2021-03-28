@@ -18,6 +18,9 @@ public class CellFlip : MonoBehaviour
     public static Action cancelFlip;
 
     [SerializeField]
+    public FlipError FlipError;
+
+    [SerializeField]
     AudioClip FlipSound;
 
     AudioSource audioSource;
@@ -34,6 +37,14 @@ public class CellFlip : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+    }
+
+    public void ShowFlipError(Rect bounds)
+    {
+        var error = Instantiate(FlipError);
+        error.transform.position = (Vector3) Physics.ToUnity(bounds.center) + new Vector3(0, 0, -5);
+        error.transform.localScale = Physics.ToUnity(bounds.size);
+        error.startTime = Time.time;
     }
 
     public async void DoFlip(Vector2 down, int input)
@@ -66,25 +77,38 @@ public class CellFlip : MonoBehaviour
         else return;
 
         if (isFlipping) return;
-        isFlipping = true;
-        audioSource.PlayOneShot(FlipSound);
-
-        var levelController = FindObjectOfType<LevelController>();
-        levelController?.SaveUndoState();
 
         var allObjects = Resources.FindObjectsOfTypeAll<Flippable>();
 
         var area = Physics.RectFromCenterSize(Physics.FromUnity(transform.position), Physics.FromUnity(transform.lossyScale));
 
-        var x = Physics.AllOverlaps(CollisionMask.Flipping, area)
-            .Where(o => o.Item2 == o.Item1.bounds)
-            .Select(o => o.Item1.GetComponent<Flippable>())
-            .Where(o => o != null)
+        var overlaps = Physics.AllOverlaps(CollisionMask.Flipping, area)
+            // .Where(o => o.Item2 == o.Item1.bounds)
+            .Select(o => (o.Item1, o.Item2, o.Item1.GetComponent<Flippable>()))
+            .Where(o => o.Item3 != null)
             .ToList();
 
-        var parents = x.Select(o => o.transform.parent).ToList();
+        var partials = overlaps
+            .Where(o => o.Item1.bounds != o.Item2)
+            .ToList();
 
-        foreach (var o in x)
+        if (partials.Any())
+        {
+            foreach (var partial in partials)
+                ShowFlipError(partial.Item2);
+            return;
+        }
+
+        var objects = overlaps.Select(o => o.Item3).ToList();
+
+        isFlipping = true;
+        audioSource.PlayOneShot(FlipSound);
+        var levelController = FindObjectOfType<LevelController>();
+        levelController?.SaveUndoState();
+
+        var parents = objects.Select(o => o.transform.parent).ToList();
+
+        foreach (var o in objects)
         {
             o.transform.parent = transform;
             o.DoBeginFlip();
@@ -94,7 +118,7 @@ public class CellFlip : MonoBehaviour
         cancelFlip = () =>
         {
             cancelled = true;
-            foreach (var (o, parent) in x.Zip(parents, (l, r) => (l, r)))
+            foreach (var (o, parent) in objects.Zip(parents, (l, r) => (l, r)))
             {
                 o.transform.parent = parent;
                 o.DoEndFlip(delta);
@@ -122,7 +146,7 @@ public class CellFlip : MonoBehaviour
 
         cancelFlip();
 
-        foreach (var o in x)
+        foreach (var o in objects)
         {
             var dyn = o.GetComponentInChildren<MyDynamic>();
             if (dyn != null && Physics.AllOverlaps(CollisionMask.Physical, dyn).Any())

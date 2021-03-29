@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-
     public UnityEvent OnKillEvent = new UnityEvent();
     LevelController levelController;
 
@@ -18,6 +17,6 @@ public class PlayerHealth : MonoBehaviour
     public void KillPlayer()
     {
         OnKillEvent.Invoke();
-        levelController.DoRestart();
+        levelController.DoDeath();
     }
 }

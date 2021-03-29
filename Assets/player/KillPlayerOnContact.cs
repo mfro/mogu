@@ -1,14 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class KillPlayerOnContact : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    private MyCollider physics;
+
+    void Start()
     {
-        if(collision.gameObject.tag == "Player")
+        physics = GetComponent<MyCollider>();
+    }
+
+    void FixedUpdate()
+    {
+        var overlapping = Physics.AllOverlaps(CollisionMask.Dynamic, physics)
+            .Select(o => o.Item1.GetComponent<PlayerHealth>())
+            .Where(o => o != null)
+            .ToList();
+
+        foreach (var item in overlapping)
         {
-            collision.gameObject.GetComponent<PlayerHealth>().KillPlayer();
+            item.KillPlayer();
         }
     }
 }

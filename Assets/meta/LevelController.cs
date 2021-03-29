@@ -143,18 +143,25 @@ public class LevelController : MonoBehaviour
         }
         else
         {
-            var d = levels[currentLevel + 1].transform.position - levels[currentLevel].transform.position;
-            var d0 = levels[currentLevel].transform.position - player.transform.position;
-            var d1 = levels[currentLevel + 1].transform.position - player.transform.position;
+            float dOld, dNext;
+            if (levels[currentLevel].exitOrientation.x == 0)
+            {
+                dOld = levels[currentLevel].transform.position.x - player.transform.position.x;
+                dNext = levels[currentLevel + 1].transform.position.x - player.transform.position.x;
+            }
+            else
+            {
+                dOld = levels[currentLevel].transform.position.y - player.transform.position.y;
+                dNext = levels[currentLevel + 1].transform.position.y - player.transform.position.y;
+            }
 
-            bool goNext = Mathf.Abs(d.x) > Mathf.Abs(d.y)
-                ? Mathf.Abs(d1.x) <= Mathf.Abs(d0.x)
-                : Mathf.Abs(d1.y) <= Mathf.Abs(d0.y);
+            var visible = Physics.RectFromCenterSize(Physics.FromUnity(levels[currentLevel + 1].transform.position), Physics.FromUnity(new Vector2(12, 12)));
+            var overlap = Physics.Overlap(visible, playerPhysics.bounds);
 
-            if (d1.sqrMagnitude < d0.sqrMagnitude && goNext && playerFlip.down == levels[currentLevel].exitOrientation)
+            if (overlap != null && Mathf.Abs(dNext) < Mathf.Abs(dOld) && playerFlip.down == levels[currentLevel].exitOrientation)
             {
                 var delta = levels[currentLevel + 1].transform.position - levels[currentLevel].transform.position;
-                if(LevelTransitionSound != null) audioSource.PlayOneShot(LevelTransitionSound);
+                if (LevelTransitionSound != null) audioSource.PlayOneShot(LevelTransitionSound);
                 await MoveCamera(delta);
                 currentLevel += 1;
 

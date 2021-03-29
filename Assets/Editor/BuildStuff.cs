@@ -54,7 +54,7 @@ public class BuildStuff
         BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
             scenes = scenes,
-            locationPathName = "build/win/mushroom.exe",
+            locationPathName = "build/win/mogu.exe",
             targetGroup = BuildTargetGroup.Standalone,
             target = BuildTarget.StandaloneWindows64,
         });

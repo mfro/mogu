@@ -11,7 +11,17 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] GameObject MainScreen;
     [SerializeField] GameObject OptionsScreen;
 
+
+    private float maxMusic, maxMaster, maxSFX;
+
     public AudioMixer audioMixer;
+
+    private void Start()
+    {
+        audioMixer.GetFloat("MusicVolume", out maxMusic);
+        audioMixer.GetFloat("SFXVolume", out maxSFX);
+        audioMixer.GetFloat("MasterVolume", out maxMaster);
+    }
 
     public void OnPlay()
     {
@@ -44,19 +54,19 @@ public class MainMenuController : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
 
-        float volumeOfMixer = Mathf.Lerp(-80, 20, volume / 100f);
+        float volumeOfMixer = Mathf.Lerp(-80, maxMusic, volume / 100f);
         audioMixer.SetFloat("MusicVolume", volumeOfMixer);
     }
 
     public void SetSFXVolume(float volume)
     {
-        float volumeOfMixer = Mathf.Lerp(-80, 20, volume / 100f);
+        float volumeOfMixer = Mathf.Lerp(-80, maxSFX, volume / 100f);
         audioMixer.SetFloat("SFXVolume", volumeOfMixer);
     }
 
     public void SetMasterVolume(float volume)
     {
-        float volumeOfMixer = Mathf.Lerp(-80, 20, volume / 100f);
+        float volumeOfMixer = Mathf.Lerp(-80, maxMaster, volume / 100f);
         audioMixer.SetFloat("MasterVolume", volumeOfMixer);
     }
 

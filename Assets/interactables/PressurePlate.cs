@@ -20,9 +20,10 @@ public class PressurePlate : Switch
     // Start is called before the first frame update
     void Start()
     {
-        physics = GetComponent<MyCollider>();
-
         audioSource = GetComponent<AudioSource>();
+
+        physics = GetComponent<MyCollider>();
+        physics.mask |= CollisionMask.Dynamic;
 
         StateChanged += (v) =>
         {
@@ -30,13 +31,13 @@ public class PressurePlate : Switch
             if (IsActive)
             {
                 pos.y = 1 / 3f;
-                if(DepressSound != null)
+                if (DepressSound != null)
                     audioSource.PlayOneShot(DepressSound);
             }
             else
             {
                 pos.y = 1;
-                if(ReleaseSound != null)
+                if (ReleaseSound != null)
                     audioSource.PlayOneShot(ReleaseSound);
             }
 
@@ -48,7 +49,7 @@ public class PressurePlate : Switch
     {
         if (!physics.enabled) return;
 
-        var overlapping = Physics.AllOverlaps(CollisionMask.Dynamic, physics);
+        var overlapping = Physics.AllOverlaps(physics);
         IsActive = overlapping.Any();
     }
 }

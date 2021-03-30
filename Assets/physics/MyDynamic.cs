@@ -9,17 +9,17 @@ public class MyDynamic : MyCollider
     public bool gravity;
     public float pushRatio;
 
+    public Vector2 velocity;
+
     public Vector2 down => flip?.down ?? Vector2.down;
 
     private bool? _grounded;
-    public bool grounded => _grounded ?? (_grounded = Physics.AllOverlaps(CollisionMask.Physical, bounds.Shift(down)).Where(c => c.Item1 != this)
-        .Any()).Value;
+    public bool grounded => _grounded ??
+        (_grounded = Physics.AllCollisions(bounds.Shift(down), mask).Where(c => c.Item1 != this).Any()).Value;
 
     private bool? _ceilinged;
-    public bool ceilinged => _ceilinged ?? (_ceilinged = Physics.AllOverlaps(CollisionMask.Physical, bounds.Shift(-down)).Where(c => c.Item1 != this)
-        .Any()).Value;
-
-    public Vector2 velocity;
+    public bool ceilinged => _ceilinged ??
+        (_ceilinged = Physics.AllCollisions(bounds.Shift(-down), mask).Where(c => c.Item1 != this).Any()).Value;
 
     [NonSerialized]
     public Vector2 remainder;
@@ -52,6 +52,10 @@ public class MyDynamic : MyCollider
 
         if (velocity != Vector2.zero)
         {
+            var outgoing = CollisionMask.Physical;
+            if (GetComponent<PlayerController>() != null)
+                outgoing |= CollisionMask.Player;
+
             Physics.Move(this, velocity);
 
             if (velocity.x != 0 && !Physics.CanMove(this, new Vector2(Mathf.Sign(velocity.x), 0)))

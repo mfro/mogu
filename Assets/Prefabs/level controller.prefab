@@ -984,7 +984,7 @@ MonoBehaviour:
   camera: {fileID: 4811372265979383890}
   border: {fileID: 1150523557216655155}
   player: {fileID: 1413353432}
-  restartText: {fileID: 2218924675880952089}
+  deathScreen: {fileID: 2218924677133246224}
   CameraTime: 1
   LevelTransitionSound: {fileID: 0}
 --- !u!114 &5696842686851089957
@@ -1531,15 +1531,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 201cfb245a9adc248bc41b9296c00553, type: 3}
---- !u!1 &2218924675880952089 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5447641573466539389, guid: 201cfb245a9adc248bc41b9296c00553,
-    type: 3}
-  m_PrefabInstance: {fileID: 6148219542689817700}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2218924675880952165 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5447641573466539265, guid: 201cfb245a9adc248bc41b9296c00553,
+    type: 3}
+  m_PrefabInstance: {fileID: 6148219542689817700}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2218924677133246224 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5447641572504255348, guid: 201cfb245a9adc248bc41b9296c00553,
     type: 3}
   m_PrefabInstance: {fileID: 6148219542689817700}
   m_PrefabAsset: {fileID: 0}

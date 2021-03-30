@@ -88,8 +88,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2343217652183063348}
-  - component: {fileID: 2343217652183063349}
   - component: {fileID: -813264859102482375}
+  - component: {fileID: 2343217652183063349}
+  - component: {fileID: 6178387223956420205}
   m_Layer: 11
   m_Name: panel flip h
   m_TagString: Untagged
@@ -112,24 +113,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2343217652183063349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2343217652183063351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4f88a9bd6ccf794b815d82065144af8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FlipError: {fileID: 8389389663875197185, guid: d23acc73427ffd5499d983c12253d940,
-    type: 3}
-  FlipSound: {fileID: 8300000, guid: 60b570011053fa24b9e86a41d56a4ae8, type: 3}
-  flip1: 3
-  flip2: 3
-  flip_time: 0.5
 --- !u!82 &-813264859102482375
 AudioSource:
   m_ObjectHideFlags: 0
@@ -227,3 +210,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2343217652183063349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343217652183063351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4f88a9bd6ccf794b815d82065144af8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlipError: {fileID: 8389389663875197185, guid: d23acc73427ffd5499d983c12253d940,
+    type: 3}
+  FlipSound: {fileID: 8300000, guid: 60b570011053fa24b9e86a41d56a4ae8, type: 3}
+  flip1: 3
+  flip2: 3
+  flip_time: 0.5
+--- !u!114 &6178387223956420205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343217652183063351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f69e733aacfe224d88141a43af4eb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: {x: 1, y: 1}
+  offset: {x: 0, y: 0}

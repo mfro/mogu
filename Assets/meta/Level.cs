@@ -17,7 +17,7 @@ public class Level : MonoBehaviour
         {
             var controller = FindObjectOfType<LevelController>();
             await Task.Yield();
-            controller.SkipToLevel(this);
+            controller.GoToLevel(this, false);
         }
     }
 

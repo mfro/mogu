@@ -18,7 +18,7 @@ public class LevelController : MonoBehaviour
     public PlayerController player;
 
     [SerializeField]
-    public GameObject restartText;
+    public GameObject deathScreen;
 
     [SerializeField]
     public float CameraTime;
@@ -40,9 +40,9 @@ public class LevelController : MonoBehaviour
             rotation = controller.player.transform.rotation;
             down = controller.playerFlip.down;
 
-            level = Instantiate(controller.levels[controller.currentLevel]);
+            level = Instantiate(controller.levels[controller.currentIndex]);
             level.gameObject.SetActive(false);
-            level.gameObject.name = $"{controller.levels[controller.currentLevel].name} (save state)";
+            level.gameObject.name = $"{controller.levels[controller.currentIndex].name} (save state)";
         }
 
         public void Apply(LevelController controller)
@@ -51,19 +51,22 @@ public class LevelController : MonoBehaviour
 
             controller.playerPhysics.position = position;
             controller.playerPhysics.velocity = Vector2.zero;
+            controller.playerPhysics.remainder = Vector2.zero;
             controller.playerPhysics.UpdatePosition();
             controller.player.transform.rotation = rotation;
             controller.playerFlip.down = down;
             controller.player.gameObject.SetActive(true);
-            controller.restartText.SetActive(false);
+            controller.deathScreen.SetActive(false);
 
-            controller.levels[controller.currentLevel].gameObject.SetActive(false);
-            Destroy(controller.levels[controller.currentLevel].gameObject);
+            controller.player.UpdateMovement();
+
+            controller.levels[controller.currentIndex].gameObject.SetActive(false);
+            Destroy(controller.levels[controller.currentIndex].gameObject);
 
             var replacement = Instantiate(level);
             replacement.gameObject.SetActive(true);
-            replacement.name = controller.levels[controller.currentLevel].name;
-            controller.levels[controller.currentLevel] = replacement;
+            replacement.name = controller.levels[controller.currentIndex].name;
+            controller.levels[controller.currentIndex] = replacement;
         }
 
         public void Cleanup()
@@ -73,7 +76,8 @@ public class LevelController : MonoBehaviour
     }
 
     private Level[] levels;
-    private int currentLevel;
+    private int currentIndex;
+    private Level currentLevel => levels[currentIndex];
 
     private MyDynamic playerPhysics => player.GetComponent<MyDynamic>();
     private Flippable playerFlip => player.GetComponent<Flippable>();
@@ -82,34 +86,100 @@ public class LevelController : MonoBehaviour
     private SaveState restartState;
     private Stack<SaveState> undoStack;
 
-    private void Awake()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void Start()
+    void Start()
     {
         levels = FindObjectsOfType<Level>().OrderBy(l => l.name).ToArray();
-        currentLevel = 0;
-
-        var pos = levels[0].transform.position;
-        pos.z = camera.transform.position.z;
-        camera.transform.position = pos;
-        player.transform.rotation = levels[0].start.transform.rotation;
-        playerPhysics.velocity = Vector2.zero;
-        playerPhysics.position = Physics.FromUnity(levels[0].start.transform.position);
-        playerPhysics.UpdatePosition();
-        playerFlip.down = levels[0].start.transform.rotation * Vector2.down;
-        player.gameObject.SetActive(true);
-        restartText.SetActive(false);
-
-        restartState = new SaveState(this);
         undoStack = new Stack<SaveState>();
 
-        test();
+        GoToLevel(levels[0], false);
     }
 
-    private void test()
+    void FixedUpdate()
+    {
+        if (moving) return;
+
+        if (currentIndex + 1 == levels.Length)
+        {
+
+        }
+        else
+        {
+            var next = levels[currentIndex + 1];
+
+            var visible = Physics.RectFromCenterSize(Physics.FromUnity(next.transform.position), Physics.FromUnity(new Vector2(12, 12)));
+            var overlap = Physics.Overlap(visible, playerPhysics.bounds);
+            var dim = currentLevel.exitOrientation.x == 0 ? 0 : 1;
+
+            var progress = overlap != null
+                && overlap.Value == playerPhysics.bounds
+                && playerFlip.down == currentLevel.exitOrientation
+                && Distance(next.transform.position, player.transform.position, dim) <= Distance(currentLevel.transform.position, player.transform.position, dim);
+
+            if (progress)
+            {
+                GoToLevel(currentIndex + 1, true);
+            }
+        }
+    }
+
+    public void SaveUndoState()
+    {
+        undoStack.Push(new SaveState(this));
+    }
+
+    public void GoToLevel(Level level, bool transition)
+    {
+        GoToLevel(Array.IndexOf(levels, level), transition);
+    }
+
+    public async void GoToLevel(int index, bool transition)
+    {
+        if (index < 0 || index >= levels.Length) return;
+
+        if (transition)
+        {
+            if (LevelTransitionSound != null) audioSource.PlayOneShot(LevelTransitionSound);
+
+            var from = currentLevel;
+            currentIndex = index;
+
+            var delta = currentLevel.transform.position - from.transform.position;
+            await MoveCamera(delta);
+        }
+        else
+        {
+            currentIndex = index;
+
+            player.transform.rotation = currentLevel.start.transform.rotation;
+            playerFlip.down = currentLevel.start.transform.rotation * Vector2.down;
+
+            playerPhysics.velocity = Vector2.zero;
+            playerPhysics.position = Physics.FromUnity(currentLevel.start.transform.position);
+            playerPhysics.UpdatePosition();
+        }
+
+        player.UpdateMovement();
+
+        var pos = currentLevel.transform.position;
+        pos.z = camera.transform.position.z;
+        camera.transform.position = pos;
+
+        border.Move(currentLevel.transform.position);
+
+        restartState?.Cleanup();
+        restartState = new SaveState(this);
+        foreach (var item in undoStack) item.Cleanup();
+        undoStack.Clear();
+
+        UpdateColliders();
+    }
+
+    private void UpdateColliders()
     {
         var visible = Physics.RectFromCenterSize(Physics.FromUnity(camera.transform.position), Physics.FromUnity(new Vector2(12, 12)));
 
@@ -120,82 +190,71 @@ public class LevelController : MonoBehaviour
             var overlap = Physics.Overlap(visible, item.bounds);
             item.enabled = overlap != null;
         }
-
-        border.Move(camera.transform.position);
-
-        player.UpdateMovement();
-        playerPhysics.velocity = Vector2.zero;
-        playerPhysics.remainder = Vector2.zero;
     }
 
-    public void SaveUndoState()
+    private async Task MoveCamera(Vector3 delta)
     {
-        undoStack.Push(new SaveState(this));
+        moving = true;
+        playerFlip.flipping = true;
+        var p0 = camera.transform.position;
+        var p1 = p0 + delta;
+
+        var t0 = Time.time;
+        var t1 = t0 + CameraTime;
+
+        while (Time.time < t1)
+        {
+            camera.transform.position = Vector3.Lerp(p0, p1, (Time.time - t0) / CameraTime);
+            await Task.Yield();
+        }
+
+        camera.transform.position = p1;
+        playerFlip.flipping = false;
+        moving = false;
     }
 
-    async void FixedUpdate()
+    public void DoRestart()
     {
         if (moving) return;
 
-        if (currentLevel + 1 == levels.Length)
-        {
-
-        }
-        else
-        {
-            float dOld, dNext;
-            if (levels[currentLevel].exitOrientation.x == 0)
-            {
-                dOld = levels[currentLevel].transform.position.x - player.transform.position.x;
-                dNext = levels[currentLevel + 1].transform.position.x - player.transform.position.x;
-            }
-            else
-            {
-                dOld = levels[currentLevel].transform.position.y - player.transform.position.y;
-                dNext = levels[currentLevel + 1].transform.position.y - player.transform.position.y;
-            }
-
-            var visible = Physics.RectFromCenterSize(Physics.FromUnity(levels[currentLevel + 1].transform.position), Physics.FromUnity(new Vector2(12, 12)));
-            var overlap = Physics.Overlap(visible, playerPhysics.bounds);
-
-            if (overlap != null && Mathf.Abs(dNext) < Mathf.Abs(dOld) && playerFlip.down == levels[currentLevel].exitOrientation)
-            {
-                var delta = levels[currentLevel + 1].transform.position - levels[currentLevel].transform.position;
-                if (LevelTransitionSound != null) audioSource.PlayOneShot(LevelTransitionSound);
-                await MoveCamera(delta);
-                currentLevel += 1;
-
-                restartState?.Cleanup();
-                restartState = new SaveState(this);
-                foreach (var item in undoStack) item.Cleanup();
-                undoStack.Clear();
-
-                test();
-            }
-        }
-    }
-
-    public void SkipToLevel(Level level)
-    {
-        var index = Array.IndexOf(levels, level);
-
-        var delta = levels[index].transform.position - levels[currentLevel].transform.position;
-        currentLevel = index;
-        player.transform.rotation = levels[currentLevel].start.transform.rotation;
-        playerPhysics.velocity = Vector2.zero;
-        playerPhysics.position = Physics.FromUnity(levels[currentLevel].start.transform.position);
-        playerPhysics.UpdatePosition();
-        playerFlip.down = levels[currentLevel].start.transform.rotation * Vector2.down;
-        camera.transform.position += delta;
         player.gameObject.SetActive(true);
-        restartText.SetActive(false);
+        deathScreen.SetActive(false);
 
-        restartState?.Cleanup();
-        restartState = new SaveState(this);
+        restartState.Apply(this);
         foreach (var item in undoStack) item.Cleanup();
         undoStack.Clear();
 
-        test();
+        UpdateColliders();
+    }
+
+    public void DoDeath()
+    {
+        if (moving) return;
+
+        player.gameObject.SetActive(false);
+        deathScreen.SetActive(true);
+    }
+
+    public void DoUndo()
+    {
+        if (moving) return;
+
+        if (!undoStack.Any())
+        {
+            DoRestart();
+            return;
+        }
+
+        var state = undoStack.Pop();
+        state.Apply(this);
+        state.Cleanup();
+
+        UpdateColliders();
+    }
+
+    private static float Distance(Vector2 a, Vector2 b, int dim)
+    {
+        return Mathf.Abs(a[dim] - b[dim]);
     }
 
     private bool _onRestart = false;
@@ -220,7 +279,7 @@ public class LevelController : MonoBehaviour
     public void OnCheat1(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton() && !_onCheat1 && !moving)
-            SkipToLevel(levels[currentLevel + 1]);
+            GoToLevel(currentIndex + 1, false);
 
         _onCheat1 = c.ReadValueAsButton();
     }
@@ -229,68 +288,8 @@ public class LevelController : MonoBehaviour
     public void OnCheat2(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton() && !_onCheat2 && !moving)
-            SkipToLevel(levels[currentLevel - 1]);
+            GoToLevel(currentIndex - 1, false);
 
         _onCheat2 = c.ReadValueAsButton();
-    }
-
-    public void DoRestart()
-    {
-        if (moving) return;
-
-        player.gameObject.SetActive(true);
-        restartText.SetActive(false);
-
-        restartState.Apply(this);
-        foreach (var item in undoStack) item.Cleanup();
-        undoStack.Clear();
-
-        test();
-    }
-
-    public void DoDeath()
-    {
-        if (moving) return;
-
-        player.gameObject.SetActive(false);
-        restartText.SetActive(true);
-    }
-
-    public void DoUndo()
-    {
-        if (moving) return;
-
-        if (!undoStack.Any())
-        {
-            DoRestart();
-            return;
-        }
-
-        var state = undoStack.Pop();
-        state.Apply(this);
-        state.Cleanup();
-
-        test();
-    }
-
-    private async Task MoveCamera(Vector3 delta)
-    {
-        moving = true;
-        playerFlip.flipping = true;
-        var p0 = camera.transform.position;
-        var p1 = p0 + delta;
-
-        var t0 = Time.time;
-        var t1 = t0 + CameraTime;
-
-        while (Time.time < t1)
-        {
-            camera.transform.position = Vector3.Lerp(p0, p1, (Time.time - t0) / CameraTime);
-            await Task.Yield();
-        }
-
-        camera.transform.position = p1;
-        playerFlip.flipping = false;
-        moving = false;
     }
 }

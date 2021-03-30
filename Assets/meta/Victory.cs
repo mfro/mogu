@@ -15,13 +15,14 @@ public class Victory : MonoBehaviour
     void Start()
     {
         physics = GetComponent<MyCollider>();
+        physics.mask |= CollisionMask.Player;
     }
 
     void FixedUpdate()
     {
         if (!physics.enabled) return;
 
-        var (player, _) = Physics.AllOverlaps(CollisionMask.Dynamic, physics)
+        var (player, _) = Physics.AllOverlaps(physics)
             .FirstOrDefault(c => c.Item1.GetComponent<PlayerController>() != null);
 
         if (player is MyDynamic dyn && dyn.grounded)

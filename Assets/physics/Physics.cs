@@ -11,7 +11,7 @@ public enum CollisionMask
     Physical = 1 << 0,
     Flipping = 1 << 1,
     Dynamic = 1 << 2,
-    PlayerOnly = 1 << 2,
+    Player = 1 << 3,
 
     Any = ~0,
 }
@@ -63,7 +63,7 @@ public static class Physics
 
     public static HashSet<MyCollider> allColliders = new HashSet<MyCollider>();
 
-    public static Rect? Overlap(Rect a, Rect b)
+    public static Rect Distance(Rect a, Rect b)
     {
         float xMin = Mathf.Max(a.xMin, b.xMin);
         float yMin = Mathf.Max(a.yMin, b.yMin);
@@ -71,13 +71,20 @@ public static class Physics
         float xMax = Mathf.Min(a.xMax, b.xMax);
         float yMax = Mathf.Min(a.yMax, b.yMax);
 
-        if (xMin >= xMax || yMin >= yMax)
-            return null;
-
         return Rect.MinMaxRect(xMin, yMin, xMax, yMax);
     }
 
-    public static IEnumerable<(MyCollider, Rect)> AllOverlaps(CollisionMask mask, Rect a)
+    public static Rect? Overlap(Rect a, Rect b)
+    {
+        var rect = Distance(a, b);
+
+        if (rect.width <= 0 || rect.height <= 0)
+            return null;
+
+        return rect;
+    }
+
+    public static IEnumerable<(MyCollider, Rect)> AllOverlaps(Rect a, CollisionMask mask)
     {
         foreach (var collider in allColliders)
         {
@@ -92,21 +99,53 @@ public static class Physics
         }
     }
 
-    public static IEnumerable<(MyCollider, Rect)> AllOverlaps(CollisionMask reason, MyCollider collider)
+    public static IEnumerable<(MyCollider, Rect)> AllCollisions(Rect a, CollisionMask mask)
     {
-        return AllOverlaps(reason, collider.bounds)
+        return AllOverlaps(a, mask)
+            .Where(c => c.Item1 is MyDynamic || c.Item1 is MyStatic);
+    }
+
+    public static IEnumerable<(MyCollider, Rect)> AllOverlaps(MyCollider collider)
+    {
+        return AllOverlaps(collider.bounds, collider.mask)
             .Where(o => o.Item1 != collider);
+    }
+
+    public static IEnumerable<(MyCollider, Rect)> AllCollisions(MyCollider collider)
+    {
+        return AllOverlaps(collider)
+            .Where(c => c.Item1 is MyDynamic || c.Item1 is MyStatic);
     }
 
     public static bool CanMove(MyDynamic collider, Vector2 motion)
     {
-        return AllOverlaps(CollisionMask.Physical, collider.bounds.Shift(motion))
-            .Where(c => c.Item1 != collider)
+        var bounds = collider.bounds.Shift(motion);
+
+        return AllCollisions(bounds, collider.mask)
+            .Where(c => c.Item1 != collider && (c.Item1 is MyStatic || c.Item1 is MyDynamic))
             .Select(c => c.Item1 as MyDynamic)
             .All(d => d != null && CanMove(d, motion));
     }
 
-    private static void MoveScaled(MyDynamic collider, int dim)
+    public static void Move(MyDynamic collider, Vector2 motion)
+    {
+        collider.remainder += motion * Time.fixedDeltaTime;
+
+        MoveDimension(collider, 0); // X
+        MoveDimension(collider, 1); // Y
+
+        var separated = collider.touching.Select(o => (o, Physics.Distance(collider.bounds, o.bounds)))
+            .Where(c => c.Item2.width < 0 || c.Item2.height < 0)
+            .ToList();
+
+        foreach (var (other, d) in separated)
+        {
+            collider.touching.Remove(other);
+            other.touching.Remove(collider);
+        }
+    }
+
+    private static void MoveDimension(MyDynamic collider, int dim)
     {
         var objects = new List<MyDynamic> { collider };
 
@@ -121,17 +160,33 @@ public static class Physics
 
             var sign = Mathf.Sign(collider.remainder[dim]) * UNIT;
             collider.remainder[dim] -= sign;
+
             var shift = new Vector2 { [dim] = sign };
+            var collision = false;
 
-            var mask = CollisionMask.Physical;
-            if (collider.GetComponent<PlayerController>() != null)
-                mask |= CollisionMask.PlayerOnly;
+            foreach (var obj in objects.ToList())
+            {
+                var overlaps = AllOverlaps(obj.bounds.Shift(shift), obj.mask)
+                    .Where(c => !objects.Contains(c.Item1));
 
-            var (other, overlap) = objects.SelectMany(o => AllOverlaps(mask, o.bounds.Shift(shift)))
-                .Where(c => !objects.Contains(c.Item1))
-                .FirstOrDefault();
+                foreach (var (other, overlap) in overlaps)
+                {
+                    if (other is MyDynamic || other is MyStatic)
+                        collision = true;
 
-            if (other == null)
+                    obj.touching.Add(other);
+                    other.touching.Add(obj);
+
+                    if (other is MyDynamic pushee && collider.grounded && pushee.pushRatio > 0)
+                    {
+                        pushee.remainder[dim] += sign * pushee.pushRatio;
+                        collider.remainder[dim] *= pushee.pushRatio;
+                        objects.Add(pushee);
+                    }
+                }
+            }
+
+            if (!collision)
             {
                 foreach (var o in objects)
                 {
@@ -139,26 +194,6 @@ public static class Physics
                     o.UpdatePosition();
                 }
             }
-            else if (other is MyDynamic pushee && collider.grounded && pushee.pushRatio > 0)
-            {
-                pushee.remainder[dim] += sign * pushee.pushRatio;
-                collider.remainder[dim] *= pushee.pushRatio;
-                objects.Add(pushee);
-            }
         }
-    }
-
-    private static void MoveScaled(MyDynamic collider, Vector2 motion)
-    {
-        collider.remainder += motion;
-
-        MoveScaled(collider, 0);
-        MoveScaled(collider, 1);
-    }
-
-    public static void Move(MyDynamic collider, Vector2 motion)
-    {
-        var scaled = motion * Time.fixedDeltaTime;
-        MoveScaled(collider, scaled);
     }
 }

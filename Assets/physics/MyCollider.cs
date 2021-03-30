@@ -14,6 +14,9 @@ public class MyCollider : MonoBehaviour
     public Vector2 position;
 
     [NonSerialized]
+    public HashSet<MyCollider> touching = new HashSet<MyCollider>();
+
+    [NonSerialized]
     public CollisionMask mask = CollisionMask.None;
 
     [NonSerialized]
@@ -26,9 +29,13 @@ public class MyCollider : MonoBehaviour
         position = Physics.FromUnity(transform.position);
         flip = GetComponentInParent<Flippable>();
 
-        if (flip != null)
+        if (GetComponent<Flippable>() != null)
         {
             mask |= CollisionMask.Flipping;
+        }
+
+        if (flip != null)
+        {
 
             flip.EndFlip += (delta) =>
             {
@@ -37,11 +44,21 @@ public class MyCollider : MonoBehaviour
         }
 
         Physics.allColliders.Add(this);
+
+        foreach (var (other, overlap) in Physics.AllOverlaps(this))
+        {
+            touching.Add(other);
+            other.touching.Add(this);
+        }
     }
 
     void OnDisable()
     {
         Physics.allColliders.Remove(this);
+
+        foreach (var other in touching)
+            other.touching.Remove(this);
+        touching.Clear();
     }
 
     public void UpdatePosition()
@@ -55,7 +72,7 @@ public class MyCollider : MonoBehaviour
         if (fullScale.x % (1 / 32f) != 0) throw new Exception($"invalid scale on collider: {fullScale.x}");
         if (fullScale.y % (1 / 32f) != 0) throw new Exception($"invalid scale on collider: {fullScale.y}");
 
-        var o = (Vector2) Physics.Round(transform.rotation * offset);
+        var o = (Vector2)Physics.Round(transform.rotation * offset);
         var s = Physics.FromUnity(transform.rotation * (transform.lossyScale * scale));
 
         s = Physics.Round(s);
@@ -91,7 +108,6 @@ public class MyCollider : MonoBehaviour
 
         if (isChild)
         {
-            flip = GetComponentInParent<Flippable>();
             var bounds = GetBounds(Physics.FromUnity(transform.position));
 
             var color = Color.green;

@@ -14,7 +14,7 @@ public class KillPlayerOnContact : MonoBehaviour
 
     void FixedUpdate()
     {
-        var overlapping = Physics.AllOverlaps(CollisionMask.Dynamic, physics)
+        var overlapping = Physics.AllOverlaps(physics)
             .Select(o => o.Item1.GetComponent<PlayerHealth>())
             .Where(o => o != null)
             .ToList();

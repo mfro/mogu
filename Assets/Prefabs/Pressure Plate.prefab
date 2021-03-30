@@ -68,9 +68,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3241442996498538665}
+  - component: {fileID: 7390701363680978888}
   - component: {fileID: 8465807014876337626}
   - component: {fileID: 831493313626786350}
-  - component: {fileID: 7390701363680978888}
   m_Layer: 10
   m_Name: pressure plate
   m_TagString: Untagged
@@ -93,35 +93,6 @@ Transform:
   m_Father: {fileID: 540492918836541690}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8465807014876337626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3241442996498538669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f69e733aacfe224d88141a43af4eb2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scale: {x: 1, y: 1}
-  offset: {x: 0, y: 0}
---- !u!114 &831493313626786350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3241442996498538669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf209e299aaa9944ea5b9e75da4d4183, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cube: {fileID: 7130059242730625747}
-  DepressSound: {fileID: 8300000, guid: b9840b29b96ae394f85f2f8b29217651, type: 3}
-  ReleaseSound: {fileID: 8300000, guid: d9e5919980a37c14186c74088697a51b, type: 3}
 --- !u!82 &7390701363680978888
 AudioSource:
   m_ObjectHideFlags: 0
@@ -219,6 +190,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8465807014876337626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241442996498538669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f69e733aacfe224d88141a43af4eb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: {x: 1, y: 1}
+  offset: {x: 0, y: 0}
+--- !u!114 &831493313626786350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241442996498538669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf209e299aaa9944ea5b9e75da4d4183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cube: {fileID: 7130059242730625747}
+  DepressSound: {fileID: 8300000, guid: b9840b29b96ae394f85f2f8b29217651, type: 3}
+  ReleaseSound: {fileID: 8300000, guid: d9e5919980a37c14186c74088697a51b, type: 3}
 --- !u!1 &7130059242730625747
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,8 +23,6 @@ public class CellFlip : MonoBehaviour
     [SerializeField]
     AudioClip FlipSound;
 
-    AudioSource audioSource;
-
     [SerializeField]
     public FlipKind flip1;
 
@@ -34,15 +32,21 @@ public class CellFlip : MonoBehaviour
     [SerializeField]
     float flip_time = 1;
 
+    private AudioSource audioSource;
+    private MyCollider physics;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+
+        physics = GetComponent<MyCollider>();
+        physics.mask |= CollisionMask.Flipping;
     }
 
     public void ShowFlipError(Rect bounds)
     {
         var error = Instantiate(FlipError);
-        error.transform.position = (Vector3) Physics.ToUnity(bounds.center) + new Vector3(0, 0, -5);
+        error.transform.position = (Vector3)Physics.ToUnity(bounds.center) + new Vector3(0, 0, -5);
         error.transform.localScale = Physics.ToUnity(bounds.size);
         error.startTime = Time.time;
     }
@@ -80,10 +84,7 @@ public class CellFlip : MonoBehaviour
 
         var allObjects = Resources.FindObjectsOfTypeAll<Flippable>();
 
-        var area = Physics.RectFromCenterSize(Physics.FromUnity(transform.position), Physics.FromUnity(transform.lossyScale));
-
-        var overlaps = Physics.AllOverlaps(CollisionMask.Flipping, area)
-            // .Where(o => o.Item2 == o.Item1.bounds)
+        var overlaps = Physics.AllOverlaps(physics)
             .Select(o => (o.Item1, o.Item2, o.Item1.GetComponent<Flippable>()))
             .Where(o => o.Item3 != null)
             .ToList();
@@ -149,7 +150,7 @@ public class CellFlip : MonoBehaviour
         foreach (var o in objects)
         {
             var dyn = o.GetComponentInChildren<MyDynamic>();
-            if (dyn != null && Physics.AllOverlaps(CollisionMask.Physical, dyn).Any())
+            if (dyn != null && Physics.AllCollisions(dyn).Any())
             {
                 levelController.DoUndo();
                 break;

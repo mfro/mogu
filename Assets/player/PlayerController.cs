@@ -15,12 +15,13 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private MyDynamic dyn;
     private SpriteRenderer sprite;
+
     [SerializeField]
     private AudioSource walkAudioSource;
     [SerializeField]
     private AudioSource landAudioSource;
     [SerializeField]
-    AudioClip LandSound;
+    private AudioClip LandSound;
 
 
     private Vector2 input_movement;

@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
     //[SerializeField] AudioSource sourceSFX;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (audioManager == null)
         {
@@ -46,6 +46,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(Audio audio)
     {
+        if (audio.audioClip == sourceMusic.clip && sourceMusic.isPlaying) return;
+
         sourceMusic.clip = audio.audioClip;
         sourceMusic.loop = audio.looping;
         sourceMusic.volume = audio.volume;

@@ -27,6 +27,8 @@ public class LevelController : MonoBehaviour
     AudioClip LevelTransitionSound;
     AudioSource audioSource;
 
+    [SerializeField] private Audio backgroundMusic;
+
     private class SaveState
     {
         public Vector3 position;
@@ -89,10 +91,13 @@ public class LevelController : MonoBehaviour
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+
     }
 
     void Start()
     {
+        AudioManager.audioManager.PlayMusic(backgroundMusic);
+
         levels = FindObjectsOfType<Level>().OrderBy(l => l.name).ToArray();
         undoStack = new Stack<SaveState>();
 

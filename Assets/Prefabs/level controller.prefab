@@ -986,6 +986,12 @@ MonoBehaviour:
   deathScreen: {fileID: 2218924677133246224}
   CameraTime: 1
   LevelTransitionSound: {fileID: 0}
+  backgroundMusic:
+    audioClip: {fileID: 8300000, guid: c6d73e34faf4f9b46ba495b5a68fcb59, type: 3}
+    volume: 1
+    looping: 1
+    mixerGroup: {fileID: -8837534004785020105, guid: 60d5009f46bde5d4a8ffcdd82728847a,
+      type: 2}
 --- !u!114 &5696842686851089957
 MonoBehaviour:
   m_ObjectHideFlags: 0

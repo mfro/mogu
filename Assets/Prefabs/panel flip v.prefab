@@ -227,7 +227,7 @@ MonoBehaviour:
   FlipSound: {fileID: 8300000, guid: 60b570011053fa24b9e86a41d56a4ae8, type: 3}
   flip1: 2
   flip2: 2
-  flip_time: 0.5
+  flip_time: 0.4
 --- !u!114 &5077597063558395348
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ public class MainMenuController : MonoBehaviour
         audioMixer.GetFloat("MusicVolume", out maxMusic);
         audioMixer.GetFloat("SFXVolume", out maxSFX);
         audioMixer.GetFloat("MasterVolume", out maxMaster);
-        AudioManager.audioManager.PlayMusic(mainMenuMusic);
+        MusicManager.musicManager.PlayMusic(mainMenuMusic);
     }
 
     public void OnPlay()

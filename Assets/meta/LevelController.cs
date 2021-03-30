@@ -96,7 +96,7 @@ public class LevelController : MonoBehaviour
 
     void Start()
     {
-        AudioManager.audioManager.PlayMusic(backgroundMusic);
+        MusicManager.musicManager.PlayMusic(backgroundMusic);
 
         levels = FindObjectsOfType<Level>().OrderBy(l => l.name).ToArray();
         undoStack = new Stack<SaveState>();

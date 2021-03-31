@@ -150,10 +150,16 @@ public class CellFlip : MonoBehaviour
         foreach (var o in objects)
         {
             var dyn = o.GetComponentInChildren<MyDynamic>();
-            if (dyn != null && Physics.AllCollisions(dyn).Any())
+            if (dyn != null)
             {
-                levelController.DoUndo();
-                break;
+                var (other, overlap) = Physics.AllCollisions(dyn).FirstOrDefault();
+
+                if (other != null)
+                {
+                    ShowFlipError(overlap);
+                    levelController.DoUndo();
+                    break;
+                }
             }
         }
 

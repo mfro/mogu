@@ -1,34 +1,103 @@
 fileFormatVersion: 2
-guid: 22dd4f68bb954e244ae2a693dc1363b7
+guid: a57932c211ddd1a4181ba9529e86da89
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6833744810930546503
-    second: level-progress_0
+      213: 3499272959063439820
+    second: down
   - first:
-      213: -1622336445056102620
-    second: level-progress_1
+      213: 3781946483862830510
+    second: bob down 1
   - first:
-      213: -705655488512988084
-    second: level-progress_2
+      213: 8268407628885547822
+    second: bob down 2
   - first:
-      213: 7861367992956213310
-    second: level-progress_3
+      213: -3306248182744019065
+    second: release down 1
   - first:
-      213: -3849416125765130482
-    second: level-progress_4
+      213: 7398979571661890971
+    second: release down 2
   - first:
-      213: -1454866059503690551
-    second: level-progress_5
+      213: -7635938385197694939
+    second: release down 3
   - first:
-      213: 6318581925098074987
-    second: level-progress_6
+      213: -3658313301145214715
+    second: release down 4
   - first:
-      213: -3479633156806939009
-    second: level-progress_7
+      213: -2933356553296434627
+    second: balloon_7
   - first:
-      213: 8475177527650265075
-    second: level-progress_8
+      213: -8568720086709014289
+    second: up
+  - first:
+      213: -1538934602957519320
+    second: bob up 1
+  - first:
+      213: -6358860599630514067
+    second: bob up 2
+  - first:
+      213: -9033040779545312112
+    second: release up 1
+  - first:
+      213: -9152978192558831385
+    second: release up 2
+  - first:
+      213: -470669842059318790
+    second: release up 3
+  - first:
+      213: 3419636618834703677
+    second: release up 4
+  - first:
+      213: -8110300814587302850
+    second: balloon_15
+  - first:
+      213: 8231600358992180082
+    second: right
+  - first:
+      213: 1211548090215467790
+    second: bob right 1
+  - first:
+      213: -1440565956228661359
+    second: bob right 2
+  - first:
+      213: 3337064464112610288
+    second: release right 1
+  - first:
+      213: 8600201632702329476
+    second: release right 2
+  - first:
+      213: 2156332608400264723
+    second: release right 3
+  - first:
+      213: 878114276259010412
+    second: release right 4
+  - first:
+      213: 5528797759925409953
+    second: balloon_23
+  - first:
+      213: -5766816026591900917
+    second: left
+  - first:
+      213: 1984283489804697916
+    second: bob left 1
+  - first:
+      213: -5770574898491345450
+    second: bob left 2
+  - first:
+      213: 1551819903114681207
+    second: release left 1
+  - first:
+      213: 497070192637014256
+    second: release left 2
+  - first:
+      213: -6976015082426762250
+    second: release left 3
+  - first:
+      213: 9065391109046999746
+    second: release left 4
+  - first:
+      213: -112111883238924323
+    second: balloon_31
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -74,7 +143,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -126,190 +195,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: level-progress_0
+      name: down
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.640625, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc93b11673aef8030800000000000000
+      internalID: 3499272959063439820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: up
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.640625, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe074fbea7ac51980800000000000000
+      internalID: -8568720086709014289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: right
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.640625, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 273f4b2e9e48c3270800000000000000
+      internalID: 8231600358992180082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bob right 1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0b8899a19840d010800000000000000
+      internalID: 1211548090215467790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: left
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.640625, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7472f25e2b656de50800000000000000
-      internalID: 6833744810930546503
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: level-progress_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 42fc246499d4c79e0800000000000000
-      internalID: -1622336445056102620
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: level-progress_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c4ce06962120536f0800000000000000
-      internalID: -705655488512988084
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: level-progress_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e38d7ccc980391d60800000000000000
-      internalID: 7861367992956213310
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: level-progress_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e07eb1fbd60249ac0800000000000000
-      internalID: -3849416125765130482
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: level-progress_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9cc928fe6074fcbe0800000000000000
-      internalID: -1454866059503690551
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: level-progress_6
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b63bca998cc10b750800000000000000
-      internalID: 6318581925098074987
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: level-progress_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f7ee9db641cd5bfc0800000000000000
-      internalID: -3479633156806939009
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: level-progress_8
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f7a7f7de01ed9570800000000000000
-      internalID: 8475177527650265075
+      spriteID: b0bc5f1b06728ffa0800000000000000
+      internalID: -5766816026591900917
       vertices: []
       indices: 
       edges: []

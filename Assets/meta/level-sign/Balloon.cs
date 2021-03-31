@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class Balloon : MonoBehaviour
 {
+    public SpriteRenderer balloon;
+
+    public Sprite upSprite;
+    public Sprite downSprite;
+    public Sprite leftSprite;
+    public Sprite rightSprite;
+
     private Vector3 position;
     private Vector3 velocity;
     private Vector3 acceleration;
@@ -16,6 +23,7 @@ public class Balloon : MonoBehaviour
     void OnEnable()
     {
         anim = GetComponent<Animator>();
+
         DoIdle();
     }
 
@@ -38,6 +46,20 @@ public class Balloon : MonoBehaviour
 
     void FixedUpdate()
     {
+        var down = transform.rotation * Vector3.down;
+
+        if (Vector2.Dot(down, Vector2.up) > 0.5f)
+            balloon.sprite = upSprite;
+        if (Vector2.Dot(down, Vector2.down) > 0.5f)
+            balloon.sprite = downSprite;
+        if (Vector2.Dot(down, Vector2.left) > 0.5f)
+            balloon.sprite = leftSprite;
+        if (Vector2.Dot(down, Vector2.right) > 0.5f)
+            balloon.sprite = rightSprite;
+
+        var spriteOut = (transform.rotation * Vector3.forward);
+        balloon.flipX = spriteOut.z < 0;
+
         if (!released) return;
 
         velocity += acceleration;

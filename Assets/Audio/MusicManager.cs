@@ -22,7 +22,6 @@ public class Audio
 
 public class MusicManager : MonoBehaviour
 {
-
     public static MusicManager musicManager;
 
     [SerializeField] AudioSource musicSource;

@@ -11,13 +11,13 @@ public class MyCollider : MonoBehaviour
     public Vector2 offset;
 
     [NonSerialized]
+    public CollisionMask mask = CollisionMask.None;
+
+    [NonSerialized]
     public Vector2 position;
 
     [NonSerialized]
     public HashSet<MyCollider> touching = new HashSet<MyCollider>();
-
-    [NonSerialized]
-    public CollisionMask mask = CollisionMask.None;
 
     [NonSerialized]
     public Flippable flip;

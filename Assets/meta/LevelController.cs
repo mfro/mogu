@@ -91,12 +91,11 @@ public class LevelController : MonoBehaviour
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-
     }
 
     void Start()
     {
-        MusicManager.musicManager.PlayMusic(backgroundMusic);
+        MusicManager.musicManager?.PlayMusic(backgroundMusic);
 
         levels = FindObjectsOfType<Level>().OrderBy(l => l.name).ToArray();
         undoStack = new Stack<SaveState>();
@@ -145,6 +144,9 @@ public class LevelController : MonoBehaviour
     public async void GoToLevel(int index, bool transition)
     {
         if (index < 0 || index >= levels.Length) return;
+
+        var balloon = levels[index].start.GetComponentInChildren<Balloon>();
+        balloon.DoRelease();
 
         if (transition)
         {

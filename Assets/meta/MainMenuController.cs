@@ -23,7 +23,7 @@ public class MainMenuController : MonoBehaviour
         audioMixer.GetFloat("MusicVolume", out maxMusic);
         audioMixer.GetFloat("SFXVolume", out maxSFX);
         audioMixer.GetFloat("MasterVolume", out maxMaster);
-        MusicManager.musicManager.PlayMusic(mainMenuMusic);
+        MusicManager.musicManager?.PlayMusic(mainMenuMusic);
     }
 
     public void OnPlay()
@@ -52,7 +52,7 @@ public class MainMenuController : MonoBehaviour
         MainScreen.SetActive(true);
         OptionsScreen.SetActive(false);
     }
-    
+
 
     public void SetMusicVolume(float volume)
     {

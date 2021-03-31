@@ -29,7 +29,7 @@ public class LevelController : MonoBehaviour
 
     [SerializeField] private Audio backgroundMusic;
 
-    private class SaveState
+    private class SaveState : IDisposable
     {
         public Vector3 position;
         public Quaternion rotation;
@@ -71,7 +71,7 @@ public class LevelController : MonoBehaviour
             controller.levels[controller.currentIndex] = replacement;
         }
 
-        public void Cleanup()
+        public void Dispose()
         {
             Destroy(level.gameObject);
         }
@@ -176,9 +176,9 @@ public class LevelController : MonoBehaviour
 
         border.Move(currentLevel.transform.position);
 
-        restartState?.Cleanup();
+        restartState?.Dispose();
         restartState = new SaveState(this);
-        foreach (var item in undoStack) item.Cleanup();
+        foreach (var item in undoStack) item.Dispose();
         undoStack.Clear();
 
         UpdateColliders();
@@ -186,6 +186,8 @@ public class LevelController : MonoBehaviour
 
     private void UpdateColliders()
     {
+        border.UpdateBorder();
+
         var visible = Physics.RectFromCenterSize(Physics.FromUnity(camera.transform.position), Physics.FromUnity(new Vector2(12, 12)));
 
         foreach (var item in FindObjectsOfType<MyCollider>())
@@ -226,7 +228,7 @@ public class LevelController : MonoBehaviour
         deathScreen.SetActive(false);
 
         restartState.Apply(this);
-        foreach (var item in undoStack) item.Cleanup();
+        foreach (var item in undoStack) item.Dispose();
         undoStack.Clear();
 
         UpdateColliders();
@@ -244,17 +246,21 @@ public class LevelController : MonoBehaviour
     {
         if (moving) return;
 
-        if (!undoStack.Any())
+        if (undoStack.Any())
+        {
+            player.gameObject.SetActive(true);
+            deathScreen.SetActive(false);
+
+            var state = undoStack.Pop();
+            state.Apply(this);
+            state.Dispose();
+
+            UpdateColliders();
+        }
+        else
         {
             DoRestart();
-            return;
         }
-
-        var state = undoStack.Pop();
-        state.Apply(this);
-        state.Cleanup();
-
-        UpdateColliders();
     }
 
     private static float Distance(Vector2 a, Vector2 b, int dim)

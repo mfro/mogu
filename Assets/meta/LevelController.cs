@@ -146,7 +146,7 @@ public class LevelController : MonoBehaviour
         if (index < 0 || index >= levels.Length) return;
 
         var balloon = levels[index].start.GetComponentInChildren<Balloon>();
-        balloon.DoRelease();
+        balloon?.DoRelease();
 
         if (transition)
         {

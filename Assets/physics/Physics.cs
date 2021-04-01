@@ -33,33 +33,8 @@ public static class Physics
     public static float SCALE = 32;
     public static float UNIT = 1;
 
-    public static Vector2 Round(Vector2 v)
-    {
-        v.x = Mathf.Round(v.x);
-        v.y = Mathf.Round(v.y);
-        return v;
-    }
-
-    public static Vector3 Round(Vector3 v)
-    {
-        v.x = Mathf.Round(v.x);
-        v.y = Mathf.Round(v.y);
-        v.z = Mathf.Round(v.z);
-        return v;
-    }
-
     public static Vector2 ToUnity(Vector2 v) => v / SCALE;
-    public static Vector2 FromUnity(Vector2 raw) => Round(raw * SCALE / UNIT) * UNIT;
-
-    public static Rect RectFromCenterSize(Vector2 center, Vector2 size) => new Rect(center - size / 2, size);
-
-    public static Rect ShiftX(this Rect rect, float x) => rect.Shift(new Vector2(x, 0));
-    public static Rect ShiftY(this Rect rect, float y) => rect.Shift(new Vector2(0, y));
-    public static Rect Shift(this Rect rect, Vector2 offset)
-    {
-        rect.position += offset;
-        return rect;
-    }
+    public static Vector2 FromUnity(Vector2 raw) => Util.Round(raw * SCALE / UNIT) * UNIT;
 
     public static HashSet<MyCollider> allColliders = new HashSet<MyCollider>();
 

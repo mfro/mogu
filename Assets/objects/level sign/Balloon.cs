@@ -68,7 +68,7 @@ public class Balloon : MonoBehaviour
         velocity += acceleration;
         position += velocity;
 
-        transform.position = Physics.ToUnity(Physics.Round(position));
+        transform.position = Physics.ToUnity(Util.Round(position));
     }
 
     public void DoRelease()
@@ -77,8 +77,8 @@ public class Balloon : MonoBehaviour
 
         position = Physics.FromUnity(transform.position);
 
-        var up = Physics.Round(transform.rotation * Vector3.up);
-        var right = Physics.Round(transform.rotation * Vector3.right);
+        var up = Util.Round(transform.rotation * Vector3.up);
+        var right = Util.Round(transform.rotation * Vector3.right);
 
         velocity = up / 4f;
         acceleration = (up / 320f) + (right / 3200f);

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
@@ -10,9 +11,9 @@ public class PlayerController : MonoBehaviour
     //public bool encumbered;
     public Vector2 facing;
 
+    [NonSerialized] public Flippable flip;
     private SpriteRenderer sprite;
     private PlayerMovement movement;
-    private Flippable flip;
     private Animator anim;
     private MyDynamic dyn;
 
@@ -139,9 +140,9 @@ public class PlayerController : MonoBehaviour
         if (!dyn.grounded)
             return;
 
-        foreach (var cell in FindObjectsOfType<CellFlip>())
+        foreach (var cell in FindObjectsOfType<FlipPanel>())
         {
-            var area = Physics.RectFromCenterSize(Physics.FromUnity(cell.transform.position), Physics.FromUnity(cell.transform.lossyScale));
+            var area = Util.RectFromCenterSize(Physics.FromUnity(cell.transform.position), Physics.FromUnity(cell.transform.lossyScale));
             var overlap = Physics.Overlap(dyn.bounds, area);
 
             if (overlap == null) continue;

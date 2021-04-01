@@ -5,6 +5,31 @@ using UnityEngine;
 
 public static class Util
 {
+    public static Vector2 Round(Vector2 v)
+    {
+        v.x = Mathf.Round(v.x);
+        v.y = Mathf.Round(v.y);
+        return v;
+    }
+
+    public static Vector3 Round(Vector3 v)
+    {
+        v.x = Mathf.Round(v.x);
+        v.y = Mathf.Round(v.y);
+        v.z = Mathf.Round(v.z);
+        return v;
+    }
+
+    public static Rect RectFromCenterSize(Vector2 center, Vector2 size) => new Rect(center - size / 2, size);
+
+    public static Rect ShiftX(this Rect rect, float x) => rect.Shift(new Vector2(x, 0));
+    public static Rect ShiftY(this Rect rect, float y) => rect.Shift(new Vector2(0, y));
+    public static Rect Shift(this Rect rect, Vector2 offset)
+    {
+        rect.position += offset;
+        return rect;
+    }
+
     public static void GetComponent<T>(MonoBehaviour self, out T field)
     {
         field = self.GetComponent<T>();

@@ -68,18 +68,18 @@ public class MyCollider : MonoBehaviour
 
     private Rect GetBounds(Vector2 position)
     {
-        var fullScale = Physics.Round(transform.lossyScale * scale * 1e5f) / 1e5f;
+        var fullScale = Util.Round(transform.lossyScale * scale * 1e5f) / 1e5f;
         if (fullScale.x % (1 / 32f) != 0) throw new Exception($"invalid scale on collider: {fullScale.x}");
         if (fullScale.y % (1 / 32f) != 0) throw new Exception($"invalid scale on collider: {fullScale.y}");
 
-        var o = (Vector2)Physics.Round(transform.rotation * offset);
+        var o = (Vector2)Util.Round(transform.rotation * offset);
         var s = Physics.FromUnity(transform.rotation * (transform.lossyScale * scale));
 
-        s = Physics.Round(s);
+        s = Util.Round(s);
         s.x = Math.Abs(s.x);
         s.y = Math.Abs(s.y);
 
-        return Physics.RectFromCenterSize(position + o, s);
+        return Util.RectFromCenterSize(position + o, s);
     }
 
 #if UNITY_EDITOR

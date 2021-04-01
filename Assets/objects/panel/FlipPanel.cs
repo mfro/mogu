@@ -12,9 +12,9 @@ public enum FlipKind
     Horizontal,
 }
 
-public class CellFlip : MonoBehaviour
+public class FlipPanel : MonoBehaviour
 {
-    public static bool isFlipping = false;
+    public static FlipPanel isFlipping;
     public static Action cancelFlip;
 
     [SerializeField]
@@ -32,6 +32,14 @@ public class CellFlip : MonoBehaviour
     [SerializeField]
     float flip_time = 1;
 
+    [SerializeField]
+    GameObject hints;
+
+    private GameObject hintCW;
+    private GameObject hintCCW;
+    private GameObject hintVertical;
+    private GameObject hintHorizontal;
+
     private AudioSource audioSource;
     private MyCollider physics;
 
@@ -40,6 +48,57 @@ public class CellFlip : MonoBehaviour
         Util.GetComponent(this, out audioSource);
         Util.GetComponent(this, out physics);
         physics.mask |= CollisionMask.Flipping;
+    }
+
+    void Start()
+    {
+        hints.transform.parent = null;
+        hints.transform.localScale = Vector3.one;
+
+        hintCW = hints.transform.GetChild(0).gameObject;
+        hintCCW = hints.transform.GetChild(1).gameObject;
+        hintVertical = hints.transform.GetChild(2).gameObject;
+        hintHorizontal = hints.transform.GetChild(3).gameObject;
+
+        var x = transform.localScale.x / 2;
+        var y = transform.localScale.y / 2;
+
+        hintCW.transform.localPosition = new Vector3(x - 1 / 64f, y - 1 / 64f, -5);
+        hintCW.SetActive(flip1 == FlipKind.CW || flip2 == FlipKind.CW);
+
+        hintCCW.transform.localPosition = new Vector3(-x + 1 / 64f, y - 1 / 64f, -5);
+        hintCCW.SetActive(flip1 == FlipKind.CCW || flip2 == FlipKind.CCW);
+
+        hintVertical.transform.localPosition = new Vector3(1 / 64f, y - 1 / 64f, -5);
+        hintVertical.SetActive(flip1 == FlipKind.Vertical || flip2 == FlipKind.Vertical);
+
+        hintHorizontal.transform.localPosition = new Vector3(1 / 64f, y - 1 / 64f, -5);
+        hintHorizontal.SetActive(flip1 == FlipKind.Horizontal || flip2 == FlipKind.Horizontal);
+    }
+
+    void Update()
+    {
+        var player = Physics.AllOverlaps(physics)
+            .Where(o => o.Item1.bounds == o.Item2)
+            .Select(o => o.Item1.GetComponent<PlayerController>())
+            .Where(p => p != null)
+            .FirstOrDefault();
+
+        hints.SetActive(player != null || isFlipping == this);
+
+        if (player != null)
+        {
+            if (flip1 == FlipKind.Vertical || flip2 == FlipKind.Vertical)
+            {
+                hintVertical.SetActive(player.flip.down.x == 0);
+                hintHorizontal.SetActive(player.flip.down.y == 0);
+            }
+            else if (flip1 == FlipKind.Horizontal || flip2 == FlipKind.Horizontal)
+            {
+                hintVertical.SetActive(player.flip.down.y == 0);
+                hintHorizontal.SetActive(player.flip.down.x == 0);
+            }
+        }
     }
 
     public void ShowFlipError(Rect bounds)
@@ -57,7 +116,6 @@ public class CellFlip : MonoBehaviour
             flip = flip1;
         else
             flip = flip2;
-
 
         Quaternion delta;
         if (flip == FlipKind.CW)
@@ -79,9 +137,7 @@ public class CellFlip : MonoBehaviour
         }
         else return;
 
-        if (isFlipping) return;
-
-        var allObjects = Resources.FindObjectsOfTypeAll<Flippable>();
+        if (isFlipping != null) return;
 
         var overlaps = Physics.AllOverlaps(physics)
             .Select(o => (o.Item1, o.Item2, o.Item1.GetComponent<Flippable>()))
@@ -101,7 +157,7 @@ public class CellFlip : MonoBehaviour
 
         var objects = overlaps.Select(o => o.Item3).ToList();
 
-        isFlipping = true;
+        isFlipping = this;
         audioSource.PlayOneShot(FlipSound);
         var levelController = FindObjectOfType<LevelController>();
         levelController?.SaveUndoState();
@@ -133,18 +189,19 @@ public class CellFlip : MonoBehaviour
         while (Time.time - t0 < flip_time)
         {
             transform.rotation = Quaternion.Lerp(q0, q1, (Time.time - t0) / flip_time);
+
             await Task.Yield();
 
             if (cancelled)
             {
-                isFlipping = false;
+                isFlipping = null;
                 return;
             }
         }
 
         transform.rotation = q1;
-
         cancelFlip();
+        transform.rotation = q0;
 
         foreach (var o in objects)
         {
@@ -162,8 +219,6 @@ public class CellFlip : MonoBehaviour
             }
         }
 
-        transform.rotation = q0;
-
-        isFlipping = false;
+        isFlipping = null;
     }
 }

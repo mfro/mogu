@@ -18,7 +18,7 @@ public class Flippable : MonoBehaviour
     void Awake()
     {
         scaleSave = transform.localScale;
-        down = Physics.Round(transform.rotation * Vector2.down);
+        down = Util.Round(transform.rotation * Vector2.down);
     }
 
 
@@ -28,7 +28,7 @@ public class Flippable : MonoBehaviour
         var dyn = GetComponent<MyDynamic>();
         if (dyn?.gravity != true) return;
 
-        var down = Physics.Round(transform.rotation * Vector3.down);
+        var down = Util.Round(transform.rotation * Vector3.down);
         var o = transform.position;
         var points = new Vector2[] {
             new Vector2(-2, 12),
@@ -80,15 +80,15 @@ public class Flippable : MonoBehaviour
 
     public void DoEndFlip(Quaternion delta)
     {
-        down = Physics.Round(delta * down);
+        down = Util.Round(delta * down);
         flipping = false;
 
         transform.localScale = scaleSave;
-        transform.localRotation = Quaternion.Euler(Physics.Round(transform.localRotation.eulerAngles));
+        transform.localRotation = Quaternion.Euler(Util.Round(transform.localRotation.eulerAngles));
 
         if (snapPosition)
         {
-            transform.localPosition = Physics.Round(transform.localPosition * 2) / 2;
+            transform.localPosition = Util.Round(transform.localPosition * 2) / 2;
         }
         else
         {

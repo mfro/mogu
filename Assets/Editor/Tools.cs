@@ -47,6 +47,8 @@ public class Tools
     [MenuItem("mushroom/rotate clockwise")]
     private static void RotateCW()
     {
+        Undo.RecordObjects(Selection.transforms, "Rotate clockwise");
+
         foreach (var t in Selection.transforms)
         {
             var (list, i) = GetRotation(t);
@@ -57,6 +59,8 @@ public class Tools
     [MenuItem("mushroom/rotate counter-clockwise")]
     private static void RotateCCW()
     {
+        Undo.RecordObjects(Selection.transforms, "Rotate counter-clockwise");
+
         foreach (var t in Selection.transforms)
         {
             var (list, i) = GetRotation(t);
@@ -67,6 +71,8 @@ public class Tools
     [MenuItem("mushroom/flip vertical")]
     private static void FlipVertical()
     {
+        Undo.RecordObjects(Selection.transforms, "Flip vertical");
+
         foreach (var t in Selection.transforms)
         {
             var (list, i) = GetRotation(t);

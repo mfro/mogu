@@ -39,7 +39,7 @@ public class LevelController : MonoBehaviour
 
         public void Apply(LevelController controller)
         {
-            CellFlip.cancelFlip?.Invoke();
+            FlipPanel.cancelFlip?.Invoke();
 
             controller.playerPhysics.position = position;
             controller.playerPhysics.velocity = Vector2.zero;
@@ -105,7 +105,7 @@ public class LevelController : MonoBehaviour
         {
             var next = levels[currentIndex + 1];
 
-            var visible = Physics.RectFromCenterSize(Physics.FromUnity(next.transform.position), Physics.FromUnity(new Vector2(12, 12)));
+            var visible = Util.RectFromCenterSize(Physics.FromUnity(next.transform.position), Physics.FromUnity(new Vector2(12, 12)));
             var overlap = Physics.Overlap(visible, playerPhysics.bounds);
             var dim = currentLevel.exitOrientation.x == 0 ? 0 : 1;
 
@@ -180,7 +180,7 @@ public class LevelController : MonoBehaviour
     {
         border.UpdateBorder();
 
-        var visible = Physics.RectFromCenterSize(Physics.FromUnity(camera.transform.position), Physics.FromUnity(new Vector2(12, 12)));
+        var visible = Util.RectFromCenterSize(Physics.FromUnity(camera.transform.position), Physics.FromUnity(new Vector2(12, 12)));
 
         foreach (var item in FindObjectsOfType<MyCollider>())
         {

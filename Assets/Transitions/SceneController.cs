@@ -21,12 +21,11 @@ public class SceneController : MonoBehaviour
         {
             sceneController = this;
             DontDestroyOnLoad(this);
-        } 
+        }
         else
         {
             Destroy(this.gameObject);
         }
-
     }
 
     public void SwitchScene(int index)
@@ -40,5 +39,5 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(nextLevel);
         transitionAnim.SetTrigger("End");
     }
-    
+
 }

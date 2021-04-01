@@ -6,21 +6,9 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    public GameObject start;
-
-    public Vector2 exitOrientation;
+    public Checkpoint start;
 
 #if UNITY_EDITOR
-    public async void Start()
-    {
-        if (Selection.activeTransform?.IsChildOf(transform) == true)
-        {
-            var controller = FindObjectOfType<LevelController>();
-            await Task.Yield();
-            controller.GoToLevel(this, false);
-        }
-    }
-
     public void OnDrawGizmos()
     {
         if (Selection.activeTransform?.IsChildOf(transform) == true)

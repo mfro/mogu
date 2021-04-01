@@ -120,7 +120,7 @@ Transform:
   m_Children:
   - {fileID: 692316036}
   m_Father: {fileID: 4811372266002696930}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1413353436
 Animator:
@@ -454,7 +454,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4811372266002696930}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1680662268
 MonoBehaviour:
@@ -961,8 +961,8 @@ Transform:
   m_Children:
   - {fileID: 4811372265979383916}
   - {fileID: 4811372266514909690}
-  - {fileID: 1413353431}
   - {fileID: 1680662267}
+  - {fileID: 1413353431}
   - {fileID: 4286013866617123173}
   - {fileID: 2218924675880952165}
   m_Father: {fileID: 0}
@@ -1248,7 +1248,7 @@ GameObject:
   - component: {fileID: 4286013866617123173}
   - component: {fileID: 1150523557216655155}
   m_Layer: 0
-  m_Name: screen border
+  m_Name: level border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

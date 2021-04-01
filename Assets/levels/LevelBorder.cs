@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 
-public class ScreenBorder : MonoBehaviour
+public class LevelBorder : MonoBehaviour
 {
     [SerializeField] public MyStatic left;
     [SerializeField] public MyStatic right;

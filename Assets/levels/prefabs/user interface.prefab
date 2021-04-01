@@ -139,9 +139,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press R to Restart
+  m_text: 'F to Undo
 
-    Press F to Undo'
+
+    R to Restart'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f3e88432adf631a4391b166b35b0d218, type: 2}
   m_sharedMaterial: {fileID: -2112801348000643368, guid: f3e88432adf631a4391b166b35b0d218,
@@ -224,7 +225,7 @@ GameObject:
   - component: {fileID: 5447641573466539391}
   - component: {fileID: 5447641573466539390}
   m_Layer: 5
-  m_Name: User Interface
+  m_Name: user interface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

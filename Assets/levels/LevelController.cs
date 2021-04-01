@@ -5,11 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
     [SerializeField] public new Camera camera;
-    [SerializeField] public ScreenBorder border;
+    [SerializeField] public LevelBorder border;
     [SerializeField] public PlayerController player;
     [SerializeField] public GameObject deathScreen;
     [SerializeField] public float CameraTime;
@@ -90,35 +91,18 @@ public class LevelController : MonoBehaviour
         levels = FindObjectsOfType<Level>().OrderBy(l => l.name).ToArray();
         undoStack = new Stack<SaveState>();
 
-        GoToLevel(0, false);
-    }
-
-    void FixedUpdate()
-    {
-        if (moving) return;
-
-        if (currentIndex + 1 == levels.Length)
+#if UNITY_EDITOR
+        for (var i = 0; i < levels.Length; ++i)
         {
-
-        }
-        else
-        {
-            var next = levels[currentIndex + 1];
-
-            var visible = Util.RectFromCenterSize(Physics.FromUnity(next.transform.position), Physics.FromUnity(new Vector2(12, 12)));
-            var overlap = Physics.Overlap(visible, playerPhysics.bounds);
-            var dim = currentLevel.exitOrientation.x == 0 ? 0 : 1;
-
-            var progress = overlap != null
-                && overlap.Value == playerPhysics.bounds
-                && playerFlip.down == currentLevel.exitOrientation
-                && Distance(next.transform.position, player.transform.position, dim) <= Distance(currentLevel.transform.position, player.transform.position, dim);
-
-            if (progress)
+            if (UnityEditor.Selection.activeTransform?.IsChildOf(levels[i].transform) == true)
             {
-                GoToLevel(currentIndex + 1, true);
+                currentIndex = i;
+                break;
             }
         }
+#endif
+
+        GoToLevel(currentIndex, false);
     }
 
     public void SaveUndoState()
@@ -126,17 +110,39 @@ public class LevelController : MonoBehaviour
         undoStack.Push(new SaveState(this));
     }
 
-    public void GoToLevel(Level level, bool transition)
+    public void Advance()
     {
-        GoToLevel(Array.IndexOf(levels, level), transition);
+        if (moving) return;
+
+        if (currentIndex + 1 == levels.Length)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            // var next = levels[currentIndex + 1];
+
+            // var visible = Util.RectFromCenterSize(Physics.FromUnity(next.transform.position), Physics.FromUnity(new Vector2(12, 12)));
+            // var overlap = Physics.Overlap(visible, playerPhysics.bounds);
+            // var dim = currentLevel.exitOrientation.x == 0 ? 0 : 1;
+
+            // var progress = overlap != null
+            //     && overlap.Value == playerPhysics.bounds
+            //     && playerFlip.down == currentLevel.exitOrientation
+            //     && Distance(next.transform.position, player.transform.position, dim) <= Distance(currentLevel.transform.position, player.transform.position, dim);
+
+            // if (progress)
+            // {
+            GoToLevel(currentIndex + 1, true);
+            // }
+        }
     }
 
     public async void GoToLevel(int index, bool transition)
     {
         if (index < 0 || index >= levels.Length) return;
 
-        var balloon = levels[index].start.GetComponentInChildren<Balloon>();
-        balloon?.DoRelease();
+        levels[index].start.MarkReached();
 
         if (transition)
         {
@@ -153,7 +159,7 @@ public class LevelController : MonoBehaviour
             currentIndex = index;
 
             player.transform.rotation = currentLevel.start.transform.rotation;
-            playerFlip.down = currentLevel.start.transform.rotation * Vector2.down;
+            playerFlip.down = Util.Round(currentLevel.start.transform.rotation * Vector2.down);
 
             playerPhysics.velocity = Vector2.zero;
             playerPhysics.position = Physics.FromUnity(currentLevel.start.transform.position);

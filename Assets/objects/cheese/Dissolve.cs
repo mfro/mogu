@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Dissolve : MonoBehaviour
@@ -9,24 +11,37 @@ public class Dissolve : MonoBehaviour
     [SerializeField] Material Cheese2;
     [SerializeField] Material Cheese3;
 
+    private MyStatic physics;
     private MeshRenderer rend;
-    private Flippable flip;
+    private bool dissolveStarted = false;
 
     void Awake()
     {
         Util.GetComponent(this, out rend);
-        Util.GetComponent(this, out flip);
+        Util.GetComponent(this, out physics);
     }
 
-    private IEnumerator OnCollisionEnter2D(Collision2D collision)
+    void FixedUpdate()
     {
+        if (dissolveStarted) return;
+
+        if (physics.touching.Any(c => c is MyDynamic))
+        {
+            DoDissolve();
+        }
+    }
+
+    private async void DoDissolve()
+    {
+        dissolveStarted = true;
+
         Color initialColor = rend.material.color;
         Color targetColor = new Color(initialColor.r, initialColor.g, initialColor.b, 0f);
         float elapsedTime = 0f;
 
         while (elapsedTime < dissolveTime)
         {
-            if (!flip.flipping)
+            if (!physics.flip.flipping)
                 elapsedTime += Time.deltaTime;
 
             if (elapsedTime < dissolveTime / 3) rend.material = Cheese1;
@@ -36,7 +51,7 @@ public class Dissolve : MonoBehaviour
             Color currentColor = Color.Lerp(initialColor, targetColor, elapsedTime / dissolveTime);
             rend.material.color = currentColor;
             */
-            yield return null;
+            await Task.Yield();
         }
 
         Destroy(gameObject);

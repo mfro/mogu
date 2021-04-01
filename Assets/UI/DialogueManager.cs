@@ -22,7 +22,8 @@ public class DialogueManager : MonoBehaviour
         if (dialogueManager == null)
         {
             dialogueManager = this;
-        } else
+        }
+        else
         {
             Destroy(this.gameObject);
         }

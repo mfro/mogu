@@ -26,8 +26,8 @@ public class MyCollider : MonoBehaviour
 
     void OnEnable()
     {
-        position = Physics.FromUnity(transform.position);
         flip = GetComponentInParent<Flippable>();
+        position = Physics.FromUnity(transform.position);
 
         if (GetComponent<Flippable>() != null)
         {

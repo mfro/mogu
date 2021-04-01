@@ -116,7 +116,7 @@ public class LevelController : MonoBehaviour
 
         if (currentIndex + 1 == levels.Length)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneController.sceneController.SwitchScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         else
         {

@@ -9,6 +9,6 @@ public class VictoryScreen : MonoBehaviour
     // Update is called once per frame
     public void DoPlayAgain()
     {
-        SceneManager.LoadScene(0);
+        SceneController.sceneController.SwitchScene(0);
     }
 }

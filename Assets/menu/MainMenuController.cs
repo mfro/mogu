@@ -28,7 +28,7 @@ public class MainMenuController : MonoBehaviour
 
     public void OnPlay()
     {
-        SceneManager.LoadScene(1);
+        SceneController.sceneController.SwitchScene(1);
     }
 
     public void OnOptions()

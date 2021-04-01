@@ -25066,6 +25066,11 @@ PrefabInstance:
       propertyPath: m_ScrollWheelAction
       value: 
       objectReference: {fileID: 1941016617}
+    - target: {fileID: 526054131404117008, guid: a1ded91701baf864cb93c8355436f9f7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2218924675880952165, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}
       propertyPath: m_RootOrder
@@ -25089,7 +25094,7 @@ PrefabInstance:
     - target: {fileID: 4811372265979383916, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4811372266002696930, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}

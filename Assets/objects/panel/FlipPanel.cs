@@ -78,25 +78,36 @@ public class FlipPanel : MonoBehaviour
 
     void Update()
     {
-        var player = Physics.AllOverlaps(physics)
-            .Where(o => o.Item1.bounds == o.Item2)
-            .Select(o => o.Item1.GetComponent<PlayerController>())
-            .Where(p => p != null)
+        var player = physics.touching
+            .Where(o => o.GetComponent<PlayerController>() != null)
             .FirstOrDefault();
 
-        hints.SetActive(player != null || isFlipping == this);
-
-        if (player != null)
+        if (player == null)
         {
-            if (flip1 == FlipKind.Vertical || flip2 == FlipKind.Vertical)
+            hints.SetActive(isFlipping == this);
+        }
+        else
+        {
+            var overlap = Physics.Overlap(player.bounds, physics.bounds);
+
+            if (overlap != player.bounds)
             {
-                hintVertical.SetActive(player.flip.down.x == 0);
-                hintHorizontal.SetActive(player.flip.down.y == 0);
+                hints.SetActive(isFlipping == this);
             }
-            else if (flip1 == FlipKind.Horizontal || flip2 == FlipKind.Horizontal)
+            else
             {
-                hintVertical.SetActive(player.flip.down.y == 0);
-                hintHorizontal.SetActive(player.flip.down.x == 0);
+                hints.SetActive(true);
+
+                if (flip1 == FlipKind.Vertical || flip2 == FlipKind.Vertical)
+                {
+                    hintVertical.SetActive(player.flip.down.x == 0);
+                    hintHorizontal.SetActive(player.flip.down.y == 0);
+                }
+                else if (flip1 == FlipKind.Horizontal || flip2 == FlipKind.Horizontal)
+                {
+                    hintVertical.SetActive(player.flip.down.y == 0);
+                    hintHorizontal.SetActive(player.flip.down.x == 0);
+                }
             }
         }
     }

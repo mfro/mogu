@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2219332058217833115}
   - component: {fileID: 181101510044343783}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8702599224715825685}
   - component: {fileID: 4926379004892851134}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3312507058169029166}
   - component: {fileID: 4294334646824659938}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint ccw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8298900325303524095}
   - component: {fileID: 940318664651522329}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5974300340209221817}
   - component: {fileID: 2475403872596203243}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint z
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,7 +419,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7676758040870499078}
   - component: {fileID: 3564981501946230447}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint flip v
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3936560115890171455}
   - component: {fileID: 856266945269838333}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -583,7 +583,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3787501885272383859}
   - component: {fileID: 8438447346981617072}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint cw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,7 +665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9072353192217177159}
   - component: {fileID: 7872716951712638325}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint x
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -746,7 +746,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 565485208828995962}
-  m_Layer: 11
+  m_Layer: 5
   m_Name: hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -789,7 +789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2987757178787785101}
   - component: {fileID: 7389166822745654336}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint space
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -871,7 +871,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1454298489421544033}
   - component: {fileID: 4226770484470132630}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -953,7 +953,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8095716866952774555}
   - component: {fileID: 5777045371884404619}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: hint flip h
   m_TagString: Untagged
   m_Icon: {fileID: 0}

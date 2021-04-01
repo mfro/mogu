@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
-    [SerializeField] public new Camera camera;
+    [SerializeField] public new GameObject camera;
     [SerializeField] public LevelBorder border;
     [SerializeField] public PlayerController player;
     [SerializeField] public GameObject deathScreen;

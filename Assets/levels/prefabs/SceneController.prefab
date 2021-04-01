@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8420017003258237701}
   - component: {fileID: 2023052094750332093}
+  - component: {fileID: 4357453605291182033}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -49,8 +50,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1686724ed019a61468cc7ae4812eb972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionAnim: {fileID: 6220039462851745855}
+  transitionAnim: {fileID: 4357453605291182033}
   transitionDuration: 1
+--- !u!95 &4357453605291182033
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6220039462102800702}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4cec25ed571e32647a9b254f9ddc8f22, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6220039462851745829
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,7 +83,6 @@ GameObject:
   - component: {fileID: 6220039462851745825}
   - component: {fileID: 6220039462851745826}
   - component: {fileID: 6220039462851745827}
-  - component: {fileID: 6220039462851745855}
   - component: {fileID: 6220039462851745824}
   m_Layer: 0
   m_Name: Crossfade
@@ -152,25 +171,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!95 &6220039462851745855
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6220039462851745829}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4cec25ed571e32647a9b254f9ddc8f22, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!225 &6220039462851745824
 CanvasGroup:
   m_ObjectHideFlags: 0

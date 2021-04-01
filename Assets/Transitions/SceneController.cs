@@ -11,6 +11,9 @@ public class SceneController : MonoBehaviour
 
     public static SceneController sceneController;
 
+
+    private int nextLevel = 0;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -26,16 +29,16 @@ public class SceneController : MonoBehaviour
 
     }
 
-    private IEnumerator SwitchSceneRoutine(int index)
-    {
-        transitionAnim.SetTrigger("Start");
-        yield return new WaitForSeconds(transitionDuration);
-        transitionAnim.SetTrigger("End");
-        SceneManager.LoadScene(index);
-    }
-
     public void SwitchScene(int index)
     {
-        StartCoroutine(SwitchSceneRoutine(index));
+        nextLevel = index;
+        transitionAnim.SetTrigger("Start");
     }
+
+    private void EndSceneSwitch()
+    {
+        SceneManager.LoadScene(nextLevel);
+        transitionAnim.SetTrigger("End");
+    }
+    
 }

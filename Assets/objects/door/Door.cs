@@ -28,6 +28,9 @@ public class Door : MonoBehaviour
             enabled = false;
             return;
         }
+
+        renderer.enabled = !IsOpen;
+        collider.enabled = !IsOpen;
     }
 
     void Update()

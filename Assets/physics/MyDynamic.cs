@@ -52,10 +52,6 @@ public class MyDynamic : MyCollider
 
         if (velocity != Vector2.zero)
         {
-            var outgoing = CollisionMask.Physical;
-            if (GetComponent<PlayerController>() != null)
-                outgoing |= CollisionMask.Player;
-
             Physics.Move(this, velocity);
 
             if (velocity.x != 0 && !Physics.CanMove(this, new Vector2(Mathf.Sign(velocity.x), 0)))

@@ -25,7 +25,9 @@ public class Checkpoint : MonoBehaviour
 
         var down = (Vector2)Util.Round(transform.rotation * Vector3.down);
 
-        var (other, _) = Physics.AllOverlaps(physics).FirstOrDefault();
+        var (other, _) = Physics.AllOverlaps(physics)
+            .FirstOrDefault(o => o.Item1.GetComponent<PlayerController>() != null);
+
         if (other != null && other.flip.down == down)
         {
             reached = true;

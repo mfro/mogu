@@ -3159,21 +3159,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneController
       objectReference: {fileID: 0}
-    - target: {fileID: 6220039462851745824, guid: c8dafb1a3e3b2f74e83e7ffa81bc81b4,
-        type: 3}
-      propertyPath: m_Alpha
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6220039462851745824, guid: c8dafb1a3e3b2f74e83e7ffa81bc81b4,
-        type: 3}
-      propertyPath: m_Interactable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6220039462851745824, guid: c8dafb1a3e3b2f74e83e7ffa81bc81b4,
-        type: 3}
-      propertyPath: m_BlocksRaycasts
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6220039462851745828, guid: c8dafb1a3e3b2f74e83e7ffa81bc81b4,
         type: 3}
       propertyPath: m_Pivot.x

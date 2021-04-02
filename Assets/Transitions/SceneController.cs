@@ -7,10 +7,10 @@ public class SceneController : MonoBehaviour
 {
 
     public Animator transitionAnim;
-    public float transitionDuration;
 
     public static SceneController sceneController;
 
+    [SerializeField] bool fadeOnInit;
 
     private int nextLevel = 0;
 
@@ -25,13 +25,25 @@ public class SceneController : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
+            return;
         }
 
+
+        if (fadeOnInit)
+        {
+            transitionAnim.enabled = true;
+        }
+        else
+        {
+            transitionAnim.enabled = false;
+        }
     }
 
-    public void SwitchScene(int index)
+    public void SwitchScene(int index, float duration = 1f)
     {
+        transitionAnim.enabled = true;
         nextLevel = index;
+        transitionAnim.speed = 1 / duration;
         transitionAnim.SetTrigger("Start");
     }
 

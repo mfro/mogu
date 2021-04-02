@@ -19,6 +19,8 @@ public class LevelController : MonoBehaviour
 
     private AudioSource audioSource;
 
+    public Action PausePressed;
+
     private class SaveState : IDisposable
     {
         public Vector3 position;
@@ -249,6 +251,7 @@ public class LevelController : MonoBehaviour
     public void DoPause()
     {
         Physics.IsEnabled = !Physics.IsEnabled;
+        PausePressed?.Invoke();
     }
 
     private static float Distance(Vector2 a, Vector2 b, int dim)
@@ -278,7 +281,11 @@ public class LevelController : MonoBehaviour
     public void OnPause(InputAction.CallbackContext c)
     {
         if (c.ReadValueAsButton() && !_onPause && !moving)
+        {
             DoPause();
+            print("did it");
+        }
+
 
         _onPause = c.ReadValueAsButton();
     }

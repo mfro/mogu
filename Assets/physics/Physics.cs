@@ -83,6 +83,11 @@ public static class Physics
         }
     }
 
+    public static void ClearPauseSet()
+    {
+        paused = null;
+    }
+
     public static void Enable(MyCollider collider)
     {
         allColliders.Add(collider);

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+[InitializeOnLoad]
 public class Tools
 {
     private static Quaternion[] rotations = new Quaternion[] {
@@ -85,5 +88,53 @@ public class Tools
             var other = list == rotations ? flips : rotations;
             t.localRotation = other[i % rotations.Length];
         }
+    }
+
+    static Tools()
+    {
+        SceneManager.sceneLoaded += (s, mode) => OnScene(s);
+        SetPickable();
+    }
+
+    [MenuItem("mushroom/set pickable")]
+    private static void SetPickable()
+    {
+        for (var i = 0; i < SceneManager.sceneCount; ++i)
+        {
+            OnScene(SceneManager.GetSceneAt(i));
+        }
+    }
+
+    private static void OnScene(Scene scene)
+    {
+        foreach (var o in FindInScene<SceneController>(scene))
+        {
+            SceneVisibilityManager.instance.DisablePicking(o.gameObject, true);
+            // SceneVisibilityManager.instance.Hide(o.gameObject, true);
+        }
+
+        foreach (var o in FindInScene<AudioManager>(scene))
+        {
+            SceneVisibilityManager.instance.DisablePicking(o.gameObject, true);
+            // SceneVisibilityManager.instance.Hide(o.gameObject, true);
+        }
+
+        foreach (var o in FindInScene<Canvas>(scene))
+        {
+            SceneVisibilityManager.instance.DisablePicking(o.gameObject, true);
+            // SceneVisibilityManager.instance.Hide(o.gameObject, true);
+        }
+
+        foreach (var o in FindInScene<Level>(scene))
+        {
+            SceneVisibilityManager.instance.DisablePicking(o.gameObject, false);
+            // SceneVisibilityManager.instance.Hide(o.gameObject, true);
+        }
+    }
+
+    private static IEnumerable<T> FindInScene<T>(Scene scene)
+    {
+        return scene.GetRootGameObjects()
+            .SelectMany(o => o.GetComponentsInChildren<T>());
     }
 }

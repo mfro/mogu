@@ -9,91 +9,118 @@ using System.IO.Compression;
 
 public class BuildStuff
 {
-    [MenuItem("mushroom/build - playtesting")]
-    private static void PlaytestingBuild()
+    private static string[] scenes => EditorBuildSettings.scenes.Select(s => s.path).ToArray();
+
+    private static string BuildWindows()
     {
-        WindowsBuild();
-        MacBuild();
+        var output = "build/windows";
 
-        using (var zip = ZipFile.Open("mushroom windows.zip", ZipArchiveMode.Create))
+        BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
-            MakeZip(zip, "build/win", "mushroom");
+            scenes = scenes,
+            locationPathName = $"{output}/mogu.exe",
+            targetGroup = BuildTargetGroup.Standalone,
+            target = BuildTarget.StandaloneWindows64,
+        });
+
+        return output;
+    }
+    [MenuItem("mushroom/build - windows")]
+    private static string BuildWindowsZip()
+    {
+        var output = "build/mogu windows.zip";
+        var input = BuildWindows();
+
+        using (var zip = ZipFile.Open(output, ZipArchiveMode.Create))
+        {
+            AddToZip(zip, input, "mogu");
         }
 
-        using (var zip = ZipFile.Open("mushroom mac.zip", ZipArchiveMode.Create))
+        return output;
+    }
+
+    private static string BuildMac()
+    {
+        var output = "build/mac.app";
+
+        BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
-            MakeZip(zip, "build/mac.app", "mushroom.app");
+            scenes = scenes,
+            locationPathName = output,
+            targetGroup = BuildTargetGroup.Standalone,
+            target = BuildTarget.StandaloneOSX,
+        });
+
+        return output;
+    }
+    [MenuItem("mushroom/build - mac")]
+    private static string BuildMacZip()
+    {
+        var output = "build/mogu mac.zip";
+        var input = BuildMac();
+
+        using (var zip = ZipFile.Open(output, ZipArchiveMode.Create))
+        {
+            AddToZip(zip, input, "mogu.app");
         }
+
+        return output;
+    }
+
+    [MenuItem("mushroom/build - web")]
+    private static string WebBuild()
+    {
+        var output = "build/web";
+
+        BuildPipeline.BuildPlayer(new BuildPlayerOptions
+        {
+            scenes = scenes,
+            locationPathName = output,
+            targetGroup = BuildTargetGroup.WebGL,
+            target = BuildTarget.WebGL,
+        });
+
+        return output;
     }
 
     [MenuItem("mushroom/build - canvas")]
-    private static void CanvasBuild()
+    private static void BuildCanvas()
     {
-        WindowsBuild();
-        MacBuild();
+        var output = "lbitzer mfroehli miczhang rkiv ssscrazy.zip";
+        var windows = BuildWindows();
+        var mac = BuildMac();
 
-        using (var zip = ZipFile.Open("lbitzer mfroehli miczhang rkiv ssscrazy.zip", ZipArchiveMode.Create))
+        using (var zip = ZipFile.Open(output, ZipArchiveMode.Create))
         {
-            MakeZip(zip, "build/win", "windows");
-            MakeZip(zip, "build/mac.app", "mac/mushroom.app");
-            MakeZip(zip, "Assets", "Assets");
-            MakeZip(zip, "ProjectSettings", "ProjectSettings");
+            AddToZip(zip, windows, "windows");
+            AddToZip(zip, mac, "mac/mogu.app");
+            AddToZip(zip, "Assets", "Assets");
+            AddToZip(zip, "ProjectSettings", "ProjectSettings");
 
             foreach (var item in Directory.EnumerateFiles(".", "*.txt"))
             {
                 var name = Path.GetFileName(item);
-                MakeZip(zip, item, name);
+                AddToZip(zip, item, name);
             }
         }
     }
 
-    [MenuItem("mushroom/build - windows")]
-    private static void WindowsBuild()
+    [MenuItem("mushroom/build - playtesting")]
+    private static void BuildPlaytest()
     {
-        var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
-        BuildPipeline.BuildPlayer(new BuildPlayerOptions
-        {
-            scenes = scenes,
-            locationPathName = "build/win/mogu.exe",
-            targetGroup = BuildTargetGroup.Standalone,
-            target = BuildTarget.StandaloneWindows64,
-        });
+        BuildWindowsZip();
+        BuildMacZip();
     }
 
-    [MenuItem("mushroom/build - mac")]
-    private static void MacBuild()
-    {
-        var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
-        BuildPipeline.BuildPlayer(new BuildPlayerOptions
-        {
-            scenes = scenes,
-            locationPathName = "build/mac.app",
-            targetGroup = BuildTargetGroup.Standalone,
-            target = BuildTarget.StandaloneOSX,
-        });
-    }
 
-    [MenuItem("mushroom/build - web")]
-    private static void WebBuild()
-    {
-        var scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray();
-        BuildPipeline.BuildPlayer(new BuildPlayerOptions
-        {
-            scenes = scenes,
-            locationPathName = "build/web",
-            targetGroup = BuildTargetGroup.WebGL,
-            target = BuildTarget.WebGL,
-        });
-    }
-
-    private static void MakeZip(ZipArchive zip, string src, string dst)
+    private static void AddToZip(ZipArchive zip, string src, string dst)
     {
         if (Directory.Exists(src))
         {
             foreach (var child in Directory.EnumerateFileSystemEntries(src))
             {
                 var name = Path.GetFileName(child);
-                MakeZip(zip, child, Path.Combine(dst, name));
+                AddToZip(zip, child, Path.Combine(dst, name));
             }
         }
         else

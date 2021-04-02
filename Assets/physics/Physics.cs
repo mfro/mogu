@@ -59,6 +59,50 @@ public static class Physics
         return rect;
     }
 
+    private static List<MyCollider> paused;
+    public static bool IsEnabled
+    {
+        get => paused == null;
+        set
+        {
+            if (value == IsEnabled) return;
+
+            if (value)
+            {
+                foreach (var item in paused)
+                    item.enabled = true;
+                allColliders = new HashSet<MyCollider>(paused);
+                paused = null;
+            }
+            else
+            {
+                paused = allColliders.ToList();
+                foreach (var item in paused)
+                    item.enabled = false;
+            }
+        }
+    }
+
+    public static void Enable(MyCollider collider)
+    {
+        allColliders.Add(collider);
+
+        foreach (var (other, overlap) in Physics.AllOverlaps(collider))
+        {
+            collider.touching.Add(other);
+            other.touching.Add(collider);
+        }
+    }
+
+    public static void Disable(MyCollider collider)
+    {
+        allColliders.Remove(collider);
+
+        foreach (var other in collider.touching)
+            other.touching.Remove(collider);
+        collider.touching.Clear();
+    }
+
     public static IEnumerable<(MyCollider, Rect)> AllOverlaps(Rect a, CollisionMask mask)
     {
         foreach (var collider in allColliders)

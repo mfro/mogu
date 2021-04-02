@@ -44,19 +44,15 @@ public class PlayerController : MonoBehaviour
         flip.EndFlip += (delta) =>
         {
             facing = delta * facing;
-            UpdateMovement();
         };
     }
 
     void Update()
     {
         anim.SetBool("grounded", dyn.grounded);
-        if (flip.flipping)
-            anim.speed = 0;
-        else
-            anim.speed = 1;
+        anim.speed = dyn.enabled ? 1 : 0;
 
-        if (dyn.grounded && !flip.flipping)
+        if (dyn.enabled && dyn.grounded)
         {
             if (!previouslyGrounded)
             {
@@ -78,17 +74,23 @@ public class PlayerController : MonoBehaviour
 
         previouslyGrounded = dyn.grounded;
 
-        // Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
-        // Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
-        // Debug.DrawLine(transform.position, transform.position + (Vector3)dyn.velocity, Color.green);
+        if (dyn.enabled)
+        {
+            // Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
+            // Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
+            // Debug.DrawLine(transform.position, transform.position + (Vector3)dyn.velocity, Color.green);
 
-        var isPushing = dyn.grounded
-            && Vector2.Dot(facing, dyn.velocity) > 0
-            && Physics.AllCollisions(dyn.bounds.Shift(facing), dyn.mask).Where(c => c.Item1 != dyn).Any();
+            var isPushing = dyn.grounded
+                && Vector2.Dot(facing, dyn.velocity) > 0
+                && Physics.AllCollisions(dyn.bounds.Shift(facing), dyn.mask).Where(c => c.Item1 != dyn).Any();
 
-        anim.SetBool("pushing", isPushing);
+            anim.SetBool("pushing", isPushing);
 
-        // UnityEditor.Selection.instanceIDs = dyn.touching.Select(o => o.gameObject.GetInstanceID()).ToArray();
+            var spriteRight = (transform.rotation * Vector2.right);
+            sprite.flipX = (Vector2.Dot(spriteRight, facing) < 0);
+
+            anim.SetFloat("running speed", Mathf.Abs(movement.input_running));
+        }
     }
 
     private static Vector2 MatchFacing(float value, Vector2 negative, Vector2 positive)
@@ -116,11 +118,6 @@ public class PlayerController : MonoBehaviour
             else
                 facing = MatchFacing(movement.input_running, Vector2.down, Vector2.up);
         }
-
-        var spriteRight = (transform.rotation * Vector2.right);
-        sprite.flipX = (Vector2.Dot(spriteRight, facing) < 0);
-
-        anim.SetFloat("running speed", Mathf.Abs(movement.input_running));
     }
 
     public void Move(InputAction.CallbackContext callback)
@@ -128,7 +125,8 @@ public class PlayerController : MonoBehaviour
         var isKeyboard = callback.control.device is Keyboard;
         var mode = isKeyboard ? InputMode.Keyboard : InputMode.Controller;
 
-        if (mode != Hint.mode) {
+        if (mode != Hint.mode)
+        {
             Hint.mode = mode;
             foreach (var hint in FindObjectsOfType<Hint>())
             {
@@ -137,8 +135,7 @@ public class PlayerController : MonoBehaviour
         }
 
         input_movement = Util.Round(callback.ReadValue<Vector2>());
-        if (!flip.flipping)
-            UpdateMovement();
+        UpdateMovement();
     }
 
     public void Jump(InputAction.CallbackContext callback)

@@ -36,6 +36,10 @@ public class Door : MonoBehaviour
     void Update()
     {
         renderer.enabled = !IsOpen;
+    }
+
+    void FixedUpdate()
+    {
         collider.enabled = !IsOpen;
     }
 }

@@ -7,12 +7,11 @@ public class FlipError : MonoBehaviour
 {
     [SerializeField] public float duration;
 
-    [NonSerialized] public float startTime;
-
     private SpriteRenderer sprite;
 
     private Color startColor;
     private Color endColor;
+    private float remaining;
 
     void Awake()
     {
@@ -21,6 +20,7 @@ public class FlipError : MonoBehaviour
 
     void Start()
     {
+        remaining = duration;
         startColor = sprite.color;
         endColor = sprite.color;
         endColor.a = 0;
@@ -29,15 +29,20 @@ public class FlipError : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var progress = (Time.time - startTime) / duration;
-        if (progress >= 1)
+        var progress = 1 - remaining / duration;
+        var faded = Color.Lerp(startColor, endColor, progress);
+        sprite.color = faded;
+    }
+
+    void FixedUpdate()
+    {
+        if (remaining >= Time.fixedDeltaTime)
         {
-            Destroy(gameObject);
+            remaining -= Time.fixedDeltaTime;
         }
         else
         {
-            var faded = Color.Lerp(startColor, endColor, progress);
-            sprite.color = faded;
+            Destroy(gameObject);
         }
     }
 }

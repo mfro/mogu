@@ -24435,14 +24435,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1413353431, guid: a1ded91701baf864cb93c8355436f9f7, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1680662267, guid: a1ded91701baf864cb93c8355436f9f7, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1680662269, guid: a1ded91701baf864cb93c8355436f9f7, type: 3}
       propertyPath: m_MoveAction
       value: 
@@ -24476,16 +24468,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1941016617}
     - target: {fileID: 526054131404117008, guid: a1ded91701baf864cb93c8355436f9f7,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2218924675880952165, guid: a1ded91701baf864cb93c8355436f9f7,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365832393706013759, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -24569,11 +24551,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: level controller
-      objectReference: {fileID: 0}
-    - target: {fileID: 4811372266514909690, guid: a1ded91701baf864cb93c8355436f9f7,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8489002932927010950, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}

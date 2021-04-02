@@ -8,7 +8,6 @@ public class Flippable : MonoBehaviour
     public event Action BeginFlip;
     public event Action<Quaternion> EndFlip;
 
-    [NonSerialized] public bool flipping = false;
     [NonSerialized] public Vector2 down;
 
     private Vector3 scaleSave;
@@ -61,8 +60,6 @@ public class Flippable : MonoBehaviour
 
     public void DoBeginFlip()
     {
-        flipping = true;
-
         snapPosition = transform.localPosition.x % 0.5f == 0
             && transform.localPosition.y % 0.5f == 0
             && transform.localPosition.z % 0.5f == 0;
@@ -80,7 +77,6 @@ public class Flippable : MonoBehaviour
     public void DoEndFlip(Quaternion delta)
     {
         down = Util.Round(delta * down);
-        flipping = false;
 
         transform.localScale = scaleSave;
         transform.localRotation = Quaternion.Euler(Util.Round(transform.localRotation.eulerAngles));

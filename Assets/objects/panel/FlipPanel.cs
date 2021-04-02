@@ -116,7 +116,6 @@ public class FlipPanel : MonoBehaviour
         var error = Instantiate(FlipError);
         error.transform.position = (Vector3)Physics.ToUnity(bounds.center) + new Vector3(0, 0, -5);
         error.transform.localScale = Physics.ToUnity(bounds.size);
-        error.startTime = Time.time;
     }
 
     public async void DoFlip(Vector2 down, int input)

@@ -50,7 +50,6 @@ public class DebugController : MonoBehaviour
             updateCount = 0;
             updateTimer += 1;
         }
-
     }
 
     // Update is called once per frame

@@ -20,8 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (flip.flipping || !dyn.enabled)
-            return;
+        if (!dyn.enabled) return;
 
         jumping = false;
         if (input_jumping && dyn.grounded)

@@ -43,22 +43,12 @@ public class MyCollider : MonoBehaviour
             };
         }
 
-        Physics.allColliders.Add(this);
-
-        foreach (var (other, overlap) in Physics.AllOverlaps(this))
-        {
-            touching.Add(other);
-            other.touching.Add(this);
-        }
+        Physics.Enable(this);
     }
 
     void OnDisable()
     {
-        Physics.allColliders.Remove(this);
-
-        foreach (var other in touching)
-            other.touching.Remove(this);
-        touching.Clear();
+        Physics.Disable(this);
     }
 
     public void UpdatePosition()

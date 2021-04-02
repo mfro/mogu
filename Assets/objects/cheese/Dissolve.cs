@@ -23,7 +23,7 @@ public class Dissolve : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (dissolveStarted) return;
+        if (dissolveStarted || !physics.enabled) return;
 
         if (physics.touching.Any(c => c is MyDynamic))
         {
@@ -41,9 +41,6 @@ public class Dissolve : MonoBehaviour
 
         while (elapsedTime < dissolveTime)
         {
-            if (!physics.flip.flipping)
-                elapsedTime += Time.deltaTime;
-
             if (elapsedTime < dissolveTime / 3) rend.material = Cheese1;
             else if (elapsedTime < (2 * dissolveTime) / 3) rend.material = Cheese2;
             else rend.material = Cheese3;
@@ -52,6 +49,7 @@ public class Dissolve : MonoBehaviour
             rend.material.color = currentColor;
             */
             await Task.Yield();
+            if (physics.enabled) elapsedTime += Time.deltaTime;
         }
 
         Destroy(gameObject);

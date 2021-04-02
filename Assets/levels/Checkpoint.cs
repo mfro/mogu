@@ -21,7 +21,7 @@ public class Checkpoint : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!physics.enabled || reached) return;
+        if (!physics.enabled) return;
 
         var down = (Vector2)Util.Round(transform.rotation * Vector3.down);
 
@@ -41,6 +41,8 @@ public class Checkpoint : MonoBehaviour
     public void MarkReached()
     {
         reached = true;
+        enabled = false;
+        physics.enabled = false;
         balloon.DoRelease();
     }
 }

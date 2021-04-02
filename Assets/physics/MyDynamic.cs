@@ -40,9 +40,6 @@ public class MyDynamic : MyCollider
 
     void FixedUpdate()
     {
-        if (flip?.flipping == true)
-            return;
-
         if (gravity)
         {
             velocity += flip.down * Physics.GRAVITY * Time.fixedDeltaTime;

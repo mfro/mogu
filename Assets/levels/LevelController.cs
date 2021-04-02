@@ -114,27 +114,13 @@ public class LevelController : MonoBehaviour
     {
         if (moving) return;
 
-        if (currentIndex + 1 == levels.Length)
+        if (currentIndex + 1 < levels.Length)
         {
-            SceneController.sceneController.SwitchScene(SceneManager.GetActiveScene().buildIndex + 1);
+            GoToLevel(currentIndex + 1, true);
         }
         else
         {
-            // var next = levels[currentIndex + 1];
-
-            // var visible = Util.RectFromCenterSize(Physics.FromUnity(next.transform.position), Physics.FromUnity(new Vector2(12, 12)));
-            // var overlap = Physics.Overlap(visible, playerPhysics.bounds);
-            // var dim = currentLevel.exitOrientation.x == 0 ? 0 : 1;
-
-            // var progress = overlap != null
-            //     && overlap.Value == playerPhysics.bounds
-            //     && playerFlip.down == currentLevel.exitOrientation
-            //     && Distance(next.transform.position, player.transform.position, dim) <= Distance(currentLevel.transform.position, player.transform.position, dim);
-
-            // if (progress)
-            // {
-            GoToLevel(currentIndex + 1, true);
-            // }
+            SceneController.sceneController.SwitchScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
         flip.EndFlip += (delta) =>
         {
             facing = delta * facing;
+            UpdateMovement();
         };
     }
 

@@ -280,7 +280,7 @@ public class LevelController : MonoBehaviour
     private bool _onPause = false;
     public void OnPause(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onPause && !moving)
+        if (c.ReadValueAsButton() && !_onPause && !moving && !player.isFlipping)
         {
             DoPause();
             print("did it");

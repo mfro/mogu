@@ -354,6 +354,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: hint ccw
       objectReference: {fileID: 0}
+    - target: {fileID: 5760154323338965641, guid: 684027745570aa848b5f7298460fc175,
+        type: 3}
+      propertyPath: input
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760154323338965641, guid: 684027745570aa848b5f7298460fc175,
+        type: 3}
+      propertyPath: context
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684027745570aa848b5f7298460fc175, type: 3}
 --- !u!4 &2866003987755353898 stripped
@@ -438,6 +448,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: hint flip v
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760154323338965641, guid: 684027745570aa848b5f7298460fc175,
+        type: 3}
+      propertyPath: input
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760154323338965641, guid: 684027745570aa848b5f7298460fc175,
+        type: 3}
+      propertyPath: context
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684027745570aa848b5f7298460fc175, type: 3}
@@ -524,6 +544,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: hint cw
       objectReference: {fileID: 0}
+    - target: {fileID: 5760154323338965641, guid: 684027745570aa848b5f7298460fc175,
+        type: 3}
+      propertyPath: input
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760154323338965641, guid: 684027745570aa848b5f7298460fc175,
+        type: 3}
+      propertyPath: context
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684027745570aa848b5f7298460fc175, type: 3}
 --- !u!4 &5530233711283250001 stripped
@@ -603,6 +633,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: hint flip h
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760154323338965641, guid: 684027745570aa848b5f7298460fc175,
+        type: 3}
+      propertyPath: input
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760154323338965641, guid: 684027745570aa848b5f7298460fc175,
+        type: 3}
+      propertyPath: context
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9068553306973400028, guid: 684027745570aa848b5f7298460fc175,
         type: 3}

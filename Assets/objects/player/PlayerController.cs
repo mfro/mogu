@@ -125,7 +125,18 @@ public class PlayerController : MonoBehaviour
 
     public void Move(InputAction.CallbackContext callback)
     {
-        input_movement = callback.ReadValue<Vector2>();
+        var isKeyboard = callback.control.device is Keyboard;
+        var mode = isKeyboard ? InputMode.Keyboard : InputMode.Controller;
+
+        if (mode != Hint.mode) {
+            Hint.mode = mode;
+            foreach (var hint in FindObjectsOfType<Hint>())
+            {
+                hint.ReRender();
+            }
+        }
+
+        input_movement = Util.Round(callback.ReadValue<Vector2>());
         if (!flip.flipping)
             UpdateMovement();
     }

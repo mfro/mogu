@@ -255,7 +255,7 @@
                 {
                     "name": "",
                     "id": "c8ad74b7-77c9-4631-886e-2f64b3eacdc0",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad;Keyboard&Mouse",
@@ -277,7 +277,7 @@
                 {
                     "name": "",
                     "id": "9ebfb6a9-ae0c-4dab-abdc-71dd4784c8fd",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad;Keyboard&Mouse",
@@ -299,7 +299,7 @@
                 {
                     "name": "",
                     "id": "39a0679c-1b26-4dd2-b209-52b316065ded",
-                    "path": "<Gamepad>/start",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad",
@@ -336,6 +336,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad",
+                    "action": "undo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6eb11292-7190-4101-b559-b9f96f180df8",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "undo",
                     "isComposite": false,
                     "isPartOfComposite": false

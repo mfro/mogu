@@ -38,6 +38,27 @@ TextureImporter:
   - first:
       213: -8664187143416442452
     second: hint down
+  - first:
+      213: -3932769181195673682
+    second: hint f
+  - first:
+      213: -4383487967158792574
+    second: hint v
+  - first:
+      213: 2177439805917323278
+    second: hint r
+  - first:
+      213: 6076839810359856673
+    second: hint a
+  - first:
+      213: -6722481226288384368
+    second: hint b
+  - first:
+      213: 6163517578107867743
+    second: hint l
+  - first:
+      213: -1230666571143759980
+    second: hint
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -139,7 +160,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 630
+        y: 810
         width: 45
         height: 45
       alignment: 0
@@ -160,7 +181,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 585
+        y: 765
         width: 45
         height: 45
       alignment: 0
@@ -181,7 +202,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 540
+        y: 720
         width: 45
         height: 45
       alignment: 0
@@ -202,7 +223,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 495
+        y: 675
         width: 45
         height: 45
       alignment: 0
@@ -223,7 +244,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 360
+        y: 540
         width: 45
         height: 45
       alignment: 0
@@ -244,7 +265,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 180
+        y: 360
         width: 45
         height: 45
       alignment: 0
@@ -349,11 +370,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 450
+        y: 630
         width: 45
         height: 45
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -370,11 +391,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 405
+        y: 585
         width: 45
         height: 45
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -382,6 +403,132 @@ TextureImporter:
       bones: []
       spriteID: ca11829a2bf92c780800000000000000
       internalID: -8664187143416442452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hint f
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 495
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaf5a33344ffb69c0800000000000000
+      internalID: -3932769181195673682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hint v
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 450
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28e0d482be8ba23c0800000000000000
+      internalID: -4383487967158792574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hint r
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 405
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e006f7787f1d73e10800000000000000
+      internalID: 2177439805917323278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hint a
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 315
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12e837d6c95455450800000000000000
+      internalID: 6076839810359856673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hint b
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 270
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09639d121f2f4b2a0800000000000000
+      internalID: -6722481226288384368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hint l
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 225
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f52def1e496398550800000000000000
+      internalID: 6163517578107867743
       vertices: []
       indices: 
       edges: []

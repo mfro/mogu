@@ -21,7 +21,6 @@ public class Flippable : MonoBehaviour
         down = Util.Round(transform.rotation * Vector2.down);
     }
 
-
 #if UNITY_EDITOR
     public void OnDrawGizmos()
     {

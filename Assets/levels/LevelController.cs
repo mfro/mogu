@@ -286,7 +286,6 @@ public class LevelController : MonoBehaviour
             print("did it");
         }
 
-
         _onPause = c.ReadValueAsButton();
     }
 

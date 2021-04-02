@@ -41,7 +41,7 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    public void SwitchScene(int index, float duration = 1f)
+    public void SwitchScene(int index, float duration = 0.75f)
     {
         loadingScene = index;
         transitionAnim.enabled = true;
@@ -51,6 +51,7 @@ public class SceneController : MonoBehaviour
 
     private void EndSceneSwitch()
     {
+        Physics.ClearPauseSet();
         SceneManager.LoadScene(loadingScene);
         transitionAnim.SetTrigger("End");
     }

@@ -1,4 +1,6 @@
-“Sound effects obtained from https://www.zapsplat.com“
+Main Menu and Level Complete sound effects by Lucas Hardy, a student from MSU.
+
+Rest of the Sound effects obtained from https://www.zapsplat.com
 
 Background music made by Lucas Hardy, a student from MSU.
 

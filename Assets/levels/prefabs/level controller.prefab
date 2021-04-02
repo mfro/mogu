@@ -976,7 +976,8 @@ MonoBehaviour:
   player: {fileID: 1413353432}
   deathScreen: {fileID: 2218924677133246224}
   CameraTime: 1
-  LevelTransitionSound: {fileID: 0}
+  LevelTransitionSound: {fileID: 8300000, guid: 245f9ed3e537e3f4793c40b16540a410,
+    type: 3}
   backgroundMusic:
     audioClip: {fileID: 8300000, guid: c6d73e34faf4f9b46ba495b5a68fcb59, type: 3}
     volume: 1
@@ -1004,10 +1005,11 @@ AudioSource:
   m_GameObject: {fileID: 4811372266002696931}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2894808964745247221, guid: 60d5009f46bde5d4a8ffcdd82728847a,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.03
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

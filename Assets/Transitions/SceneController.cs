@@ -21,22 +21,13 @@ public class SceneController : MonoBehaviour
         {
             sceneController = this;
             DontDestroyOnLoad(this);
-        } 
+        }
         else
         {
             Destroy(this.gameObject);
             return;
         }
 
-
-        if (fadeOnInit)
-        {
-            transitionAnim.enabled = true;
-        }
-        else
-        {
-            transitionAnim.enabled = false;
-        }
     }
 
     public void SwitchScene(int index, float duration = 1f)
@@ -52,5 +43,5 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(nextLevel);
         transitionAnim.SetTrigger("End");
     }
-    
+
 }

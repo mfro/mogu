@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 input_movement;
     private bool previouslyGrounded = false;
-    public bool isFlipping = true;
+    public bool isFlipping = false;
 
     void Awake()
     {
@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        isFlipping = false;
         dyn.mask |= CollisionMask.Player;
 
         facing = Vector2.right;

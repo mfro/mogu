@@ -28,6 +28,14 @@ public class SceneController : MonoBehaviour
             return;
         }
 
+        if (fadeOnInit)
+        {
+            transitionAnim.enabled = true;
+        }
+        else
+        {
+            transitionAnim.enabled = false;
+        }
     }
 
     public void SwitchScene(int index, float duration = 1f)

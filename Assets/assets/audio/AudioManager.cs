@@ -20,18 +20,19 @@ public class Audio
     }
 }
 
-public class MusicManager : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
-    public static MusicManager musicManager;
+    public static AudioManager audioManger;
 
     [SerializeField] AudioSource musicSource;
+    [SerializeField] AudioSource SFXSource;
 
     // Start is called before the first frame update
     void Awake()
     {
-        if (musicManager == null)
+        if (audioManger == null)
         {
-            musicManager = this;
+            audioManger = this;
         }
         else
         {
@@ -42,7 +43,7 @@ public class MusicManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void PlayMusic(Audio audio)
+    public void PlayMusic (Audio audio)
     {
         if (audio.audioClip == musicSource.clip && musicSource.isPlaying) return;
 
@@ -53,7 +54,18 @@ public class MusicManager : MonoBehaviour
         musicSource.Play();
     }
 
+    public void PlaySFX (Audio audio)
+    {
+        if (audio.audioClip == SFXSource.clip && SFXSource.isPlaying) return;
 
+        SFXSource.clip = audio.audioClip;
+        SFXSource.loop = audio.looping;
+        SFXSource.volume = audio.volume;
+        SFXSource.outputAudioMixerGroup = audio.mixerGroup;
+        SFXSource.Play();
+    }
+
+ 
     public void StopMusic()
     {
         musicSource.Stop();

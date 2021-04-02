@@ -10,7 +10,10 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] GameObject MainScreen;
     [SerializeField] GameObject OptionsScreen;
     [SerializeField] TextMeshProUGUI musicVolumeText, masterVolumeText, sfxVolumeText;
+
     [SerializeField] Audio mainMenuMusic;
+
+    [SerializeField] Audio pressButtonSound;
 
     private float maxMusic, maxMaster, maxSFX;
 
@@ -21,22 +24,25 @@ public class MainMenuController : MonoBehaviour
         audioMixer.GetFloat("MusicVolume", out maxMusic);
         audioMixer.GetFloat("SFXVolume", out maxSFX);
         audioMixer.GetFloat("MasterVolume", out maxMaster);
-        MusicManager.musicManager?.PlayMusic(mainMenuMusic);
+        AudioManager.audioManger?.PlayMusic(mainMenuMusic);
     }
 
     public void OnPlay()
     {
+        AudioManager.audioManger?.PlaySFX(pressButtonSound);
         SceneController.sceneController.SwitchScene(1);
     }
 
     public void OnOptions()
     {
+        AudioManager.audioManger?.PlaySFX(pressButtonSound);
         MainScreen.SetActive(false);
         OptionsScreen.SetActive(true);
     }
 
     public void OnCredits()
     {
+        AudioManager.audioManger?.PlaySFX(pressButtonSound);
         print("credits");
     }
 
@@ -47,11 +53,10 @@ public class MainMenuController : MonoBehaviour
 
     public void OnOptionsReturn()
     {
+        AudioManager.audioManger?.PlaySFX(pressButtonSound);
         MainScreen.SetActive(true);
         OptionsScreen.SetActive(false);
     }
-
-
     public void SetMusicVolume(float volume)
     {
 
@@ -78,6 +83,11 @@ public class MainMenuController : MonoBehaviour
 
         audioMixer.SetFloat("MasterVolume", volumeOfMixer);
         masterVolumeText.text = volume.ToString();
+    }
+
+    public void EndDrag()
+    {
+        AudioManager.audioManger.PlaySFX(pressButtonSound);
     }
 
 }

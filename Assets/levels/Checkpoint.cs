@@ -29,7 +29,7 @@ public class Checkpoint : MonoBehaviour
 
         if (other != null && other.flip.down == down)
         {
-            balloon.DoRelease();
+            MarkReached();
 
             var levelController = FindObjectOfType<LevelController>();
             levelController.Advance();

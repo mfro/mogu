@@ -113,8 +113,14 @@ public class Hint : MonoBehaviour
         }).ToList();
     }
 
-    void Start()
+    void OnEnable()
     {
         Render();
+    }
+
+    void OnDisable()
+    {
+        foreach (var obj in children)
+            Destroy(obj);
     }
 }

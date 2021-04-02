@@ -7,7 +7,6 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] public Balloon balloon;
 
     private MyCollider physics;
-    [HideInInspector] [SerializeField] private bool reached = false;
 
     void Awake()
     {
@@ -30,7 +29,6 @@ public class Checkpoint : MonoBehaviour
 
         if (other != null && other.flip.down == down)
         {
-            reached = true;
             balloon.DoRelease();
 
             var levelController = FindObjectOfType<LevelController>();
@@ -40,7 +38,6 @@ public class Checkpoint : MonoBehaviour
 
     public void MarkReached()
     {
-        reached = true;
         enabled = false;
         physics.enabled = false;
         balloon.DoRelease();

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
@@ -120,7 +119,7 @@ public class LevelController : MonoBehaviour
         }
         else
         {
-            SceneController.sceneController.SwitchScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneController.sceneController.SwitchScene(SceneController.NextLevel);
         }
     }
 

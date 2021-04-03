@@ -31,6 +31,7 @@ public class BuildStuff
         var output = "build/mogu windows.zip";
         var input = BuildWindows();
 
+        File.Delete(output);
         using (var zip = ZipFile.Open(output, ZipArchiveMode.Create))
         {
             AddToZip(zip, input, "mogu");
@@ -59,6 +60,7 @@ public class BuildStuff
         var output = "build/mogu mac.zip";
         var input = BuildMac();
 
+        File.Delete(output);
         using (var zip = ZipFile.Open(output, ZipArchiveMode.Create))
         {
             AddToZip(zip, input, "mogu.app");
@@ -90,6 +92,7 @@ public class BuildStuff
         var windows = BuildWindows();
         var mac = BuildMac();
 
+        File.Delete(output);
         using (var zip = ZipFile.Open(output, ZipArchiveMode.Create))
         {
             AddToZip(zip, windows, "windows");

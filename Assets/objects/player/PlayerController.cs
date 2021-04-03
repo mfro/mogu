@@ -18,11 +18,14 @@ public class PlayerController : MonoBehaviour
     private MyDynamic dyn;
 
     [SerializeField] AudioSource walkAudioSource;
-    [SerializeField] AudioSource landAudioSource;
+    [SerializeField] AudioSource OneShotAudioSource;
     [SerializeField] AudioClip LandSound;
+    [SerializeField] AudioClip JumpSound;
 
     private Vector2 input_movement;
     private bool previouslyGrounded = false;
+    private bool previouslyJumping = false;
+    private bool isPushing;
 
     void Awake()
     {
@@ -53,11 +56,34 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("grounded", dyn.grounded);
         anim.speed = dyn.enabled ? 1 : 0;
 
+
+
+        previouslyGrounded = dyn.grounded;
+        previouslyJumping = movement.jumping;
+
+        if (dyn.enabled)
+        {
+            // Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
+            // Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
+            // Debug.DrawLine(transform.position, transform.position + (Vector3)dyn.velocity, Color.green);
+
+            isPushing = dyn.grounded
+                && Vector2.Dot(facing, dyn.velocity) > 0
+                && Physics.AllCollisions(dyn.bounds.Shift(facing), dyn.mask).Where(c => c.Item1 != dyn).Any();
+
+            anim.SetBool("pushing", isPushing);
+
+            var spriteRight = (transform.rotation * Vector2.right);
+            sprite.flipX = (Vector2.Dot(spriteRight, facing) < 0);
+
+            anim.SetFloat("running speed", Mathf.Abs(movement.input_running));
+        }
+
         if (dyn.enabled && dyn.grounded)
         {
             if (!previouslyGrounded)
             {
-                landAudioSource.PlayOneShot(LandSound);
+                OneShotAudioSource.PlayOneShot(LandSound);
             }
             if (dyn.velocity.magnitude > 0)
             {
@@ -73,25 +99,13 @@ public class PlayerController : MonoBehaviour
             if (walkAudioSource.isPlaying) walkAudioSource.Pause();
         }
 
-        previouslyGrounded = dyn.grounded;
-
-        if (dyn.enabled)
+        if (movement.jumping && !previouslyJumping)
         {
-            // Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
-            // Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
-            // Debug.DrawLine(transform.position, transform.position + (Vector3)dyn.velocity, Color.green);
-
-            var isPushing = dyn.grounded
-                && Vector2.Dot(facing, dyn.velocity) > 0
-                && Physics.AllCollisions(dyn.bounds.Shift(facing), dyn.mask).Where(c => c.Item1 != dyn).Any();
-
-            anim.SetBool("pushing", isPushing);
-
-            var spriteRight = (transform.rotation * Vector2.right);
-            sprite.flipX = (Vector2.Dot(spriteRight, facing) < 0);
-
-            anim.SetFloat("running speed", Mathf.Abs(movement.input_running));
+            OneShotAudioSource.PlayOneShot(JumpSound);
         }
+
+        walkAudioSource.pitch = isPushing ? 0.6f : 1;
+
     }
 
     private static Vector2 MatchFacing(float value, Vector2 negative, Vector2 positive)

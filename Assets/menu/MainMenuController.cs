@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
-using TMPro;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Threading.Tasks;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -14,10 +13,24 @@ public class MainMenuController : MonoBehaviour
 
     [SerializeField] Audio pressButtonSound;
 
+    [SerializeField] GameObject[] buttons;
+
     void Start()
     {
         AudioManager.audioManger?.PlayMusic(mainMenuMusic);
         optionsScreen.Close += DoOptionsReturn;
+    }
+
+    private void OnEnable()
+    {
+        SetSelected();
+    }
+
+    public async void SetSelected()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        await Task.Yield();
+        EventSystem.current.SetSelectedGameObject(buttons[0]);
     }
 
     public void DoPlay()
@@ -30,6 +43,7 @@ public class MainMenuController : MonoBehaviour
     {
         AudioManager.audioManger?.PlaySFX(pressButtonSound);
         mainScreen.SetActive(false);
+
         optionsScreen.gameObject.SetActive(true);
     }
 
@@ -49,5 +63,6 @@ public class MainMenuController : MonoBehaviour
         AudioManager.audioManger?.PlaySFX(pressButtonSound);
         mainScreen.SetActive(true);
         optionsScreen.gameObject.SetActive(false);
+        SetSelected();
     }
 }

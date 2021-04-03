@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
+using System.Threading.Tasks;
 
 public class PauseScreen : MonoBehaviour
 {
@@ -12,6 +14,9 @@ public class PauseScreen : MonoBehaviour
     [SerializeField] Audio pressButtonSound;
 
     [SerializeField] public CanvasGroup LevelTitle;
+
+
+    [SerializeField] GameObject[] buttons;
 
     private bool isPaused = false;
 
@@ -36,7 +41,17 @@ public class PauseScreen : MonoBehaviour
         if (isPaused)
         {
             AudioManager.audioManger.PlaySFX(pressButtonSound);
-        }
+            SetSelected();
+        } 
+    }
+
+    async void SetSelected()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+
+        await Task.Yield();
+
+        EventSystem.current.SetSelectedGameObject(buttons[0]);
     }
 
     public void DoQuit()
@@ -57,6 +72,8 @@ public class PauseScreen : MonoBehaviour
         mainScreen.SetActive(true);
         optionsScreen.gameObject.SetActive(false);
         AudioManager.audioManger.PlaySFX(pressButtonSound);
+
+        SetSelected();
     }
 
     private bool _onPause = false;

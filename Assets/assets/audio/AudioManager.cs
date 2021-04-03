@@ -20,12 +20,38 @@ public class Audio
     }
 }
 
+public class AudioGroup
+{
+    public string Name { get; }
+
+    public float Min { get; }
+    public float Max { get; }
+    public float DefaultValue { get; }
+
+    public float GetMixerVolume(float value) => value == 0 ? -80 : Mathf.Lerp(Min, Max, value / 100);
+
+    public AudioGroup(string name, float min, float max, float defaultValue)
+    {
+        Name = name;
+        Min = min;
+        Max = max;
+        DefaultValue = defaultValue;
+    }
+}
+
 public class AudioManager : MonoBehaviour
 {
+    public static AudioGroup
+        Master = new AudioGroup("MasterVolume", -35, 0, 100),
+        Effects = new AudioGroup("SFXVolume", -35, 0, 100),
+        Music = new AudioGroup("MusicVolume", -35, 0, 50);
+
     public static AudioManager audioManger;
 
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
+
+    [SerializeField] AudioMixer audioMixer;
 
     // Start is called before the first frame update
     void Awake()
@@ -43,7 +69,14 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void PlayMusic (Audio audio)
+    void Start()
+    {
+        SetValue(Master, GetValue(Master));
+        SetValue(Effects, GetValue(Effects));
+        SetValue(Music, GetValue(Music));
+    }
+
+    public void PlayMusic(Audio audio)
     {
         if (audio.audioClip == musicSource.clip && musicSource.isPlaying) return;
 
@@ -54,7 +87,7 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
-    public void PlaySFX (Audio audio)
+    public void PlaySFX(Audio audio)
     {
         if (audio.audioClip == SFXSource.clip && SFXSource.isPlaying) return;
 
@@ -65,9 +98,23 @@ public class AudioManager : MonoBehaviour
         SFXSource.Play();
     }
 
- 
     public void StopMusic()
     {
         musicSource.Stop();
+    }
+
+    public void SetValue(AudioGroup group, float value)
+    {
+        var volume = group.GetMixerVolume(value);
+
+        audioMixer.SetFloat(group.Name, volume);
+        PlayerPrefs.SetFloat(group.Name, value);
+    }
+
+    public float GetValue(AudioGroup group)
+    {
+        return PlayerPrefs.HasKey(group.Name)
+            ? PlayerPrefs.GetFloat(group.Name)
+            : group.DefaultValue;
     }
 }

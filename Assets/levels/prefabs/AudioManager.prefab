@@ -175,6 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1191159166082545445}
   SFXSource: {fileID: 6187792666046923715}
+  audioMixer: {fileID: 24100000, guid: 60d5009f46bde5d4a8ffcdd82728847a, type: 2}
 --- !u!1 &6776937864738134655
 GameObject:
   m_ObjectHideFlags: 0

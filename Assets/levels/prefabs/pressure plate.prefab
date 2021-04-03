@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1908669191653252536}
   - component: {fileID: 6553645522195276349}
   m_Layer: 10
-  m_Name: Pressure Plate
+  m_Name: pressure plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f69e733aacfe224d88141a43af4eb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 1, y: 1}
+  scale: {x: 1, y: 0.5}
   offset: {x: 0, y: 0}
 --- !u!114 &831493313626786350
 MonoBehaviour:

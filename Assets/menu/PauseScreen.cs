@@ -11,6 +11,8 @@ public class PauseScreen : MonoBehaviour
 
     [SerializeField] Audio pressButtonSound;
 
+    [SerializeField] public CanvasGroup LevelTitle;
+
     private bool isPaused = false;
 
     void Start()
@@ -27,6 +29,8 @@ public class PauseScreen : MonoBehaviour
         Physics.IsEnabled = !isPaused;
         gameObject.SetActive(isPaused);
         mainScreen.SetActive(isPaused);
+        LevelTitle.alpha = isPaused ? 1 : 0;
+        LevelTitle.gameObject.SetActive(isPaused);
         optionsScreen.gameObject.SetActive(false);
 
         if (isPaused)

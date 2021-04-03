@@ -61,14 +61,14 @@ public class MyCollider : MonoBehaviour
         if (fullScale.x % (1 / 32f) != 0) throw new Exception($"invalid scale on collider: {fullScale.x}");
         if (fullScale.y % (1 / 32f) != 0) throw new Exception($"invalid scale on collider: {fullScale.y}");
 
-        var o = (Vector2)Util.Round(transform.rotation * offset);
-        var s = Physics.FromUnity(transform.rotation * (transform.lossyScale * scale));
+        var pos = Util.Round(position + (Vector2)(transform.rotation * offset));
+        var s = Physics.FromUnity(transform.rotation * fullScale);
 
         s = Util.Round(s);
         s.x = Math.Abs(s.x);
         s.y = Math.Abs(s.y);
 
-        return Util.RectFromCenterSize(position + o, s);
+        return Util.RectFromCenterSize(pos, s);
     }
 
 #if UNITY_EDITOR

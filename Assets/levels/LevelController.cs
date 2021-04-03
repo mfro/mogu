@@ -3,17 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class LevelController : MonoBehaviour
 {
+    public static Level CurrentLevel;
+
     [SerializeField] public new GameObject camera;
     [SerializeField] public LevelBorder border;
     [SerializeField] public PlayerController player;
     [SerializeField] public GameObject deathScreen;
+    [SerializeField] public TextMeshProUGUI levelText;
+    [SerializeField] public CanvasGroup levelScreen;
     [SerializeField] public float CameraTime;
     [SerializeField] public AudioClip LevelTransitionSound;
+    [SerializeField] public int World;
 
     [SerializeField] private Audio backgroundMusic;
 
@@ -130,6 +136,9 @@ public class LevelController : MonoBehaviour
         if (index < 0 || index >= levels.Length) return;
 
         levels[index].start.MarkReached();
+        levelScreen.alpha = 1;
+        levelText.text = $"{World}-{index + 1}\n\n{levels[index].title}";
+        levelScreen.gameObject.SetActive(true);
 
         if (transition)
         {
@@ -151,7 +160,10 @@ public class LevelController : MonoBehaviour
             playerPhysics.velocity = Vector2.zero;
             playerPhysics.position = Physics.FromUnity(currentLevel.start.transform.position);
             playerPhysics.UpdatePosition();
+            levelScreen.alpha = 1;
         }
+
+        CurrentLevel = currentLevel;
 
         player.UpdateMovement();
 
@@ -167,6 +179,21 @@ public class LevelController : MonoBehaviour
         undoStack.Clear();
 
         UpdateColliders();
+
+        var end = Time.time + 1f;
+        while (Time.time < end) await Task.Yield();
+
+        var t0 = Time.time;
+        var t1 = t0 + CameraTime;
+
+        while (Time.time < t1)
+        {
+            levelScreen.alpha = 1 - (Time.time - t0) / CameraTime;
+            await Task.Yield();
+        }
+
+        levelScreen.alpha = 0;
+        levelScreen.gameObject.SetActive(false);
     }
 
     private void UpdateColliders()
@@ -196,11 +223,13 @@ public class LevelController : MonoBehaviour
 
         while (Time.time < t1)
         {
+            levelScreen.alpha = (Time.time - t0) / CameraTime;
             camera.transform.position = Vector3.Lerp(p0, p1, (Time.time - t0) / CameraTime);
             await Task.Yield();
         }
 
         camera.transform.position = p1;
+        levelScreen.alpha = 1;
         Physics.IsEnabled = true;
         moving = false;
     }

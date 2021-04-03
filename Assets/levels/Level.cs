@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    public string title;
     public Checkpoint start;
 
 #if UNITY_EDITOR

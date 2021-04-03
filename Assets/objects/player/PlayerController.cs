@@ -151,9 +151,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (var cell in FindObjectsOfType<FlipPanel>())
         {
-            var area = Util.RectFromCenterSize(Physics.FromUnity(cell.transform.position), Physics.FromUnity(cell.transform.lossyScale));
-            var overlap = Physics.Overlap(dyn.bounds, area);
-
+            var overlap = Physics.Overlap(dyn.bounds, cell.physics.bounds);
             if (overlap == null) continue;
 
             if (overlap.Value == dyn.bounds)

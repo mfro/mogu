@@ -105,6 +105,43 @@ public class Tools
         }
     }
 
+    [MenuItem("mushroom/internal flip")]
+    private static void InternalFlip()
+    {
+        var target = Selection.activeTransform;
+
+        for (var i = 0; i < target.childCount; ++i)
+        {
+            var inner = target.GetChild(i);
+            Undo.RecordObject(inner, "Internal flip");
+
+            var pos = inner.localPosition;
+            pos.y = -pos.y;
+            inner.localPosition = pos;
+        }
+    }
+
+    [MenuItem("mushroom/internal rotate clockwise")]
+    private static void InternalRotateCW() => InternalRotate(Quaternion.AngleAxis(90, Vector3.back));
+
+    [MenuItem("mushroom/internal rotate counter-clockwise")]
+    private static void InternalRotateCCW() => InternalRotate(Quaternion.AngleAxis(-90, Vector3.back));
+
+    private static void InternalRotate(Quaternion delta)
+    {
+        var target = Selection.activeTransform;
+
+        for (var i = 0; i < target.childCount; ++i)
+        {
+            var inner = target.GetChild(i);
+            Undo.RecordObject(inner, "Internal flip");
+
+            var pos = inner.localPosition;
+            pos = Util.Round(delta * pos * 2) / 2;
+            inner.localPosition = pos;
+        }
+    }
+
     private static void OnScene(Scene scene)
     {
         foreach (var o in FindInScene<SceneController>(scene))

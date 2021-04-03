@@ -40,7 +40,7 @@ public class FlipPanel : MonoBehaviour
     private GameObject hintHorizontal;
 
     private AudioSource audioSource;
-    private MyCollider physics;
+    [NonSerialized] public MyCollider physics;
 
     void Awake()
     {
@@ -191,6 +191,9 @@ public class FlipPanel : MonoBehaviour
             cancelFlip = null;
         };
 
+        var originalPos = transform.position;
+        transform.position = originalPos + new Vector3(0, 0, -5);
+
         var q0 = transform.rotation;
         var q1 = delta * q0;
 
@@ -209,8 +212,8 @@ public class FlipPanel : MonoBehaviour
         }
 
         transform.rotation = q1;
+        transform.position = originalPos;
         cancelFlip();
-        transform.rotation = q0;
 
         foreach (var o in objects)
         {

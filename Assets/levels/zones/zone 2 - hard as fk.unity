@@ -4187,6 +4187,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: level 01
       objectReference: {fileID: 0}
+    - target: {fileID: 3494262569976773966, guid: a0360d3851b7738409da2c081f7468c1,
+        type: 3}
+      propertyPath: title
+      value: Good Luck
+      objectReference: {fileID: 0}
     - target: {fileID: 3494262569976773967, guid: a0360d3851b7738409da2c081f7468c1,
         type: 3}
       propertyPath: m_RootOrder

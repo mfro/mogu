@@ -943,9 +943,12 @@ MonoBehaviour:
   border: {fileID: 1150523557216655155}
   player: {fileID: 1413353432}
   deathScreen: {fileID: 2218924677133246224}
+  levelText: {fileID: 7507255081455066782}
+  levelScreen: {fileID: 4287883206622489351}
   CameraTime: 1
   LevelTransitionSound: {fileID: 8300000, guid: 245f9ed3e537e3f4793c40b16540a410,
     type: 3}
+  World: 0
   backgroundMusic:
     audioClip: {fileID: 8300000, guid: c6d73e34faf4f9b46ba495b5a68fcb59, type: 3}
     volume: 1
@@ -1749,5 +1752,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6e5d52c179e1d84ba1f56648e3a39dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!225 &4287883206622489351 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 7985799233397362531, guid: 201cfb245a9adc248bc41b9296c00553,
+    type: 3}
+  m_PrefabInstance: {fileID: 6148219542689817700}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7507255081455066782 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4430976479610026746, guid: 201cfb245a9adc248bc41b9296c00553,
+    type: 3}
+  m_PrefabInstance: {fileID: 6148219542689817700}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

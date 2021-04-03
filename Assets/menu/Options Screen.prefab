@@ -98,6 +98,7 @@ MonoBehaviour:
     looping: 0
     mixerGroup: {fileID: -2894808964745247221, guid: 60d5009f46bde5d4a8ffcdd82728847a,
       type: 2}
+  buttons: []
 --- !u!1 &821358089309390665
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +478,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.34117648, g: 0.22352943, b: 0.058823533, a: 0}
-    m_HighlightedColor: {r: 0.34117648, g: 0.22352943, b: 0.058823533, a: 0.23529412}
+    m_HighlightedColor: {r: 0.34117648, g: 0.22352943, b: 0.058823533, a: 0}
     m_PressedColor: {r: 0.34117648, g: 0.22352943, b: 0.058823533, a: 0.47058824}
     m_SelectedColor: {r: 0.34117648, g: 0.22352943, b: 0.058823533, a: 0.23529412}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -609,9 +610,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 0.4392157, g: 0.6901961, b: 0.45882353, a: 1}
+    m_SelectedColor: {r: 0.7411765, g: 0.85882354, b: 0.7529412, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -662,12 +663,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 14
+  - eventID: 0
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3708917833596251055}
-          m_MethodName: TestSFX
+        - m_Target: {fileID: 2709189861361757151}
+          m_MethodName: Select
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -910,9 +911,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 0.4392157, g: 0.6901961, b: 0.45882353, a: 1}
+    m_SelectedColor: {r: 0.7411765, g: 0.85882354, b: 0.7529412, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -963,12 +964,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 14
+  - eventID: 0
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3708917833596251055}
-          m_MethodName: TestSFX
+        - m_Target: {fileID: 6899854601094388525}
+          m_MethodName: Select
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2402,9 +2403,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 0.4392157, g: 0.6901961, b: 0.45882353, a: 1}
+    m_SelectedColor: {r: 0.7411765, g: 0.85882354, b: 0.7529412, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2455,7 +2456,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 14
+  - eventID: 0
     callback:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 2604737529526621456}
+          m_MethodName: Select
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

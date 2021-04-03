@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Threading.Tasks;
 
 public class OptionsScreen : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class OptionsScreen : MonoBehaviour
 
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] Audio pressButtonSound;
+
+    [SerializeField] GameObject[] buttons;
 
     private void UpdateUI(AudioGroup group, Slider slider, TextMeshProUGUI text)
     {
@@ -26,6 +30,15 @@ public class OptionsScreen : MonoBehaviour
         UpdateUI(AudioManager.Master, masterVolumeSlider, masterVolumeText);
         UpdateUI(AudioManager.Effects, sfxVolumeSlider, sfxVolumeText);
         UpdateUI(AudioManager.Music, musicVolumeSlider, musicVolumeText);
+
+        SetSelected();
+    }
+
+    async void SetSelected()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        await Task.Yield();
+        EventSystem.current.SetSelectedGameObject(buttons[0]);
     }
 
     public void SetMasterVolume(float volume)

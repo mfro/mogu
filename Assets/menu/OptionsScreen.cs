@@ -36,7 +36,6 @@ public class OptionsScreen : MonoBehaviour
     {
         float volume;
         audioMixer.GetFloat(name, out volume);
-        print($"{name} {volume}");
         slider.value = VolumeToSlider(volume, -35, max);
         text.text = Mathf.Round(VolumeToSlider(volume, -35, max)).ToString();
     }

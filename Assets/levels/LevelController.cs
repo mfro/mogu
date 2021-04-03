@@ -187,7 +187,7 @@ public class LevelController : MonoBehaviour
     private async Task MoveCamera(Vector3 delta)
     {
         moving = true;
-        playerPhysics.enabled = false;
+        Physics.IsEnabled = false;
         var p0 = camera.transform.position;
         var p1 = p0 + delta;
 
@@ -201,7 +201,7 @@ public class LevelController : MonoBehaviour
         }
 
         camera.transform.position = p1;
-        playerPhysics.enabled = true;
+        Physics.IsEnabled = true;
         moving = false;
     }
 
@@ -248,12 +248,6 @@ public class LevelController : MonoBehaviour
         }
     }
 
-    public void DoPause()
-    {
-        Physics.IsEnabled = !Physics.IsEnabled;
-        PausePressed?.Invoke();
-    }
-
     private static float Distance(Vector2 a, Vector2 b, int dim)
     {
         return Mathf.Abs(a[dim] - b[dim]);
@@ -275,18 +269,6 @@ public class LevelController : MonoBehaviour
             DoUndo();
 
         _onUndo = c.ReadValueAsButton();
-    }
-
-    private bool _onPause = false;
-    public void OnPause(InputAction.CallbackContext c)
-    {
-        if (c.ReadValueAsButton() && !_onPause && !moving && !player.isFlipping)
-        {
-            DoPause();
-            print("did it");
-        }
-
-        _onPause = c.ReadValueAsButton();
     }
 
     private bool _onCheat1 = false;

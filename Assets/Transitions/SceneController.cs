@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-
-    public Animator transitionAnim;
+    public static event Action SceneChanged;
 
     public static SceneController sceneController;
 
     public static int NextLevel => SceneManager.GetActiveScene().buildIndex + 1;
+
+    public Animator transitionAnim;
 
     [SerializeField] bool fadeOnInit;
 
@@ -51,8 +52,8 @@ public class SceneController : MonoBehaviour
 
     private void EndSceneSwitch()
     {
-        Physics.ClearPauseSet();
         SceneManager.LoadScene(loadingScene);
+        SceneChanged?.Invoke();
         transitionAnim.SetTrigger("End");
     }
 }

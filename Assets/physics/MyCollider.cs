@@ -36,7 +36,6 @@ public class MyCollider : MonoBehaviour
 
         if (flip != null)
         {
-
             flip.EndFlip += (delta) =>
             {
                 position = Physics.FromUnity(transform.position);

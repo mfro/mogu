@@ -24467,10 +24467,25 @@ PrefabInstance:
       propertyPath: m_ScrollWheelAction
       value: 
       objectReference: {fileID: 1941016617}
+    - target: {fileID: 99774622005713099, guid: a1ded91701baf864cb93c8355436f9f7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 526054131404117008, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784657959109790054, guid: a1ded91701baf864cb93c8355436f9f7,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3835049777402656681, guid: a1ded91701baf864cb93c8355436f9f7,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4286013866617123173, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}
@@ -24551,6 +24566,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: level controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 5682419838300322196, guid: a1ded91701baf864cb93c8355436f9f7,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8489002932927010950, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}

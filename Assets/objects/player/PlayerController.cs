@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 input_movement;
     private bool previouslyGrounded = false;
-    public bool isFlipping = false;
 
     void Awake()
     {
@@ -36,23 +35,16 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        isFlipping = false;
         dyn.mask |= CollisionMask.Player;
 
         facing = Vector2.right;
 
         Time.fixedDeltaTime = 1 / 60f;
 
-        flip.BeginFlip += () =>
-        {
-            isFlipping = true;
-        };
-
         flip.EndFlip += (delta) =>
         {
             facing = delta * facing;
             UpdateMovement();
-            isFlipping = false;
         };
     }
 
@@ -154,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
     public void DoFlip(int input)
     {
-        if (!dyn.grounded || !Physics.IsEnabled)
+        if (!dyn.enabled || !dyn.grounded)
             return;
 
         foreach (var cell in FindObjectsOfType<FlipPanel>())

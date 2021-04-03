@@ -6,88 +6,47 @@ using TMPro;
 
 public class MainMenuController : MonoBehaviour
 {
-
-    [SerializeField] GameObject MainScreen;
-    [SerializeField] GameObject OptionsScreen;
-    [SerializeField] TextMeshProUGUI musicVolumeText, masterVolumeText, sfxVolumeText;
+    [SerializeField] GameObject mainScreen;
+    [SerializeField] OptionsScreen optionsScreen;
 
     [SerializeField] Audio mainMenuMusic;
 
     [SerializeField] Audio pressButtonSound;
 
-    private float maxMusic, maxMaster, maxSFX;
-
-    [SerializeField] AudioMixer audioMixer;
-
     void Start()
     {
-        audioMixer.GetFloat("MusicVolume", out maxMusic);
-        audioMixer.GetFloat("SFXVolume", out maxSFX);
-        audioMixer.GetFloat("MasterVolume", out maxMaster);
         AudioManager.audioManger?.PlayMusic(mainMenuMusic);
+        optionsScreen.Close += DoOptionsReturn;
     }
 
-    public void OnPlay()
+    public void DoPlay()
     {
         AudioManager.audioManger?.PlaySFX(pressButtonSound);
         SceneController.sceneController.SwitchScene(1);
     }
 
-    public void OnOptions()
+    public void DoOptions()
     {
         AudioManager.audioManger?.PlaySFX(pressButtonSound);
-        MainScreen.SetActive(false);
-        OptionsScreen.SetActive(true);
+        mainScreen.SetActive(false);
+        optionsScreen.gameObject.SetActive(true);
     }
 
-    public void OnCredits()
+    public void DoCredits()
     {
         AudioManager.audioManger?.PlaySFX(pressButtonSound);
         print("credits");
     }
 
-    public void OnQuit()
+    public void DoQuit()
     {
         Application.Quit();
     }
 
-    public void OnOptionsReturn()
+    public void DoOptionsReturn()
     {
         AudioManager.audioManger?.PlaySFX(pressButtonSound);
-        MainScreen.SetActive(true);
-        OptionsScreen.SetActive(false);
+        mainScreen.SetActive(true);
+        optionsScreen.gameObject.SetActive(false);
     }
-    public void SetMusicVolume(float volume)
-    {
-
-        float volumeOfMixer = Mathf.Lerp(-35f, maxMusic, volume / 100f);
-        volumeOfMixer = volume == 0 ? -80f : volumeOfMixer;
-
-        audioMixer.SetFloat("MusicVolume", volumeOfMixer);
-        musicVolumeText.text = volume.ToString();
-    }
-
-    public void SetSFXVolume(float volume)
-    {
-        float volumeOfMixer = Mathf.Lerp(-35f, maxSFX, volume / 100f);
-        volumeOfMixer = volume == 0 ? -80f : volumeOfMixer;
-
-        audioMixer.SetFloat("SFXVolume", volumeOfMixer);
-        sfxVolumeText.text = volume.ToString();
-    }
-
-    public void SetMasterVolume(float volume)
-    {
-        float volumeOfMixer = Mathf.Lerp(-35f, maxMaster, volume / 100f);
-        volumeOfMixer = volume == 0 ? -80f : volumeOfMixer;
-
-        audioMixer.SetFloat("MasterVolume", volumeOfMixer);
-        masterVolumeText.text = volume.ToString();
-    }
-
-    public void EndDrag()
-    {
-        AudioManager.audioManger.PlaySFX(pressButtonSound);
-    }
-
 }

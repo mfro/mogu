@@ -83,9 +83,9 @@ public static class Physics
         }
     }
 
-    public static void ClearPauseSet()
+    static Physics()
     {
-        paused = null;
+        SceneController.SceneChanged += () => paused = null;
     }
 
     public static void Enable(MyCollider collider)

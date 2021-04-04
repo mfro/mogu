@@ -190,6 +190,7 @@ public class LevelController : MonoBehaviour
         {
             levelScreen.alpha = 1 - (Time.time - t0) / CameraTime;
             await Task.Yield();
+            if (currentIndex != index || !Physics.IsEnabled) return;
         }
 
         levelScreen.alpha = 0;

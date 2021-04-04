@@ -40,13 +40,13 @@ public class HintController : MonoBehaviour
             if (panel.flip1 == FlipKind.CW && panel.flip2 == FlipKind.CCW)
             {
                 hint1.transform.position = panel.transform.position + new Vector3(x - 1 / 64f, y - 1 / 64f, -10);
-                hint1.input = HintInput.Flip1;
+                hint1.input = HintInput.Flip2;
                 hint1.context = HintContext.CW;
                 hint1.gameObject.SetActive(true);
                 hint1.ReRender();
 
                 hint2.transform.position = panel.transform.position + new Vector3(-x + 1 / 64f, y - 1 / 64f, -10);
-                hint2.input = HintInput.Flip2;
+                hint2.input = HintInput.Flip1;
                 hint2.context = HintContext.CCW;
                 hint2.gameObject.SetActive(true);
                 hint2.ReRender();

@@ -24,7 +24,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78019d1798857f3469439d61d24f6110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 2, y: 2}
+  scale: {x: 0.875, y: 1.5}
   offset: {x: 0, y: 0}
   gravity: 1
   pushRatio: 0.5
@@ -75,17 +75,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e60b68d640cd8f04cb8d2c1c145f4050,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4375
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e60b68d640cd8f04cb8d2c1c145f4050,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e60b68d640cd8f04cb8d2c1c145f4050,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4375
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e60b68d640cd8f04cb8d2c1c145f4050,
         type: 3}

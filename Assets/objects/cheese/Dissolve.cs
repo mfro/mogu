@@ -34,9 +34,6 @@ public class Dissolve : MonoBehaviour
     private async void DoDissolve()
     {
         dissolveStarted = true;
-
-        Color initialColor = rend.material.color;
-        Color targetColor = new Color(initialColor.r, initialColor.g, initialColor.b, 0f);
         float elapsedTime = 0f;
 
         while (elapsedTime < dissolveTime)
@@ -44,10 +41,6 @@ public class Dissolve : MonoBehaviour
             if (elapsedTime < dissolveTime / 3) rend.material = Cheese1;
             else if (elapsedTime < (2 * dissolveTime) / 3) rend.material = Cheese2;
             else rend.material = Cheese3;
-            /*
-            Color currentColor = Color.Lerp(initialColor, targetColor, elapsedTime / dissolveTime);
-            rend.material.color = currentColor;
-            */
             await Task.Yield();
             if (physics.enabled) elapsedTime += Time.deltaTime;
         }

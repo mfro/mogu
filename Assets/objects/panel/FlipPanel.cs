@@ -31,14 +31,6 @@ public class FlipPanel : MonoBehaviour
     [SerializeField]
     float flip_time = 1;
 
-    [SerializeField]
-    GameObject hints;
-
-    private GameObject hintCW;
-    private GameObject hintCCW;
-    private GameObject hintVertical;
-    private GameObject hintHorizontal;
-
     private AudioSource audioSource;
     [NonSerialized] public MyCollider physics;
 
@@ -47,68 +39,6 @@ public class FlipPanel : MonoBehaviour
         Util.GetComponent(this, out audioSource);
         Util.GetComponent(this, out physics);
         physics.mask |= CollisionMask.Flipping;
-    }
-
-    void Start()
-    {
-        hints.transform.parent = null;
-        hints.transform.localScale = Vector3.one;
-
-        hintCW = hints.transform.GetChild(0).gameObject;
-        hintCCW = hints.transform.GetChild(1).gameObject;
-        hintVertical = hints.transform.GetChild(2).gameObject;
-        hintHorizontal = hints.transform.GetChild(3).gameObject;
-
-        var x = transform.localScale.x / 2;
-        var y = transform.localScale.y / 2;
-
-        hintCW.transform.localPosition = new Vector3(x - 1 / 64f, y - 1 / 64f, -5);
-        hintCW.SetActive(flip1 == FlipKind.CW || flip2 == FlipKind.CW);
-
-        hintCCW.transform.localPosition = new Vector3(-x + 1 / 64f, y - 1 / 64f, -5);
-        hintCCW.SetActive(flip1 == FlipKind.CCW || flip2 == FlipKind.CCW);
-
-        hintVertical.transform.localPosition = new Vector3(1 / 64f, y - 1 / 64f, -5);
-        hintVertical.SetActive(flip1 == FlipKind.Vertical || flip2 == FlipKind.Vertical);
-
-        hintHorizontal.transform.localPosition = new Vector3(1 / 64f, y - 1 / 64f, -5);
-        hintHorizontal.SetActive(flip1 == FlipKind.Horizontal || flip2 == FlipKind.Horizontal);
-    }
-
-    void Update()
-    {
-        var player = physics.touching
-            .Where(o => o.GetComponent<PlayerController>() != null)
-            .FirstOrDefault();
-
-        if (player == null)
-        {
-            hints.SetActive(isFlipping == this);
-        }
-        else
-        {
-            var overlap = Physics.Overlap(player.bounds, physics.bounds);
-
-            if (overlap != player.bounds)
-            {
-                hints.SetActive(isFlipping == this);
-            }
-            else
-            {
-                hints.SetActive(true);
-
-                if (flip1 == FlipKind.Vertical || flip2 == FlipKind.Vertical)
-                {
-                    hintVertical.SetActive(player.flip.down.x == 0);
-                    hintHorizontal.SetActive(player.flip.down.y == 0);
-                }
-                else if (flip1 == FlipKind.Horizontal || flip2 == FlipKind.Horizontal)
-                {
-                    hintVertical.SetActive(player.flip.down.y == 0);
-                    hintHorizontal.SetActive(player.flip.down.x == 0);
-                }
-            }
-        }
     }
 
     public void ShowFlipError(Rect bounds)

@@ -34,6 +34,7 @@ public enum HintContext
 public class Hint : MonoBehaviour
 {
     public static InputMode mode = InputMode.Keyboard;
+    public float opacity;
     public HintInput input;
     public HintContext context;
 
@@ -103,6 +104,7 @@ public class Hint : MonoBehaviour
 
             var renderer = obj.AddComponent<SpriteRenderer>();
             renderer.sprite = sprite;
+            renderer.color = new Color(1, 1, 1, opacity);
 
             obj.layer = gameObject.layer;
             obj.transform.parent = transform;
@@ -111,6 +113,8 @@ public class Hint : MonoBehaviour
 
             return obj;
         }).ToList();
+
+        transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, opacity);
     }
 
     void OnEnable()

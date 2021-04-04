@@ -5883,6 +5883,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: level controller
       objectReference: {fileID: 0}
+    - target: {fileID: 4811372266002696957, guid: a1ded91701baf864cb93c8355436f9f7,
+        type: 3}
+      propertyPath: World
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7611434339646209452, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}
       propertyPath: m_Enabled

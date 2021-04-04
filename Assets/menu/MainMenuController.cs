@@ -8,12 +8,15 @@ public class MainMenuController : MonoBehaviour
 {
     [SerializeField] GameObject mainScreen;
     [SerializeField] OptionsScreen optionsScreen;
+    [SerializeField] GameObject creditsScreen;
 
     [SerializeField] Audio mainMenuMusic;
 
     [SerializeField] Audio pressButtonSound;
 
     [SerializeField] GameObject[] buttons;
+    [SerializeField] GameObject creditsReturnButton;
+    [SerializeField] GameObject title;
 
     void Start()
     {
@@ -23,14 +26,15 @@ public class MainMenuController : MonoBehaviour
 
     private void OnEnable()
     {
-        SetSelected();
+        title.SetActive(true);
+        SetSelected(buttons[0]);
     }
 
-    public async void SetSelected()
+    public async void SetSelected(GameObject button)
     {
         EventSystem.current.SetSelectedGameObject(null);
         await Task.Yield();
-        EventSystem.current.SetSelectedGameObject(buttons[0]);
+        EventSystem.current.SetSelectedGameObject(button);
     }
 
     public void DoPlay()
@@ -49,8 +53,11 @@ public class MainMenuController : MonoBehaviour
 
     public void DoCredits()
     {
+        title.SetActive(false);
         AudioManager.audioManger?.PlaySFX(pressButtonSound);
-        print("credits");
+        creditsScreen.SetActive(true);
+        mainScreen.SetActive(false);
+        SetSelected(creditsReturnButton);
     }
 
     public void DoQuit()
@@ -63,6 +70,15 @@ public class MainMenuController : MonoBehaviour
         AudioManager.audioManger?.PlaySFX(pressButtonSound);
         mainScreen.SetActive(true);
         optionsScreen.gameObject.SetActive(false);
-        SetSelected();
+        SetSelected(buttons[0]);
+    }
+
+    public void DoCreditsReturn()
+    {
+        title.SetActive(true);
+        AudioManager.audioManger?.PlaySFX(pressButtonSound);
+        mainScreen.SetActive(true);
+        creditsScreen.SetActive(false);
+        SetSelected(buttons[0]);
     }
 }

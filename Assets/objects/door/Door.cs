@@ -7,6 +7,8 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     [SerializeField] Switch Switch;
+    [SerializeField] Material open;
+    [SerializeField] Material closed;
 
     public bool IsOpen => Switch.IsActive;
 
@@ -29,13 +31,12 @@ public class Door : MonoBehaviour
             return;
         }
 
-        renderer.enabled = !IsOpen;
-        collider.enabled = !IsOpen;
+        renderer.material = IsOpen ? open : closed;
     }
 
     void Update()
     {
-        renderer.enabled = !IsOpen;
+        renderer.material = IsOpen ? open : closed;
     }
 
     void FixedUpdate()

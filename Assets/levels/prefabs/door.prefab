@@ -94,6 +94,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Switch: {fileID: 0}
+  open: {fileID: 2100000, guid: c96b9af6e4da0bd4bbbacb86ccc2cbbe, type: 2}
+  closed: {fileID: 2100000, guid: 517998be4efdda64ca6ad5989ad90ba8, type: 2}
 --- !u!114 &3097570451256170826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +122,7 @@ GameObject:
   - component: {fileID: 6591443183897482374}
   - component: {fileID: 109732918976961457}
   m_Layer: 0
-  m_Name: Door
+  m_Name: door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,8 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!114 &109732918976961457
 MonoBehaviour:
   m_ObjectHideFlags: 0

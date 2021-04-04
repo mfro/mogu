@@ -180,7 +180,7 @@ public class LevelController : MonoBehaviour
 
         UpdateColliders();
 
-        var end = Time.time + 1f;
+        var end = Time.time + 2f;
         while (Time.time < end) await Task.Yield();
 
         var t0 = Time.time;

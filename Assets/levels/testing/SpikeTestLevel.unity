@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.627451, g: 0.627451, b: 0.627451, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -179,8 +179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!23 &240342454
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -361,8 +359,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +440,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &630426706
 GameObject:
@@ -504,8 +500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!23 &630426709
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -741,7 +735,7 @@ Transform:
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &711996165
 MonoBehaviour:
@@ -755,8 +749,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!1 &784351098
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,8 +886,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!23 &1010194183
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1094,8 +1084,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!23 &1142133351
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1468,8 +1456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!23 &1261513499
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1578,8 +1564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!61 &1296076381
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1787,8 +1771,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!23 &1695379436
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1908,8 +1890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!23 &1738607951
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2050,8 +2030,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!23 &1892650576
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2232,8 +2210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!1 &2036624407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2292,8 +2268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!23 &2036624410
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2634,8 +2608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e7fa462fec36e4db9309de7656ccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipping: 0
-  down: {x: 0, y: -1}
 --- !u!23 &2123031198
 MeshRenderer:
   m_ObjectHideFlags: 0

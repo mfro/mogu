@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.627451, g: 0.627451, b: 0.627451, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -5882,6 +5882,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: level controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 4811372266002696957, guid: a1ded91701baf864cb93c8355436f9f7,
+        type: 3}
+      propertyPath: World
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7611434339646209452, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}

@@ -180,7 +180,7 @@ public class LevelController : MonoBehaviour
 
         UpdateColliders();
 
-        var end = Time.time + 1f;
+        var end = Time.time + 2f;
         while (Time.time < end) await Task.Yield();
 
         var t0 = Time.time;
@@ -190,6 +190,7 @@ public class LevelController : MonoBehaviour
         {
             levelScreen.alpha = 1 - (Time.time - t0) / CameraTime;
             await Task.Yield();
+            if (currentIndex != index || !Physics.IsEnabled) return;
         }
 
         levelScreen.alpha = 0;

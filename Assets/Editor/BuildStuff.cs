@@ -11,8 +11,15 @@ public class BuildStuff
 {
     private static string[] scenes => EditorBuildSettings.scenes.Select(s => s.path).ToArray();
 
+    private static void PrepBuild()
+    {
+        PlayerSettings.SplashScreen.show = false;
+    }
+
     private static string BuildWindows()
     {
+        PrepBuild();
+
         var output = "build/windows";
 
         BuildPipeline.BuildPlayer(new BuildPlayerOptions
@@ -42,6 +49,8 @@ public class BuildStuff
 
     private static string BuildMac()
     {
+        PrepBuild();
+
         var output = "build/mac.app";
 
         BuildPipeline.BuildPlayer(new BuildPlayerOptions
@@ -72,6 +81,8 @@ public class BuildStuff
     [MenuItem("mushroom/build - web")]
     private static string WebBuild()
     {
+        PrepBuild();
+
         var output = "build/web";
 
         BuildPipeline.BuildPlayer(new BuildPlayerOptions

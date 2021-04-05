@@ -105,7 +105,7 @@ public class FlipPanel : MonoBehaviour
 
         foreach (var o in objects)
         {
-            o.transform.parent = transform;
+            o.transform.SetParent(transform, true);
             o.DoBeginFlip();
         }
 
@@ -115,7 +115,7 @@ public class FlipPanel : MonoBehaviour
             cancelled = true;
             foreach (var (o, parent) in objects.Zip(parents, (l, r) => (l, r)))
             {
-                o.transform.parent = parent;
+                o.transform.SetParent(parent, true);
                 o.DoEndFlip(delta);
             }
             cancelFlip = null;

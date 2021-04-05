@@ -8,7 +8,7 @@ public class HintController : MonoBehaviour
     public Hint hint1;
     public Hint hint2;
 
-    public MyDynamic player;
+    public MyCollider player;
 
     private FlipPanel previousPanel;
 
@@ -55,7 +55,7 @@ public class HintController : MonoBehaviour
             {
                 hint1.transform.position = panel.transform.position + new Vector3(1 / 64f, y - 1 / 64f, -10);
                 hint1.input = HintInput.Flip1;
-                hint1.context = player.down.x == 0 ? HintContext.Vertical : HintContext.Horizontal;
+                hint1.context = player.flip.down.x == 0 ? HintContext.Vertical : HintContext.Horizontal;
                 hint1.gameObject.SetActive(true);
                 hint1.ReRender();
 

@@ -56,8 +56,6 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("grounded", dyn.grounded);
         anim.speed = dyn.enabled ? 1 : 0;
 
-
-
         previouslyGrounded = dyn.grounded;
         previouslyJumping = movement.jumping;
 

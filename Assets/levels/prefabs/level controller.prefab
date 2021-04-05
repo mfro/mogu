@@ -994,7 +994,7 @@ MonoBehaviour:
   player: {fileID: 1413353432}
   deathScreen: {fileID: 2218924677133246224}
   levelText: {fileID: 7507255081455066782}
-  levelScreen: {fileID: 4287883206622489351}
+  levelScreen: {fileID: 1780130119338892190}
   CameraTime: 1
   LevelTransitionSound: {fileID: 8300000, guid: 245f9ed3e537e3f4793c40b16540a410,
     type: 3}
@@ -1997,9 +1997,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6148219542689817700}
   m_PrefabAsset: {fileID: 0}
---- !u!225 &4287883206622489351 stripped
+--- !u!225 &1780130119338892190 stripped
 CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 7985799233397362531, guid: 201cfb245a9adc248bc41b9296c00553,
+  m_CorrespondingSourceObject: {fileID: 5613341042780618746, guid: 201cfb245a9adc248bc41b9296c00553,
     type: 3}
   m_PrefabInstance: {fileID: 6148219542689817700}
   m_PrefabAsset: {fileID: 0}

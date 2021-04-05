@@ -39,7 +39,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8991834290909398359}
   m_Layer: 0
-  m_Name: box
+  m_Name: crate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,21 +71,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a22280dab389cb74c9a3f2c3a3b562c9,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a22280dab389cb74c9a3f2c3a3b562c9,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a22280dab389cb74c9a3f2c3a3b562c9,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a22280dab389cb74c9a3f2c3a3b562c9,
         type: 3}

@@ -3,23 +3,16 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Renderer))]
 public class Door : MonoBehaviour
 {
     [SerializeField] Switch Switch;
     [SerializeField] Material open;
     [SerializeField] Material closed;
 
+    [SerializeField] MyStatic hitbox;
+    [SerializeField] MeshRenderer cube;
+
     public bool IsOpen => Switch.IsActive;
-
-    private new Renderer renderer;
-    private new MyStatic collider;
-
-    void Awake()
-    {
-        Util.GetComponent(this, out renderer);
-        Util.GetComponent(this, out collider);
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -31,16 +24,16 @@ public class Door : MonoBehaviour
             return;
         }
 
-        renderer.material = IsOpen ? open : closed;
+        cube.material = IsOpen ? open : closed;
     }
 
     void Update()
     {
-        renderer.material = IsOpen ? open : closed;
+        cube.material = IsOpen ? open : closed;
     }
 
     void FixedUpdate()
     {
-        collider.enabled = !IsOpen;
+        hitbox.enabled = !IsOpen;
     }
 }

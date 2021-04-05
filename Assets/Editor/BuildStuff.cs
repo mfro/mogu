@@ -99,7 +99,7 @@ public class BuildStuff
     [MenuItem("mushroom/build - canvas")]
     private static void BuildCanvas()
     {
-        var output = "lbitzer mfroehli miczhang rkiv ssscrazy.zip";
+        var output = "build/lbitzer mfroehli miczhang rkiv ssscrazy.zip";
         var windows = BuildWindows();
         var mac = BuildMac();
 

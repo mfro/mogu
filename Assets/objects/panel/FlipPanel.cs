@@ -147,10 +147,10 @@ public class FlipPanel : MonoBehaviour
 
         foreach (var o in objects)
         {
-            var dyn = o.GetComponentInChildren<MyDynamic>();
-            if (dyn != null)
+            var collider = o.GetComponentInChildren<MyCollider>();
+            if (collider is MyStatic || collider is MyDynamic)
             {
-                var (other, overlap) = Physics.AllCollisions(dyn).FirstOrDefault();
+                var (other, overlap) = Physics.AllCollisions(collider).FirstOrDefault();
 
                 if (other != null)
                 {

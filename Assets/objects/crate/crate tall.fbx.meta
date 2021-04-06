@@ -3,7 +3,22 @@ guid: e60b68d640cd8f04cb8d2c1c145f4050
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blank
+    second: {fileID: 2100000, guid: 10d3eb04f9351fe48a86429f3213b5a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: crate tall
+    second: {fileID: 2100000, guid: 6647e2d453a03a84fac8c9c6a42b2526, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: crate tall blank
+    second: {fileID: 2100000, guid: 1c589e542e07eb74e9da7518fb19dfa4, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -59,7 +74,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

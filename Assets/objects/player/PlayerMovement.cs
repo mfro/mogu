@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!dyn.enabled) return;
 
-        if(dyn.grounded) jumping = false;
+        if (dyn.grounded) jumping = false;
 
         if (input_jumping && dyn.grounded)
         {

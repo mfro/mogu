@@ -9,6 +9,7 @@ public class PressurePlate : Switch
 {
     [SerializeField] GameObject cube;
     [SerializeField] MyCollider hitbox;
+    [SerializeField] GameObject[] lights;
     [SerializeField] MeshRenderer platform;
 
     [SerializeField] Material platformMaterial;
@@ -63,5 +64,10 @@ public class PressurePlate : Switch
             ? activePlatformMaterial
             : platformMaterial;
         platform.materials = mats;
+
+        foreach (var light in lights)
+        {
+            light.SetActive(IsActive);
+        }
     }
 }

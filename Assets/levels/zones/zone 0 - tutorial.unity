@@ -26521,20 +26521,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4332000047474502681, guid: a1ded91701baf864cb93c8355436f9f7,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4711989369918479299, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4811372265979383916, guid: a1ded91701baf864cb93c8355436f9f7,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4811372266002696930, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}

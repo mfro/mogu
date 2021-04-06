@@ -15,6 +15,7 @@ public class FlipPanel : MonoBehaviour
 {
     public static FlipPanel isFlipping;
     public static Action cancelFlip;
+    public static float FlipTime = 0.4f;
 
     [SerializeField]
     public FlipError FlipError;
@@ -27,9 +28,6 @@ public class FlipPanel : MonoBehaviour
 
     [SerializeField]
     public FlipKind flip2;
-
-    [SerializeField]
-    float flip_time = 1;
 
     private AudioSource audioSource;
     [NonSerialized] public MyCollider physics;
@@ -128,9 +126,9 @@ public class FlipPanel : MonoBehaviour
         var q1 = delta * q0;
 
         float t0 = Time.time;
-        while (Time.time - t0 < flip_time)
+        while (Time.time - t0 < FlipTime)
         {
-            transform.rotation = Quaternion.Lerp(q0, q1, (Time.time - t0) / flip_time);
+            transform.rotation = Quaternion.Lerp(q0, q1, (Time.time - t0) / FlipTime);
 
             await Task.Yield();
 

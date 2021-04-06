@@ -20,7 +20,7 @@ public class MainMenuController : MonoBehaviour
 
     void Start()
     {
-        AudioManager.audioManger?.PlayMusic(mainMenuMusic);
+        AudioManager.instance?.PlayMusic(mainMenuMusic);
         optionsScreen.Close += DoOptionsReturn;
     }
 
@@ -39,13 +39,13 @@ public class MainMenuController : MonoBehaviour
 
     public void DoPlay()
     {
-        AudioManager.audioManger?.PlaySFX(pressButtonSound);
-        SceneController.sceneController.SwitchScene(1);
+        AudioManager.instance?.PlaySFX(pressButtonSound);
+        SceneController.instance.SwitchScene(1);
     }
 
     public void DoOptions()
     {
-        AudioManager.audioManger?.PlaySFX(pressButtonSound);
+        AudioManager.instance?.PlaySFX(pressButtonSound);
         mainScreen.SetActive(false);
 
         optionsScreen.gameObject.SetActive(true);
@@ -54,7 +54,7 @@ public class MainMenuController : MonoBehaviour
     public void DoCredits()
     {
         title.SetActive(false);
-        AudioManager.audioManger?.PlaySFX(pressButtonSound);
+        AudioManager.instance?.PlaySFX(pressButtonSound);
         creditsScreen.SetActive(true);
         mainScreen.SetActive(false);
         SetSelected(creditsReturnButton);
@@ -67,7 +67,7 @@ public class MainMenuController : MonoBehaviour
 
     public void DoOptionsReturn()
     {
-        AudioManager.audioManger?.PlaySFX(pressButtonSound);
+        AudioManager.instance?.PlaySFX(pressButtonSound);
         mainScreen.SetActive(true);
         optionsScreen.gameObject.SetActive(false);
         SetSelected(buttons[0]);
@@ -76,7 +76,7 @@ public class MainMenuController : MonoBehaviour
     public void DoCreditsReturn()
     {
         title.SetActive(true);
-        AudioManager.audioManger?.PlaySFX(pressButtonSound);
+        AudioManager.instance?.PlaySFX(pressButtonSound);
         mainScreen.SetActive(true);
         creditsScreen.SetActive(false);
         SetSelected(buttons[0]);

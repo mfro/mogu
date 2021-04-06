@@ -6,6 +6,6 @@ public class VictoryScreen : MonoBehaviour
 {
     public void DoPlayAgain()
     {
-        SceneController.sceneController.SwitchScene(0);
+        SceneController.instance.SwitchScene(0);
     }
 }

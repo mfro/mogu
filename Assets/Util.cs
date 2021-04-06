@@ -30,6 +30,12 @@ public static class Util
         return rect;
     }
 
+    public static IEnumerable<GameObject> GetChildren(this GameObject o)
+    {
+        for (var i = 0; i < o.transform.childCount; ++i)
+            yield return o.transform.GetChild(i).gameObject;
+    }
+
     public static void GetComponent<T>(MonoBehaviour self, out T field)
     {
         field = self.GetComponent<T>();

@@ -40,9 +40,9 @@ public class PauseScreen : MonoBehaviour
 
         if (isPaused)
         {
-            AudioManager.audioManger.PlaySFX(pressButtonSound);
+            AudioManager.instance.PlaySFX(pressButtonSound);
             SetSelected();
-        } 
+        }
     }
 
     async void SetSelected()
@@ -56,22 +56,22 @@ public class PauseScreen : MonoBehaviour
 
     public void DoQuit()
     {
-        SceneController.sceneController.SwitchScene(0);
-        AudioManager.audioManger.PlaySFX(pressButtonSound);
+        SceneController.instance.SwitchScene(0);
+        AudioManager.instance.PlaySFX(pressButtonSound);
     }
 
     public void DoOptions()
     {
         mainScreen.SetActive(false);
         optionsScreen.gameObject.SetActive(true);
-        AudioManager.audioManger.PlaySFX(pressButtonSound);
+        AudioManager.instance.PlaySFX(pressButtonSound);
     }
 
     public void DoOptionsReturn()
     {
         mainScreen.SetActive(true);
         optionsScreen.gameObject.SetActive(false);
-        AudioManager.audioManger.PlaySFX(pressButtonSound);
+        AudioManager.instance.PlaySFX(pressButtonSound);
 
         SetSelected();
     }

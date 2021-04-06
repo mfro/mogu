@@ -23,7 +23,7 @@ public class OptionsScreen : MonoBehaviour
 
     private void UpdateUI(AudioGroup group, Slider slider, TextMeshProUGUI text)
     {
-        var value = AudioManager.audioManger.GetValue(group);
+        var value = AudioManager.instance.GetValue(group);
         slider.value = value;
         text.text = Mathf.Round(value).ToString();
     }
@@ -58,23 +58,23 @@ public class OptionsScreen : MonoBehaviour
     public void SetMasterVolume(float volume)
     {
         if (!isActiveAndEnabled) return;
-        AudioManager.audioManger.SetValue(AudioManager.Master, volume);
+        AudioManager.instance.SetValue(AudioManager.Master, volume);
         UpdateUI(AudioManager.Master, masterVolumeSlider, masterVolumeText);
-        AudioManager.audioManger.PlaySFX(pressButtonSound);
+        AudioManager.instance.PlaySFX(pressButtonSound);
     }
 
     public void SetSFXVolume(float volume)
     {
         if (!isActiveAndEnabled) return;
-        AudioManager.audioManger.SetValue(AudioManager.Effects, volume);
+        AudioManager.instance.SetValue(AudioManager.Effects, volume);
         UpdateUI(AudioManager.Effects, sfxVolumeSlider, sfxVolumeText);
-        AudioManager.audioManger.PlaySFX(pressButtonSound);
+        AudioManager.instance.PlaySFX(pressButtonSound);
     }
 
     public void SetMusicVolume(float volume)
     {
         if (!isActiveAndEnabled) return;
-        AudioManager.audioManger.SetValue(AudioManager.Music, volume);
+        AudioManager.instance.SetValue(AudioManager.Music, volume);
         UpdateUI(AudioManager.Music, musicVolumeSlider, musicVolumeText);
     }
 

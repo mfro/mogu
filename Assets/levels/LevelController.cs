@@ -93,7 +93,7 @@ public class LevelController : MonoBehaviour
 
     void Start()
     {
-        AudioManager.audioManger?.PlayMusic(backgroundMusic);
+        AudioManager.instance?.PlayMusic(backgroundMusic);
 
         levels = FindObjectsOfType<Level>().OrderBy(l => l.name).ToArray();
         undoStack = new Stack<SaveState>();
@@ -127,7 +127,7 @@ public class LevelController : MonoBehaviour
         }
         else
         {
-            SceneController.sceneController.SwitchScene(SceneController.NextLevel);
+            SceneController.instance.SwitchScene(SceneController.NextLevel);
         }
     }
 

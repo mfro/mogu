@@ -46,7 +46,7 @@ public class AudioManager : MonoBehaviour
         Effects = new AudioGroup("SFXVolume", -35, 0, 100),
         Music = new AudioGroup("MusicVolume", -35, 0, 50);
 
-    public static AudioManager audioManger;
+    public static AudioManager instance;
 
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
@@ -56,17 +56,16 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (audioManger == null)
+        if (instance != null)
         {
-            audioManger = this;
+            Destroy(this.gameObject);
         }
         else
         {
-            Destroy(this.gameObject);
-            return;
+            instance = this;
+            transform.SetParent(null, false);
+            DontDestroyOnLoad(this);
         }
-
-        DontDestroyOnLoad(this);
     }
 
     void Start()

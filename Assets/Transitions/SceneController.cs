@@ -8,7 +8,7 @@ public class SceneController : MonoBehaviour
 {
     public static event Action SceneChanged;
 
-    public static SceneController sceneController;
+    public static SceneController instance;
 
     public static int NextLevel => SceneManager.GetActiveScene().buildIndex + 1;
 
@@ -21,24 +21,24 @@ public class SceneController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (sceneController == null)
-        {
-            sceneController = this;
-            DontDestroyOnLoad(this);
-        }
-        else
+        if (instance != null)
         {
             Destroy(this.gameObject);
-            return;
-        }
-
-        if (fadeOnInit)
-        {
-            transitionAnim.enabled = true;
         }
         else
         {
-            transitionAnim.enabled = false;
+            instance = this;
+            transform.SetParent(null, false);
+            DontDestroyOnLoad(this);
+
+            if (fadeOnInit)
+            {
+                transitionAnim.enabled = true;
+            }
+            else
+            {
+                transitionAnim.enabled = false;
+            }
         }
     }
 

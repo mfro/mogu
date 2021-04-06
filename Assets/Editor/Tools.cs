@@ -90,18 +90,91 @@ public class Tools
         }
     }
 
-    static Tools()
-    {
-        SceneManager.sceneLoaded += (s, mode) => OnScene(s);
-        SetPickable();
-    }
-
     [MenuItem("mushroom/set pickable")]
     private static void SetPickable()
     {
         for (var i = 0; i < SceneManager.sceneCount; ++i)
         {
-            OnScene(SceneManager.GetSceneAt(i));
+            var scene = SceneManager.GetSceneAt(i);
+
+            foreach (var o in FindInScene<SceneController>(scene))
+            {
+                SceneVisibilityManager.instance.DisablePicking(o.gameObject, true);
+                // SceneVisibilityManager.instance.Hide(o.gameObject, true);
+            }
+
+            foreach (var o in FindInScene<AudioManager>(scene))
+            {
+                SceneVisibilityManager.instance.DisablePicking(o.gameObject, true);
+                // SceneVisibilityManager.instance.Hide(o.gameObject, true);
+            }
+
+            foreach (var o in FindInScene<Canvas>(scene))
+            {
+                SceneVisibilityManager.instance.DisablePicking(o.gameObject, true);
+                // SceneVisibilityManager.instance.Hide(o.gameObject, true);
+            }
+
+            foreach (var o in FindInScene<Level>(scene))
+            {
+                SceneVisibilityManager.instance.DisablePicking(o.gameObject, false);
+                // SceneVisibilityManager.instance.Hide(o.gameObject, true);
+            }
+        }
+
+        for (var i = 0; i < SceneManager.sceneCount; ++i)
+        {
+            foreach (var root in SceneManager.GetSceneAt(i).GetRootGameObjects())
+                SetPickable(root);
+        }
+    }
+
+    private static HashSet<string> immutable = new HashSet<string>
+    {
+        "Assets/levels/prefabs/level sign.prefab",
+        "Assets/levels/prefabs/platform.prefab",
+        "Assets/levels/prefabs/platform pressure plate.prefab",
+        "Assets/levels/prefabs/door.prefab",
+        "Assets/levels/prefabs/crate.prefab",
+        "Assets/levels/prefabs/crate tall.prefab",
+        "Assets/levels/prefabs/panel flip v.prefab",
+        "Assets/levels/prefabs/panel rotate.prefab",
+    };
+
+    private static void SetPickable(GameObject o)
+    {
+        var root = PrefabUtility.GetNearestPrefabInstanceRoot(o);
+        var path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(o);
+
+        if (root == o && immutable.Contains(path))
+        {
+            SceneVisibilityManager.instance.DisablePicking(o.gameObject, true);
+            SceneVisibilityManager.instance.EnablePicking(o.gameObject, false);
+        }
+        else
+        {
+            if (root == o)
+            {
+                Debug.Log(path);
+            }
+
+            foreach (var child in o.GetChildren())
+            {
+                SetPickable(child);
+            }
+        }
+    }
+
+    [DrawGizmo(GizmoType.NonSelected | GizmoType.Pickable)]
+    private static void DrawPrefabGizmo(GameObject o, GizmoType type)
+    {
+        var root = PrefabUtility.GetNearestPrefabInstanceRoot(o);
+        var path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(o);
+
+        if (root == o && immutable.Contains(path) && !Selection.gameObjects.Contains(o))
+        {
+            Gizmos.color = new Color(0.25f, 0, 0.25f, 0);
+            Gizmos.DrawCube(o.transform.position, o.transform.lossyScale);
         }
     }
 
@@ -139,33 +212,6 @@ public class Tools
             var pos = inner.localPosition;
             pos = Util.Round(delta * pos * 2) / 2;
             inner.localPosition = pos;
-        }
-    }
-
-    private static void OnScene(Scene scene)
-    {
-        foreach (var o in FindInScene<SceneController>(scene))
-        {
-            SceneVisibilityManager.instance.DisablePicking(o.gameObject, true);
-            // SceneVisibilityManager.instance.Hide(o.gameObject, true);
-        }
-
-        foreach (var o in FindInScene<AudioManager>(scene))
-        {
-            SceneVisibilityManager.instance.DisablePicking(o.gameObject, true);
-            // SceneVisibilityManager.instance.Hide(o.gameObject, true);
-        }
-
-        foreach (var o in FindInScene<Canvas>(scene))
-        {
-            SceneVisibilityManager.instance.DisablePicking(o.gameObject, true);
-            // SceneVisibilityManager.instance.Hide(o.gameObject, true);
-        }
-
-        foreach (var o in FindInScene<Level>(scene))
-        {
-            SceneVisibilityManager.instance.DisablePicking(o.gameObject, false);
-            // SceneVisibilityManager.instance.Hide(o.gameObject, true);
         }
     }
 

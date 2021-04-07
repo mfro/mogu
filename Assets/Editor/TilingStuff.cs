@@ -63,16 +63,6 @@ public class TilingStuff
 
         var allLevels = Component.FindObjectsOfType<Level>();
 
-        var levels = Selection.gameObjects
-            .Select(o => o.GetComponent<Level>())
-            .ToList();
-
-        if (levels.Any(t => t == null))
-        {
-            Debug.LogWarning("invalid selection");
-            return;
-        }
-
         var panels = new List<Rect>();
         var grid = new HashSet<Vector2>();
 
@@ -90,7 +80,7 @@ public class TilingStuff
             panels.Add(rect);
         }
 
-        foreach (var level in levels)
+        foreach (var level in allLevels)
         {
             foreach (var child in FindPlatforms(level.gameObject))
             {

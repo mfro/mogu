@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class HintController : MonoBehaviour
 {
-    public Hint hint1;
-    public Hint hint2;
+    public Hint cw, ccw, vertical, horizontal;
 
     public MyCollider player;
 
@@ -28,8 +27,10 @@ public class HintController : MonoBehaviour
 
         if (panel == null)
         {
-            hint1.gameObject.SetActive(false);
-            hint2.gameObject.SetActive(false);
+            cw.gameObject.SetActive(false);
+            ccw.gameObject.SetActive(false);
+            vertical.gameObject.SetActive(false);
+            horizontal.gameObject.SetActive(false);
             previousPanel = null;
         }
         else
@@ -37,34 +38,57 @@ public class HintController : MonoBehaviour
             var x = panel.transform.localScale.x / 2;
             var y = panel.transform.localScale.y / 2;
 
-            if (panel.flip1 == FlipKind.CW && panel.flip2 == FlipKind.CCW)
+            if (panel.flip1 == FlipKind.CW || panel.flip2 == FlipKind.CW)
             {
-                hint1.transform.position = panel.transform.position + new Vector3(x - 1 / 64f, y - 1 / 64f, -10);
-                hint1.input = HintInput.Flip2;
-                hint1.context = HintContext.CW;
-                hint1.gameObject.SetActive(true);
-                hint1.ReRender();
-
-                hint2.transform.position = panel.transform.position + new Vector3(-x + 1 / 64f, y - 1 / 64f, -10);
-                hint2.input = HintInput.Flip1;
-                hint2.context = HintContext.CCW;
-                hint2.gameObject.SetActive(true);
-                hint2.ReRender();
-            }
-            else if (panel.flip1 == FlipKind.Vertical)
-            {
-                hint1.transform.position = panel.transform.position + new Vector3(1 / 64f, y - 1 / 64f, -10);
-                hint1.input = HintInput.Flip1;
-                hint1.context = player.flip.down.x == 0 ? HintContext.Vertical : HintContext.Horizontal;
-                hint1.gameObject.SetActive(true);
-                hint1.ReRender();
-
-                hint2.gameObject.SetActive(false);
+                cw.transform.position = panel.transform.position + new Vector3(x, y, -10);
+                cw.gameObject.SetActive(true);
+                cw.ReRender();
+                cw.transform.localScale = LevelController.CurrentLevel.title == "Walking on the Walls"
+                    ? new Vector3(2, 2, 1)
+                    : new Vector3(1, 1, 1);
             }
             else
             {
-                hint1.gameObject.SetActive(false);
-                hint2.gameObject.SetActive(false);
+                cw.gameObject.SetActive(false);
+            }
+
+            if (panel.flip1 == FlipKind.CCW || panel.flip2 == FlipKind.CCW)
+            {
+                ccw.transform.position = panel.transform.position + new Vector3(-x, y, -10);
+                ccw.gameObject.SetActive(true);
+                ccw.ReRender();
+                ccw.transform.localScale = LevelController.CurrentLevel.title == "Walking on the Walls"
+                    ? new Vector3(2, 2, 1)
+                    : new Vector3(1, 1, 1);
+            }
+            else
+            {
+                ccw.gameObject.SetActive(false);
+            }
+
+            if (panel.flip1 == FlipKind.Vertical || panel.flip2 == FlipKind.Vertical)
+            {
+                vertical.transform.position = panel.transform.position + new Vector3(0, y, -10);
+                vertical.gameObject.SetActive(true);
+                vertical.ReRender();
+                vertical.transform.localScale = LevelController.CurrentLevel.title == "Walking on the Ceiling"
+                    ? new Vector3(2, 2, 1)
+                    : new Vector3(1, 1, 1);
+            }
+            else
+            {
+                vertical.gameObject.SetActive(false);
+            }
+
+            if (panel.flip1 == FlipKind.Horizontal || panel.flip2 == FlipKind.Horizontal)
+            {
+                horizontal.transform.position = panel.transform.position + new Vector3(x, 0, -10);
+                horizontal.gameObject.SetActive(true);
+                horizontal.ReRender();
+            }
+            else
+            {
+                horizontal.gameObject.SetActive(false);
             }
         }
     }

@@ -4,61 +4,49 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: 495367587157968522
-    second: hint bg
+    second: ccw keyboard
   - first:
       213: 1199028794772665275
-    second: hint space
+    second: cw keyboard
   - first:
       213: 2938817184429400356
-    second: hint right
+    second: vertical keyboard
   - first:
       213: 1834645745885146840
-    second: hint left
+    second: restart keyboard
   - first:
       213: 6185354257784583458
-    second: hint x
+    second: undo keyboard
   - first:
       213: -4976865915644985433
-    second: hint z
+    second: horizontal keyboard
   - first:
       213: 2289999503610690722
-    second: hint cw
+    second: move
   - first:
       213: -2041218466325022141
-    second: hint ccw
+    second: jump keyboard
   - first:
       213: -3314400591712877415
-    second: hint flip v
+    second: jump controller
   - first:
       213: 3430160208380735099
-    second: hint flip h
+    second: horizontal controller
   - first:
       213: -3570099393771181035
-    second: hint up
+    second: ccw controller
   - first:
       213: -8664187143416442452
-    second: hint down
+    second: cw controller
   - first:
       213: -3932769181195673682
-    second: hint f
+    second: vertical controller
   - first:
       213: -4383487967158792574
-    second: hint v
+    second: restart controller
   - first:
       213: 2177439805917323278
-    second: hint r
-  - first:
-      213: 6076839810359856673
-    second: hint a
-  - first:
-      213: -6722481226288384368
-    second: hint b
-  - first:
-      213: 6163517578107867743
-    second: hint l
-  - first:
-      213: -1230666571143759980
-    second: hint
+    second: undo controller
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -156,15 +144,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hint bg
+      name: ccw keyboard
       rect:
         serializedVersion: 2
         x: 0
-        y: 954
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 43
+        width: 23
+        height: 13
+      alignment: 9
+      pivot: {x: 1, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -177,15 +165,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint space
+      name: cw keyboard
       rect:
         serializedVersion: 2
         x: 0
-        y: 901
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 30
+        width: 23
+        height: 13
+      alignment: 9
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -198,15 +186,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint right
+      name: vertical keyboard
       rect:
         serializedVersion: 2
         x: 0
-        y: 848
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 17
+        width: 26
+        height: 13
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -219,15 +207,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint left
+      name: restart keyboard
       rect:
         serializedVersion: 2
         x: 0
-        y: 795
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 4
+        width: 12
+        height: 13
+      alignment: 9
+      pivot: {x: 1, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -240,15 +228,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint x
+      name: undo keyboard
       rect:
         serializedVersion: 2
-        x: 0
-        y: 636
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 12
+        y: 4
+        width: 12
+        height: 13
+      alignment: 9
+      pivot: {x: 1, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -261,15 +249,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint z
+      name: horizontal keyboard
       rect:
         serializedVersion: 2
-        x: 0
-        y: 424
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 23
+        y: 30
+        width: 13
+        height: 26
+      alignment: 9
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -282,13 +270,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint cw
+      name: move
       rect:
         serializedVersion: 2
-        x: 0
-        y: 159
-        width: 53
-        height: 53
+        x: 26
+        y: 18
+        width: 22
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -303,13 +291,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint ccw
+      name: jump keyboard
       rect:
         serializedVersion: 2
-        x: 0
-        y: 106
-        width: 53
-        height: 53
+        x: 26
+        y: 6
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,13 +312,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint flip v
+      name: jump controller
       rect:
         serializedVersion: 2
-        x: 0
-        y: 53
-        width: 53
-        height: 53
+        x: 38
+        y: 6
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -345,15 +333,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint flip h
+      name: horizontal controller
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 36
+        y: 30
+        width: 17
+        height: 26
+      alignment: 9
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -366,15 +354,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint up
+      name: ccw controller
       rect:
         serializedVersion: 2
-        x: 0
-        y: 742
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 53
+        y: 42
+        width: 29
+        height: 14
+      alignment: 9
+      pivot: {x: 1, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -387,15 +375,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint down
+      name: cw controller
       rect:
         serializedVersion: 2
-        x: 0
-        y: 689
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 53
+        y: 28
+        width: 29
+        height: 14
+      alignment: 9
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -408,15 +396,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint f
+      name: vertical controller
       rect:
         serializedVersion: 2
-        x: 0
-        y: 583
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 50
+        y: 14
+        width: 32
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -429,15 +417,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint v
+      name: restart controller
       rect:
         serializedVersion: 2
-        x: 0
-        y: 530
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 50
+        y: 0
+        width: 19
+        height: 14
+      alignment: 9
+      pivot: {x: 1, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -450,15 +438,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hint r
+      name: undo controller
       rect:
         serializedVersion: 2
-        x: 0
-        y: 477
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 69
+        y: 0
+        width: 13
+        height: 14
+      alignment: 9
+      pivot: {x: 1, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -466,69 +454,6 @@ TextureImporter:
       bones: []
       spriteID: e006f7787f1d73e10800000000000000
       internalID: 2177439805917323278
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hint a
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 371
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 12e837d6c95455450800000000000000
-      internalID: 6076839810359856673
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hint b
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 318
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09639d121f2f4b2a0800000000000000
-      internalID: -6722481226288384368
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hint l
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 265
-        width: 53
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f52def1e496398550800000000000000
-      internalID: 6163517578107867743
       vertices: []
       indices: 
       edges: []

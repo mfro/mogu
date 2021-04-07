@@ -47,7 +47,7 @@ public class Tools
         throw new Exception("no rotation");
     }
 
-    [MenuItem("mushroom/rotate clockwise")]
+    [MenuItem("mushroom/orientation/rotate clockwise")]
     private static void RotateCW()
     {
         if (Application.isPlaying) return;
@@ -61,7 +61,7 @@ public class Tools
         }
     }
 
-    [MenuItem("mushroom/rotate counter-clockwise")]
+    [MenuItem("mushroom/orientation/rotate counter-clockwise")]
     private static void RotateCCW()
     {
         if (Application.isPlaying) return;
@@ -75,7 +75,7 @@ public class Tools
         }
     }
 
-    [MenuItem("mushroom/flip vertical")]
+    [MenuItem("mushroom/orientation/flip vertical")]
     private static void FlipVertical()
     {
         if (Application.isPlaying) return;
@@ -153,11 +153,6 @@ public class Tools
         }
         else
         {
-            if (root == o)
-            {
-                Debug.Log(path);
-            }
-
             foreach (var child in o.GetChildren())
             {
                 SetPickable(child);
@@ -178,7 +173,7 @@ public class Tools
         }
     }
 
-    [MenuItem("mushroom/internal flip")]
+    [MenuItem("mushroom/orientation/internal flip")]
     private static void InternalFlip()
     {
         var target = Selection.activeTransform;
@@ -194,10 +189,10 @@ public class Tools
         }
     }
 
-    [MenuItem("mushroom/internal rotate clockwise")]
+    [MenuItem("mushroom/orientation/internal rotate clockwise")]
     private static void InternalRotateCW() => InternalRotate(Quaternion.AngleAxis(90, Vector3.back));
 
-    [MenuItem("mushroom/internal rotate counter-clockwise")]
+    [MenuItem("mushroom/orientation/internal rotate counter-clockwise")]
     private static void InternalRotateCCW() => InternalRotate(Quaternion.AngleAxis(-90, Vector3.back));
 
     private static void InternalRotate(Quaternion delta)

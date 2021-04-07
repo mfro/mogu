@@ -18,7 +18,7 @@ public enum CollisionMask
 
 public static class Physics
 {
-    public static float MAX_FALL_SPEED = 640;
+    public static float MAX_FALL_SPEED = 440;
     public static float RUNNING_SPEED_LIMIT = 150;
     public static float GROUND_RUNNING_ACCELERATION = 2560;
     public static float GROUND_DECELERATION = 7680;
@@ -35,6 +35,9 @@ public static class Physics
 
     public static Vector2 ToUnity(Vector2 v) => v / SCALE;
     public static Vector2 FromUnity(Vector2 raw) => Util.Round(raw * SCALE / UNIT) * UNIT;
+
+    public static Rect ToUnity(Rect v) => Util.RectFromCenterSize(ToUnity(v.center), ToUnity(v.size));
+    public static Rect FromUnity(Rect raw) => Util.RectFromCenterSize(FromUnity(raw.center), FromUnity(raw.size));
 
     public static HashSet<MyCollider> allColliders = new HashSet<MyCollider>();
 

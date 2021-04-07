@@ -32,7 +32,7 @@ public class BuildStuff
 
         return output;
     }
-    [MenuItem("mushroom/build - windows")]
+    [MenuItem("mushroom/build/windows")]
     private static string BuildWindowsZip()
     {
         var output = "build/mogu windows.zip";
@@ -63,7 +63,7 @@ public class BuildStuff
 
         return output;
     }
-    [MenuItem("mushroom/build - mac")]
+    [MenuItem("mushroom/build/mac")]
     private static string BuildMacZip()
     {
         var output = "build/mogu mac.zip";
@@ -78,7 +78,7 @@ public class BuildStuff
         return output;
     }
 
-    [MenuItem("mushroom/build - web")]
+    [MenuItem("mushroom/build/web")]
     private static string WebBuild()
     {
         PrepBuild();
@@ -96,7 +96,7 @@ public class BuildStuff
         return output;
     }
 
-    [MenuItem("mushroom/build - canvas")]
+    [MenuItem("mushroom/build/canvas")]
     private static void BuildCanvas()
     {
         var output = "build/lbitzer mfroehli miczhang rkiv ssscrazy.zip";
@@ -119,7 +119,7 @@ public class BuildStuff
         }
     }
 
-    [MenuItem("mushroom/build - playtesting")]
+    [MenuItem("mushroom/build/playtesting")]
     private static void BuildPlaytest()
     {
         BuildWindowsZip();

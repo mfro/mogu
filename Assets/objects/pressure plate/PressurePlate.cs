@@ -10,10 +10,8 @@ public class PressurePlate : Switch
     [SerializeField] GameObject cube;
     [SerializeField] MyCollider hitbox;
     [SerializeField] GameObject[] lights;
-    [SerializeField] MeshRenderer platform;
 
-    [SerializeField] Material platformMaterial;
-    [SerializeField] Material activePlatformMaterial;
+    [SerializeField] GameObject[] activeSymbols;
 
     [SerializeField] AudioClip DepressSound;
     [SerializeField] AudioClip ReleaseSound;
@@ -59,11 +57,10 @@ public class PressurePlate : Switch
 
         cube.transform.localScale = size;
 
-        var mats = platform.materials;
-        mats[1] = IsActive
-            ? activePlatformMaterial
-            : platformMaterial;
-        platform.materials = mats;
+        foreach (var symbol in activeSymbols)
+        {
+            symbol.SetActive(IsActive);
+        }
 
         foreach (var light in lights)
         {

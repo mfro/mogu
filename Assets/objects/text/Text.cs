@@ -61,6 +61,7 @@ public class Text : MonoBehaviour
                 var obj = new GameObject("char");
                 obj.transform.SetParent(transform, false);
                 obj.transform.localPosition = new Vector3(x / 32f, -2 / 32f, 0);
+                obj.layer = gameObject.layer;
 
                 var renderer = obj.AddComponent<SpriteRenderer>();
                 renderer.sprite = sprite;

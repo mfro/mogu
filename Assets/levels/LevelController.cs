@@ -14,7 +14,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] public new GameObject camera;
     [SerializeField] public LevelBorder border;
     [SerializeField] public PlayerController player;
-    [SerializeField] public GameObject deathScreen;
+    [SerializeField] public GameObject[] deathScreen;
     [SerializeField] public TextMeshProUGUI levelText;
     [SerializeField] public CanvasGroup levelScreen;
     [SerializeField] public float CameraTime;
@@ -56,7 +56,7 @@ public class LevelController : MonoBehaviour
             controller.player.transform.rotation = rotation;
             controller.playerFlip.down = down;
             controller.player.gameObject.SetActive(true);
-            controller.deathScreen.SetActive(false);
+            foreach (var item in controller.deathScreen) item.SetActive(false);
 
             controller.player.UpdateMovement();
 
@@ -240,7 +240,7 @@ public class LevelController : MonoBehaviour
         if (moving) return;
 
         player.gameObject.SetActive(true);
-        deathScreen.SetActive(false);
+        foreach (var item in deathScreen) item.SetActive(false);
 
         restartState.Apply(this);
         foreach (var item in undoStack) item.Dispose();
@@ -254,7 +254,7 @@ public class LevelController : MonoBehaviour
         if (moving) return;
 
         player.gameObject.SetActive(false);
-        deathScreen.SetActive(true);
+        foreach (var item in deathScreen) item.SetActive(true);
     }
 
     public void DoUndo()
@@ -264,7 +264,7 @@ public class LevelController : MonoBehaviour
         if (undoStack.Any())
         {
             player.gameObject.SetActive(true);
-            deathScreen.SetActive(false);
+            foreach (var item in deathScreen) item.SetActive(false);
 
             var state = undoStack.Pop();
             state.Apply(this);

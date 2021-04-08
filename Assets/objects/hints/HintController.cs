@@ -66,7 +66,10 @@ public class HintController : MonoBehaviour
                 ccw.gameObject.SetActive(false);
             }
 
-            if (panel.flip1 == FlipKind.Vertical || panel.flip2 == FlipKind.Vertical)
+            var relativeVertical = player.flip.down.x == 0 ? FlipKind.Vertical : FlipKind.Horizontal;
+            var relativeHorizontal = player.flip.down.x == 0 ? FlipKind.Horizontal : FlipKind.Vertical;
+
+            if (panel.flip1 == relativeVertical || panel.flip2 == relativeVertical)
             {
                 vertical.transform.position = panel.transform.position + new Vector3(0, y, -10);
                 vertical.gameObject.SetActive(true);
@@ -80,7 +83,7 @@ public class HintController : MonoBehaviour
                 vertical.gameObject.SetActive(false);
             }
 
-            if (panel.flip1 == FlipKind.Horizontal || panel.flip2 == FlipKind.Horizontal)
+            if (panel.flip1 == relativeHorizontal || panel.flip2 == relativeHorizontal)
             {
                 horizontal.transform.position = panel.transform.position + new Vector3(x, 0, -10);
                 horizontal.gameObject.SetActive(true);

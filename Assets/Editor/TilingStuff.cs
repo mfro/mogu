@@ -9,7 +9,7 @@ using System.IO.Compression;
 
 public class TilingStuff
 {
-    [MenuItem("mushroom/tiling/re-tile level")]
+    [MenuItem("mushroom/re-tile level")]
     private static void TileLevel()
     {
         var tex = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/objects/tile/bricks.png");
@@ -176,7 +176,6 @@ public class TilingStuff
             }
         }
     }
-
 
     // [MenuItem("mushroom/tiling/level image")]
     // private static void LevelImage()

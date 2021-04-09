@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext callback)
     {
-        movement.input_jumping = callback.ReadValueAsButton();
+        if (Physics.IsEnabled) movement.input_jumping = callback.ReadValueAsButton();
     }
 
     public void DoFlip(int input)

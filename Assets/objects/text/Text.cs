@@ -4,6 +4,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum TextAlignment
+{
+    Left,
+    Center,
+    Right,
+}
+
 public class Text : MonoBehaviour
 {
     [SerializeField]
@@ -17,11 +24,11 @@ public class Text : MonoBehaviour
     }
 
     public Color color = Color.black;
-    public bool reverse = false;
+    public TextAlignment alignment = TextAlignment.Left;
 
     private const string UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private const string LOWER = "abcdefghijklmnopqrstuvwxyz";
-    private const string NUMBER = "0123456789.";
+    private const string NUMBER = "0123456789.,:/";
     private static Sprite[] upper;
     private static Sprite[] lower;
     private static Sprite[] number;
@@ -36,77 +43,80 @@ public class Text : MonoBehaviour
         ['r'] = 4,
         ['t'] = 3,
         ['.'] = 1,
+        [','] = 2,
+        [':'] = 1,
+        ['/'] = 3,
     };
 
     private List<GameObject> children;
     private void Draw()
     {
-        var isUI = GetComponent<RectTransform>() != null;
+        var ui = GetComponent<RectTransform>();
 
-        var x = reverse ? 1 : -1;
-        foreach (var ch in reverse ? text.Reverse() : text)
+        var x = -1;
+        var layout = text.Select(ch =>
         {
+            var pos = x + 1;
             if (ch == ' ')
+                x += 3;
+            else
+                x += kerning.ContainsKey(ch)
+                    ? kerning[ch] + 1
+                    : 6;
+
+            return (ch, pos);
+        }).ToList();
+
+        if (x < 0) x = 0;
+
+        float origin;
+        if (alignment == TextAlignment.Left)
+            origin = ui != null ? ui.rect.xMin : 0;
+        else if (alignment == TextAlignment.Center)
+            origin = ui != null ? ui.rect.center.x - x / 2 : -x / 2;
+        else if (alignment == TextAlignment.Right)
+            origin = ui != null ? ui.rect.xMax - x : -x;
+        else
+            throw new Exception("invalid alignment");
+
+        children = layout.Select(pair =>
+        {
+            var sprite = UPPER.Contains(pair.ch) ? upper[UPPER.IndexOf(pair.ch)]
+                : LOWER.Contains(pair.ch) ? lower[LOWER.IndexOf(pair.ch)]
+                : NUMBER.Contains(pair.ch) ? number[NUMBER.IndexOf(pair.ch)]
+                : null;
+
+            if (sprite == null) return null;
+
+            var obj = new GameObject("char");
+            obj.transform.SetParent(transform, false);
+            obj.layer = gameObject.layer;
+
+            if (ui != null)
             {
-                x += reverse ? -3 : 3;
+                var rect = obj.AddComponent<RectTransform>();
+                rect.offsetMax = new Vector2(5, 9);
+                rect.offsetMin = new Vector2(0, 0);
+                // rect.anchorMin = new Vector2(x, -2);
+                // rect.anchorMax = new Vector2(x + 5, 7);
+
+                obj.transform.localPosition = new Vector3(origin + pair.pos + 2.5f, -2, 0);
+
+                var renderer = obj.AddComponent<Image>();
+                renderer.sprite = sprite;
+                renderer.color = color;
             }
             else
             {
-                if (reverse)
-                {
-                    x -= kerning.ContainsKey(ch)
-                        ? kerning[ch] + 1
-                        : 6;
-                }
-                else
-                {
-                    x += 1;
-                }
+                obj.transform.localPosition = new Vector3(origin + pair.pos / 32f, -2 / 32f, 0);
 
-                var sprite = UPPER.Contains(ch) ? upper[UPPER.IndexOf(ch)]
-                    : LOWER.Contains(ch) ? lower[LOWER.IndexOf(ch)]
-                    : NUMBER.Contains(ch) ? number[NUMBER.IndexOf(ch)]
-                    : null;
-
-                if (sprite == null) continue;
-
-                var obj = new GameObject("char");
-                obj.transform.SetParent(transform, false);
-                obj.layer = gameObject.layer;
-
-                if (isUI)
-                {
-                    var rect = obj.AddComponent<RectTransform>();
-                    rect.offsetMax = new Vector2(5, 9);
-                    rect.offsetMin = new Vector2(0, 0);
-                    // rect.anchorMin = new Vector2(x, -2);
-                    // rect.anchorMax = new Vector2(x + 5, 7);
-
-                    obj.transform.localPosition = new Vector3(x + 2.5f, -6.5f, 0);
-
-                    var renderer = obj.AddComponent<Image>();
-                    renderer.sprite = sprite;
-                    renderer.color = color;
-                }
-                else
-                {
-                    obj.transform.localPosition = new Vector3(x / 32f, -2 / 32f, 0);
-
-                    var renderer = obj.AddComponent<SpriteRenderer>();
-                    renderer.sprite = sprite;
-                    renderer.color = color;
-                }
-
-                if (!reverse)
-                {
-                    x += kerning.ContainsKey(ch)
-                        ? kerning[ch]
-                        : 5;
-                }
-
-                children.Add(obj);
+                var renderer = obj.AddComponent<SpriteRenderer>();
+                renderer.sprite = sprite;
+                renderer.color = color;
             }
-        }
+
+            return obj;
+        }).ToList();
     }
 
     public void ReDraw()

@@ -15,7 +15,8 @@ public class LevelController : MonoBehaviour
     [SerializeField] public LevelBorder border;
     [SerializeField] public PlayerController player;
     [SerializeField] public GameObject[] deathScreen;
-    [SerializeField] public TextMeshProUGUI levelText;
+    [SerializeField] public Text levelNumber;
+    [SerializeField] public Text levelName;
     [SerializeField] public CanvasGroup levelScreen;
     [SerializeField] public float CameraTime;
     [SerializeField] public AudioClip LevelTransitionSound;
@@ -107,9 +108,9 @@ public class LevelController : MonoBehaviour
                 break;
             }
         }
+#endif
 
         GoToLevel(currentIndex, false);
-#endif
     }
 
     public void SaveUndoState()
@@ -137,7 +138,8 @@ public class LevelController : MonoBehaviour
 
         levels[index].start.MarkReached();
         levelScreen.alpha = 1;
-        levelText.text = $"\n{World}-{index + 1}\n{levels[index].title}";
+        levelNumber.text = $"{World}-{index + 1}";
+        levelName.text = levels[index].title;
         levelScreen.gameObject.SetActive(true);
 
         if (transition)

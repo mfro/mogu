@@ -28,7 +28,7 @@ public class Text : MonoBehaviour
 
     private const string UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private const string LOWER = "abcdefghijklmnopqrstuvwxyz";
-    private const string NUMBER = "0123456789.,:/";
+    private const string NUMBER = "0123456789.,:/-";
     private static Sprite[] upper;
     private static Sprite[] lower;
     private static Sprite[] number;

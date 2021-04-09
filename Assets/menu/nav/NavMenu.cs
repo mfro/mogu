@@ -7,6 +7,7 @@ using System;
 
 public class NavMenu : MonoBehaviour
 {
+    public event Action Play;
     public event Action Options;
     public event Action Credits;
 
@@ -22,7 +23,8 @@ public class NavMenu : MonoBehaviour
 
     public void DoPlay()
     {
-        SceneController.instance.SwitchScene(1);
+        Play?.Invoke();
+        // SceneController.instance.SwitchScene(1);
         selected = buttons[0];
     }
 

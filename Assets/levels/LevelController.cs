@@ -93,7 +93,7 @@ public class LevelController : MonoBehaviour
 
     void Start()
     {
-        AudioManager.instance?.PlayMusic(backgroundMusic);
+        // AudioManager.instance?.PlayMusic(backgroundMusic);
 
         levels = FindObjectsOfType<Level>().OrderBy(l => l.name).ToArray();
         undoStack = new Stack<SaveState>();
@@ -107,9 +107,9 @@ public class LevelController : MonoBehaviour
                 break;
             }
         }
-#endif
 
-        GoToLevel(currentIndex, false);
+        GoToLevel(0, false);
+#endif
     }
 
     public void SaveUndoState()

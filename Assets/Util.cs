@@ -30,7 +30,15 @@ public static class Util
         return rect;
     }
 
-    public static IEnumerable<GameObject> GetChildren(this GameObject o) => GetChildren<GameObject>(o);
+    public static IEnumerable<GameObject> GetChildren(this GameObject o)
+    {
+        for (var i = 0; i < o.transform.childCount; ++i)
+        {
+            var c = o.transform.GetChild(i).gameObject;
+            if (c != null) yield return c;
+        }
+    }
+
     public static IEnumerable<Child> GetChildren<Child>(this GameObject o)
     {
         for (var i = 0; i < o.transform.childCount; ++i)

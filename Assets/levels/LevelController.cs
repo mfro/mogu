@@ -108,7 +108,7 @@ public class LevelController : MonoBehaviour
             }
         }
 
-        GoToLevel(0, false);
+        GoToLevel(currentIndex, false);
 #endif
     }
 

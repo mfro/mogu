@@ -973,8 +973,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242a7f4029d59df4ab478c578f092c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: 
   font: {fileID: 2800000, guid: 4a97af4944173994c99d1e6043dde97e, type: 3}
-  text: to restart
+  color: {r: 0, g: 0, b: 0, a: 1}
+  reverse: 0
 --- !u!1 &4811372265979383891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1658,8 +1660,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242a7f4029d59df4ab478c578f092c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: 
   font: {fileID: 2800000, guid: 4a97af4944173994c99d1e6043dde97e, type: 3}
-  text: to undo last flip
+  color: {r: 0, g: 0, b: 0, a: 1}
+  reverse: 0
 --- !u!1 &8305777456022692103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,6 +1950,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 26.854996
       objectReference: {fileID: 0}
+    - target: {fileID: 5164624881686027019, guid: 201cfb245a9adc248bc41b9296c00553,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5447641572504255348, guid: 201cfb245a9adc248bc41b9296c00553,
         type: 3}
       propertyPath: m_IsActive
@@ -2135,11 +2144,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6989909914888913130, guid: 201cfb245a9adc248bc41b9296c00553,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 6989909914888913130, guid: 201cfb245a9adc248bc41b9296c00553,
         type: 3}

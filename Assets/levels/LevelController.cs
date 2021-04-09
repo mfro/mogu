@@ -137,7 +137,7 @@ public class LevelController : MonoBehaviour
 
         levels[index].start.MarkReached();
         levelScreen.alpha = 1;
-        levelText.text = $"{World}-{index + 1}\n\n{levels[index].title}";
+        levelText.text = $"{World}-{index + 1}\n{levels[index].title}";
         levelScreen.gameObject.SetActive(true);
 
         if (transition)

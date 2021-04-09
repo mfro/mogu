@@ -10,6 +10,7 @@ public class PauseScreen : MonoBehaviour
 {
     [SerializeField] GameObject mainScreen;
     [SerializeField] OptionsScreen optionsScreen;
+    [SerializeField] GameObject optionsScreenBackdrop;
 
     [SerializeField] Audio pressButtonSound;
 
@@ -34,9 +35,10 @@ public class PauseScreen : MonoBehaviour
         Physics.IsEnabled = !isPaused;
         gameObject.SetActive(isPaused);
         mainScreen.SetActive(isPaused);
-        LevelTitle.alpha = isPaused ? 1 : 0;
+        LevelTitle.alpha = 1;
         LevelTitle.gameObject.SetActive(isPaused);
         optionsScreen.gameObject.SetActive(false);
+        optionsScreenBackdrop.gameObject.SetActive(false);
 
         if (isPaused)
         {
@@ -63,14 +65,18 @@ public class PauseScreen : MonoBehaviour
     public void DoOptions()
     {
         mainScreen.SetActive(false);
+        LevelTitle.gameObject.SetActive(false);
         optionsScreen.gameObject.SetActive(true);
+        optionsScreenBackdrop.gameObject.SetActive(true);
         AudioManager.instance.PlaySFX(pressButtonSound);
     }
 
     public void DoOptionsReturn()
     {
         mainScreen.SetActive(true);
+        LevelTitle.gameObject.SetActive(true);
         optionsScreen.gameObject.SetActive(false);
+        optionsScreenBackdrop.gameObject.SetActive(false);
         AudioManager.instance.PlaySFX(pressButtonSound);
 
         SetSelected();

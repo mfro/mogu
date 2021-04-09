@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using System.Threading.Tasks;
 using System.Linq;
 
-public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
+public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, ISubmitHandler
 {
     public Sprite hoverImage, pressImage;
     public Sprite pressCursor;
@@ -44,6 +44,7 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
     public void OnPointerDown(PointerEventData eventData)
     {
         image.sprite = pressImage;
+        cursor.GetComponent<Animator>().SetTrigger("isPressed");
         cursor.sprite = pressCursor;
         text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
     }
@@ -54,6 +55,7 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
         {
             image.sprite = hover ? hoverImage : baseImage;
             cursor.sprite = baseCursor;
+            cursor.GetComponent<Animator>().SetTrigger("isUnPressed");
             text.transform.position -= new Vector3(0, -4 * transform.lossyScale.y, 0);
         }
     }
@@ -75,10 +77,20 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
     public void OnSelect(BaseEventData eventData)
     {
         cursor.gameObject.SetActive(true);
+        cursor.gameObject.GetComponent<Animator>().enabled = true;
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
         cursor.gameObject.SetActive(false);
+        cursor.gameObject.GetComponent<Animator>().enabled = false;
+    }
+
+    public void OnSubmit(BaseEventData eventData)
+    {
+        image.sprite = pressImage;
+        cursor.GetComponent<Animator>().SetTrigger("isPressed");
+        cursor.sprite = pressCursor;
+        text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
     }
 }

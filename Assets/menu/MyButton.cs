@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using System.Threading.Tasks;
 using System.Linq;
 
-public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, ISubmitHandler
+public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler//, ISubmitHandler
 {
     public Sprite hoverImage, pressImage;
     public Sprite pressCursor;
@@ -86,11 +86,12 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
         cursor.gameObject.GetComponent<Animator>().enabled = false;
     }
 
-    public void OnSubmit(BaseEventData eventData)
-    {
-        image.sprite = pressImage;
-        cursor.GetComponent<Animator>().SetTrigger("isPressed");
-        cursor.sprite = pressCursor;
-        text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
-    }
+    // doesnt work
+    //public void OnSubmit(BaseEventData eventData)
+    //{
+    //    image.sprite = pressImage;
+    //    cursor.GetComponent<Animator>().SetTrigger("isPressed");
+    //    cursor.sprite = pressCursor;
+    //    text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+    //}
 }

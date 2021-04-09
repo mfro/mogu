@@ -49,8 +49,8 @@ public class MainMenuController : MonoBehaviour
         await t3;
         await t4;
 
-        nav.gameObject.SetActive(false);
         Physics.IsEnabled = true;
+        nav.gameObject.SetActive(false);
         levelController.GetComponent<LevelController>().GoToLevel(0, false);
     }
 

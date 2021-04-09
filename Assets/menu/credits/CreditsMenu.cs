@@ -12,14 +12,8 @@ public class CreditsMenu : MonoBehaviour
 
     [SerializeField] GameObject button;
 
-    void OnEnable()
+    async void OnEnable()
     {
-        SetSelected();
-    }
-
-    async void SetSelected()
-    {
-        EventSystem.current.SetSelectedGameObject(null);
         await Task.Yield();
         EventSystem.current.SetSelectedGameObject(button);
     }

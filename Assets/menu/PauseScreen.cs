@@ -43,17 +43,8 @@ public class PauseScreen : MonoBehaviour
         if (isPaused)
         {
             AudioManager.instance.PlaySFX(pressButtonSound);
-            SetSelected();
+            EventSystem.current.SetSelectedGameObject(buttons[0]);
         }
-    }
-
-    async void SetSelected()
-    {
-        EventSystem.current.SetSelectedGameObject(null);
-
-        await Task.Yield();
-
-        EventSystem.current.SetSelectedGameObject(buttons[0]);
     }
 
     public void DoQuit()
@@ -79,7 +70,7 @@ public class PauseScreen : MonoBehaviour
         optionsScreenBackdrop.gameObject.SetActive(false);
         AudioManager.instance.PlaySFX(pressButtonSound);
 
-        SetSelected();
+        EventSystem.current.SetSelectedGameObject(buttons[0]);
     }
 
     private bool _onPause = false;

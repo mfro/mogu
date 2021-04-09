@@ -158,7 +158,7 @@ public class LevelController : MonoBehaviour
             playerFlip.down = Util.Round(currentLevel.start.transform.rotation * Vector2.down);
 
             playerPhysics.velocity = Vector2.zero;
-            playerPhysics.position = Physics.FromUnity(currentLevel.start.transform.position);
+            playerPhysics.position = Physics.FromUnity(currentLevel.start.transform.position) + playerFlip.down;
             playerPhysics.UpdatePosition();
             levelScreen.alpha = 1;
         }

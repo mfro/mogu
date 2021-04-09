@@ -49,6 +49,8 @@ public class Balloon : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!Physics.IsEnabled) return;
+
         var down = transform.rotation * Vector3.down;
 
         if (Vector2.Dot(down, Vector2.up) > 0.5f)

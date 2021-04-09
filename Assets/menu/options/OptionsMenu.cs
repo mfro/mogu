@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Threading.Tasks;
 
-public class OptionsScreen : MonoBehaviour
+public class OptionsMenu : MonoBehaviour
 {
     public event Action Close;
 

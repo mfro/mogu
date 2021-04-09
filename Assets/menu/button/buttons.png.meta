@@ -25,13 +25,13 @@ TextureImporter:
     second: default cursor
   - first:
       213: 5830344958925785552
-    second: default hover cursor
+    second: default cursor blink
   - first:
       213: 4009284081192125275
     second: play cursor
   - first:
       213: 8359661988393023892
-    second: play hover cursor
+    second: play cursor blink
   - first:
       213: -7138311499508957143
     second: default press cursor
@@ -162,7 +162,7 @@ TextureImporter:
       name: default hover
       rect:
         serializedVersion: 2
-        x: 53
+        x: 106
         y: 98
         width: 53
         height: 28
@@ -183,7 +183,7 @@ TextureImporter:
       name: default press
       rect:
         serializedVersion: 2
-        x: 106
+        x: 159
         y: 98
         width: 53
         height: 28
@@ -225,7 +225,7 @@ TextureImporter:
       name: play hover
       rect:
         serializedVersion: 2
-        x: 53
+        x: 106
         y: 63
         width: 53
         height: 35
@@ -246,7 +246,7 @@ TextureImporter:
       name: play press
       rect:
         serializedVersion: 2
-        x: 106
+        x: 159
         y: 63
         width: 53
         height: 35
@@ -285,7 +285,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: default hover cursor
+      name: default cursor blink
       rect:
         serializedVersion: 2
         x: 53
@@ -327,7 +327,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: play hover cursor
+      name: play cursor blink
       rect:
         serializedVersion: 2
         x: 53
@@ -351,7 +351,7 @@ TextureImporter:
       name: default press cursor
       rect:
         serializedVersion: 2
-        x: 106
+        x: 159
         y: 35
         width: 53
         height: 28
@@ -372,7 +372,7 @@ TextureImporter:
       name: play press cursor
       rect:
         serializedVersion: 2
-        x: 106
+        x: 159
         y: 0
         width: 53
         height: 35

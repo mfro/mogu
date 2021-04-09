@@ -6,79 +6,77 @@ using System.Threading.Tasks;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] GameObject mainScreen;
-    [SerializeField] OptionsScreen optionsScreen;
-    [SerializeField] GameObject creditsScreen;
+    [SerializeField] NavMenu nav;
+    [SerializeField] OptionsMenu options;
+    [SerializeField] CreditsMenu credits;
+    [SerializeField] GameObject carousel;
 
     [SerializeField] Audio mainMenuMusic;
 
-    [SerializeField] Audio pressButtonSound;
-
-    [SerializeField] GameObject[] buttons;
-    [SerializeField] GameObject creditsReturnButton;
-    [SerializeField] GameObject title;
+    [SerializeField] float animationTime = 0.3f;
 
     void Start()
     {
         AudioManager.instance?.PlayMusic(mainMenuMusic);
-        optionsScreen.Close += DoOptionsReturn;
+        options.Close += DoOptionsReturn;
+        credits.Close += DoCreditsReturn;
+        nav.Options += DoOptions;
+        nav.Credits += DoCredits;
     }
 
-    private void OnEnable()
+    public async void DoOptions()
     {
-        title.SetActive(true);
-        SetSelected(buttons[0]);
+        options.gameObject.SetActive(true);
+
+        await AnimateCarousel(new Vector2(-384, 0));
+
+        nav.gameObject.SetActive(false);
     }
 
-    public async void SetSelected(GameObject button)
+    public async void DoOptionsReturn()
     {
-        EventSystem.current.SetSelectedGameObject(null);
-        await Task.Yield();
-        EventSystem.current.SetSelectedGameObject(button);
+        nav.gameObject.SetActive(true);
+
+        await AnimateCarousel(new Vector2(384, 0));
+
+        options.gameObject.SetActive(false);
     }
 
-    public void DoPlay()
+    public async void DoCredits()
     {
-        AudioManager.instance?.PlaySFX(pressButtonSound);
-        SceneController.instance.SwitchScene(1);
+        credits.gameObject.SetActive(true);
+
+        await AnimateCarousel(new Vector2(-384, 0));
+
+        nav.gameObject.SetActive(false);
     }
 
-    public void DoOptions()
+    public async void DoCreditsReturn()
     {
-        AudioManager.instance?.PlaySFX(pressButtonSound);
-        mainScreen.SetActive(false);
+        nav.gameObject.SetActive(true);
 
-        optionsScreen.gameObject.SetActive(true);
+        await AnimateCarousel(new Vector2(384, 0));
+
+        credits.gameObject.SetActive(false);
     }
 
-    public void DoCredits()
+    private async Task AnimateCarousel(Vector2 delta)
     {
-        title.SetActive(false);
-        AudioManager.instance?.PlaySFX(pressButtonSound);
-        creditsScreen.SetActive(true);
-        mainScreen.SetActive(false);
-        SetSelected(creditsReturnButton);
-    }
+        var p0 = carousel.transform.position;
+        var p1 = p0 + (Vector3)delta;
 
-    public void DoQuit()
-    {
-        Application.Quit();
-    }
+        var t0 = Time.time;
+        var t1 = t0 + animationTime;
 
-    public void DoOptionsReturn()
-    {
-        AudioManager.instance?.PlaySFX(pressButtonSound);
-        mainScreen.SetActive(true);
-        optionsScreen.gameObject.SetActive(false);
-        SetSelected(buttons[0]);
-    }
+        while (Time.time < t1)
+        {
+            var t = (Time.time - t0) / animationTime;
+            var d = t < 0.5 ? (Mathf.Pow(2 * t, 3) / 2) : (Mathf.Pow(2 * t - 2, 3) / 2 + 1);
+            carousel.transform.position = Vector3.Lerp(p0, p1, d);
+            await Task.Yield();
+        }
 
-    public void DoCreditsReturn()
-    {
-        title.SetActive(true);
-        AudioManager.instance?.PlaySFX(pressButtonSound);
-        mainScreen.SetActive(true);
-        creditsScreen.SetActive(false);
-        SetSelected(buttons[0]);
+        carousel.transform.position = p1;
+        Physics.IsEnabled = true;
     }
 }

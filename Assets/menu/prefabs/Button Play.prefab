@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 288493495519738108, guid: 695e17d7a90760944b904dd8f2621f2f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3959984e38b72444cae4d0ac6b3a00f0, type: 2}
     - target: {fileID: 3333208687659453369, guid: 695e17d7a90760944b904dd8f2621f2f,
         type: 3}
       propertyPath: hoverImage

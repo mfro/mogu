@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
+#if !UNITY_WEBGL
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
     public static void ResizeWindow()
     {
@@ -17,4 +18,5 @@ public class Controller : MonoBehaviour
 
         Screen.SetResolution((int)maxGameSize.x, (int)maxGameSize.y, FullScreenMode.Windowed);
     }
+#endif
 }

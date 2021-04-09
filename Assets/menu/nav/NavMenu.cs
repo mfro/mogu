@@ -15,9 +15,8 @@ public class NavMenu : MonoBehaviour
 
     private GameObject selected;
 
-    async void OnEnable()
+    void OnEnable()
     {
-        await Task.Yield();
         EventSystem.current.SetSelectedGameObject(selected ?? buttons[0]);
     }
 

@@ -37,13 +37,6 @@ public class OptionsMenu : MonoBehaviour
         animationSpeedSlider.value = 1 - FlipPanel.FlipTime;
         animationSpeedText.text = $"{FlipPanel.FlipTime:0.##}s";
 
-        SetSelected();
-    }
-
-    async void SetSelected()
-    {
-        EventSystem.current.SetSelectedGameObject(null);
-        await Task.Yield();
         EventSystem.current.SetSelectedGameObject(buttons[0]);
     }
 

@@ -51,7 +51,17 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
         isEnabled = true;
         image.sprite = baseImage;
         cursor.sprite = baseCursor;
-        cursor.gameObject.SetActive(false);
+
+        if (gameObject == EventSystem.current.currentSelectedGameObject)
+        {
+            cursor.gameObject.SetActive(true);
+            animator.Rebind();
+            animator.Update(0);
+        }
+        else
+        {
+            cursor.gameObject.SetActive(false);
+        }
     }
 
     void OnDisable()

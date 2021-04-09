@@ -18,7 +18,14 @@ public class MySlider : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     void OnEnable()
     {
-        cursor.gameObject.SetActive(false);
+        if (gameObject == EventSystem.current.currentSelectedGameObject)
+        {
+            cursor.gameObject.SetActive(true);
+        }
+        else
+        {
+            cursor.gameObject.SetActive(false);
+        }
     }
 
     public void OnSelect(BaseEventData eventData)

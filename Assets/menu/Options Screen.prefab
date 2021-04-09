@@ -313,6 +313,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Animation Speed
       objectReference: {fileID: 0}
+    - target: {fileID: 1792108300636261903, guid: 27f3a944887d4a44fa654e70d4c59192,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2432180241327811032, guid: 27f3a944887d4a44fa654e70d4c59192,
         type: 3}
       propertyPath: m_Pivot.y

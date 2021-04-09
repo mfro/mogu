@@ -11,21 +11,21 @@ public class OptionsScreen : MonoBehaviour
     public event Action Close;
 
     [SerializeField] Slider masterVolumeSlider, sfxVolumeSlider, musicVolumeSlider;
-    [SerializeField] TextMeshProUGUI masterVolumeText, sfxVolumeText, musicVolumeText;
+    [SerializeField] Text masterVolumeText, sfxVolumeText, musicVolumeText;
 
     [SerializeField] Slider animationSpeedSlider;
-    [SerializeField] TextMeshProUGUI animationSpeedText;
+    [SerializeField] Text animationSpeedText;
 
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] Audio pressButtonSound;
 
     [SerializeField] GameObject[] buttons;
 
-    private void UpdateUI(AudioGroup group, Slider slider, TextMeshProUGUI text)
+    private void UpdateUI(AudioGroup group, Slider slider, Text text)
     {
         var value = AudioManager.instance.GetValue(group);
         slider.value = value;
-        text.text = Mathf.Round(value).ToString();
+        text.text = Mathf.Round(value * 100).ToString();
     }
 
     void OnEnable()
@@ -35,7 +35,7 @@ public class OptionsScreen : MonoBehaviour
         UpdateUI(AudioManager.Music, musicVolumeSlider, musicVolumeText);
 
         animationSpeedSlider.value = 1 - FlipPanel.FlipTime;
-        animationSpeedText.text = $"{FlipPanel.FlipTime:#.##}s";
+        animationSpeedText.text = $"{FlipPanel.FlipTime:0.##}s";
 
         SetSelected();
     }
@@ -52,7 +52,7 @@ public class OptionsScreen : MonoBehaviour
         if (!isActiveAndEnabled) return;
         FlipPanel.FlipTime = 1 - value;
 
-        animationSpeedText.text = $"{FlipPanel.FlipTime:#.##}s";
+        animationSpeedText.text = $"{FlipPanel.FlipTime:0.##}s";
     }
 
     public void SetMasterVolume(float volume)

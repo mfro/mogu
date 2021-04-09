@@ -28,7 +28,7 @@ public class AudioGroup
     public float Max { get; }
     public float DefaultValue { get; }
 
-    public float GetMixerVolume(float value) => value == 0 ? -80 : Mathf.Lerp(Min, Max, value / 100);
+    public float GetMixerVolume(float value) => value == 0 ? -80 : Mathf.Lerp(Min, Max, value);
 
     public AudioGroup(string name, float min, float max, float defaultValue)
     {

@@ -254,7 +254,15 @@ public class LevelController : MonoBehaviour
         if (moving) return;
 
         player.gameObject.SetActive(false);
-        foreach (var item in deathScreen) item.SetActive(true);
+        foreach (var item in deathScreen)
+        {
+            item.SetActive(true);
+
+            foreach (var hint in item.GetComponentsInChildren<Hint>())
+            {
+                hint.ReRender();
+            }
+        }
     }
 
     public void DoUndo()

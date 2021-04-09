@@ -111,6 +111,8 @@ public class Text : MonoBehaviour
 
     public void ReDraw()
     {
+        if (children == null) return;
+
         foreach (var child in children)
             Destroy(child);
         children = new List<GameObject>();

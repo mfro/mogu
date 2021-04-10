@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Threading.Tasks;
 using System;
+using UnityEngine.UI;
 
 public class NavMenu : MonoBehaviour
 {
@@ -17,47 +18,44 @@ public class NavMenu : MonoBehaviour
 
     void OnEnable()
     {
-        canPressPlay = true;
-        canPressOptions = true;
-        canPressCredits = true;
-        canPressQuit = true;
+        SetAllButtonsEnabled(true);
         EventSystem.current.SetSelectedGameObject(selected ?? buttons[0]);
     }
 
-    private bool canPressPlay = true;
     public void DoPlay()
     {
-        if (!canPressPlay) return;
-        canPressPlay = false;
         Play?.Invoke();
         // SceneController.instance.SwitchScene(1);
         selected = buttons[0];
+        SetAllButtonsEnabled(false);
     }
 
-    private bool canPressOptions = true;
     public void DoOptions()
     {
-        if (!canPressOptions) return;
-        canPressOptions = false;
         Options?.Invoke();
         selected = buttons[1];
+        SetAllButtonsEnabled(false);
     }
 
-    private bool canPressCredits = true;
     public void DoCredits()
     {
-        if (!canPressCredits) return;
-        canPressCredits = false;
         Credits?.Invoke();
         selected = buttons[2];
+        SetAllButtonsEnabled(false);
     }
 
-    private bool canPressQuit = true;
     public void DoQuit()
     {
-        if (!canPressQuit) return;
-        canPressQuit = false;
         Application.Quit();
         selected = buttons[3];
+        SetAllButtonsEnabled(false);
+    }
+
+    public void SetAllButtonsEnabled(bool enabled)
+    {
+        foreach (var button in buttons)
+        {
+            button.GetComponent<Button>().interactable = enabled;
+        }
     }
 }

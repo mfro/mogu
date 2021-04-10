@@ -38,7 +38,7 @@ public class OptionsMenu : MonoBehaviour
         animationSpeedText.text = $"{FlipPanel.FlipTime:0.##}s";
 
         EventSystem.current.SetSelectedGameObject(buttons[0]);
-        canPressClose = true;
+        SetAllButtonsEnabled(true);
     }
 
     public void SetAnimationSpeed(float value)
@@ -72,11 +72,17 @@ public class OptionsMenu : MonoBehaviour
         UpdateUI(AudioManager.Music, musicVolumeSlider, musicVolumeText);
     }
 
-    private bool canPressClose = true;
     public void DoClose()
     {
-        if (!canPressClose) return;
-        canPressClose = false;
+        SetAllButtonsEnabled(false);
         Close?.Invoke();
+    }
+
+    public void SetAllButtonsEnabled(bool enabled)
+    {
+        foreach (var button in buttons)
+        {
+            button.GetComponent<Selectable>().interactable = enabled;
+        }
     }
 }

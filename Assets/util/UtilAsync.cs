@@ -35,15 +35,6 @@ public static partial class Util
         }
     }
 
-    public static async Task EveryFixedUpdate(Func<bool> callback)
-    {
-        while (true)
-        {
-            if (Physics.IsEnabled && !callback()) break;
-            await NextFixedUpdate();
-        }
-    }
-
     public static async Task Seconds(float seconds, bool obeyPhysics)
     {
         while (seconds >= 0)

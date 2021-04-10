@@ -57,7 +57,7 @@ public class HintController : MonoBehaviour
                 ccw.transform.position = panel.transform.position + new Vector3(-x, y, -10);
                 ccw.gameObject.SetActive(true);
                 ccw.ReRender();
-                ccw.transform.localScale = LevelController.CurrentLevel.title == "Walking on the Walls"
+                ccw.transform.localScale = LevelController.CurrentLevel?.title == "Walking on the Walls"
                     ? new Vector3(2, 2, 1)
                     : new Vector3(1, 1, 1);
             }
@@ -74,7 +74,7 @@ public class HintController : MonoBehaviour
                 vertical.transform.position = panel.transform.position + new Vector3(0, y, -10);
                 vertical.gameObject.SetActive(true);
                 vertical.ReRender();
-                vertical.transform.localScale = LevelController.CurrentLevel.title == "Walking on the Ceiling"
+                vertical.transform.localScale = LevelController.CurrentLevel?.title == "Walking on the Ceiling"
                     ? new Vector3(2, 2, 1)
                     : new Vector3(1, 1, 1);
             }

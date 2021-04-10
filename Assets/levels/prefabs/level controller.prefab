@@ -2333,6 +2333,7 @@ MonoBehaviour:
   shaking: 0
   duration: 0.1
   strength: 0.1
+  decay: 1
 --- !u!1 &5916889552571867719
 GameObject:
   m_ObjectHideFlags: 0

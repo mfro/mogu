@@ -8,7 +8,7 @@ public class CameraShake : MonoBehaviour
 
     public bool shaking = false;
 
-    [SerializeField] float duration, strength;
+    [SerializeField] float duration, strength, decay;
 
     public static CameraShake cameraShake;
 
@@ -26,45 +26,47 @@ public class CameraShake : MonoBehaviour
         shaking = false;
     }
 
-    IEnumerator Shake(float strength)
+    private static Vector3[] offsets = {
+        new Vector2(1, 0),
+        // new Vector2(2, 0),
+        // new Vector2(2, 0),
+        new Vector2(1, 0),
+        new Vector2(0, 0),
+        new Vector2(-1, 0),
+        // new Vector2(-2, 0),
+        // new Vector2(-2, 0),
+        new Vector2(-1, 0),
+        new Vector2(0, 0),
+        new Vector2(1, 0),
+        new Vector2(0, 0),
+        new Vector2(-1, 0),
+        new Vector2(0, 0),
+    };
+
+    private async void Shake(float strength)
     {
         shaking = true;
         Vector3 startPosition = transform.position;
+        var player = FindObjectOfType<PlayerController>();
+        var orientation = Quaternion.FromToRotation(Vector2.down, player.flip.down);
 
-        float currTime = 0f;
-
-        while (true)
+        for (var i = 0; i < offsets.Length; ++i)
         {
+            transform.position = startPosition + orientation * offsets[i] / 32;
 
-            float x = Random.Range(-1f, 1f) * strength + startPosition.x;
-            float y = Random.Range(-1f, 1f) * strength + startPosition.y;
+            await Util.NextFixedUpdate();
 
-            transform.position = new Vector3(x, y, startPosition.z);
-
-            currTime += Time.deltaTime;
-            if (currTime >= duration) break;
-
-            yield return null;
+            strength *= decay;
         }
+
         transform.position = startPosition;
         shaking = false;
     }
 
-    public void DoShake()
+    public void DoShake() => DoShake(strength);
+    public void DoShake(float strength)
     {
         if (shaking) return;
-
-        shaking = true;
-
-        StartCoroutine(Shake(strength));
-    }
-
-    public void DoShake(float strengthOverride)
-    {
-        if (shaking) return;
-
-        shaking = true;
-
-        StartCoroutine(Shake(strengthOverride));
+        Shake(strength);
     }
 }

@@ -11,6 +11,7 @@ public enum TextAlignment
     Right,
 }
 
+[ExecuteAlways]
 public class Text : MonoBehaviour
 {
     [SerializeField]
@@ -52,6 +53,23 @@ public class Text : MonoBehaviour
     private List<GameObject> children;
     private void Draw()
     {
+        if (number == null || number[0] == null)
+        {
+            number = new Sprite[NUMBER.Length];
+            for (var i = 0; i < NUMBER.Length; ++i)
+            {
+                number[i] = Sprite.Create(font, new Rect(i * 5, 0, 5, 9), new Vector2(0, 0), 32, 0, SpriteMeshType.Tight, Vector4.zero, false);
+            }
+
+            upper = new Sprite[UPPER.Length];
+            lower = new Sprite[LOWER.Length];
+            for (var i = 0; i < UPPER.Length; ++i)
+            {
+                lower[i] = Sprite.Create(font, new Rect(i * 5, 9, 5, 9), new Vector2(0, 0), 32, 0, SpriteMeshType.Tight, Vector4.zero, false);
+                upper[i] = Sprite.Create(font, new Rect(i * 5, 18, 5, 9), new Vector2(0, 0), 32, 0, SpriteMeshType.Tight, Vector4.zero, false);
+            }
+        }
+
         var ui = GetComponent<RectTransform>();
 
         var x = -1;
@@ -92,6 +110,7 @@ public class Text : MonoBehaviour
             var obj = new GameObject("char");
             obj.transform.SetParent(transform, false);
             obj.layer = gameObject.layer;
+            obj.hideFlags |= HideFlags.DontSave;
 
             if (ui != null)
             {
@@ -120,37 +139,34 @@ public class Text : MonoBehaviour
         }).ToList();
     }
 
+    private void Clean()
+    {
+        if (children != null)
+        {
+            foreach (var child in children)
+            {
+                DestroyImmediate(child);
+            }
+            children = null;
+        }
+    }
+
     public void ReDraw()
     {
-        if (children == null) return;
+        if (!enabled) return;
 
-        foreach (var child in children)
-            Destroy(child);
-        children = new List<GameObject>();
-
+        Clean();
         Draw();
     }
 
-    void Awake()
+    void OnEnable()
     {
-        if (number == null)
-        {
-            number = new Sprite[NUMBER.Length];
-            for (var i = 0; i < NUMBER.Length; ++i)
-            {
-                number[i] = Sprite.Create(font, new Rect(i * 5, 0, 5, 9), new Vector2(0, 0), 32, 0, SpriteMeshType.Tight, Vector4.zero, false);
-            }
-
-            upper = new Sprite[UPPER.Length];
-            lower = new Sprite[LOWER.Length];
-            for (var i = 0; i < UPPER.Length; ++i)
-            {
-                lower[i] = Sprite.Create(font, new Rect(i * 5, 9, 5, 9), new Vector2(0, 0), 32, 0, SpriteMeshType.Tight, Vector4.zero, false);
-                upper[i] = Sprite.Create(font, new Rect(i * 5, 18, 5, 9), new Vector2(0, 0), 32, 0, SpriteMeshType.Tight, Vector4.zero, false);
-            }
-        }
-
-        children = new List<GameObject>();
+        Clean();
         Draw();
+    }
+
+    void OnDisable()
+    {
+        Clean();
     }
 }

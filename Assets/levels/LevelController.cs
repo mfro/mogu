@@ -199,7 +199,7 @@ public class LevelController : MonoBehaviour
             return true;
         });
 
-        if (Physics.IsEnabled)
+        if (currentIndex == index && Physics.IsEnabled)
         {
             levelScreen.alpha = 0;
             levelScreen.gameObject.SetActive(false);

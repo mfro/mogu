@@ -44,17 +44,27 @@ public class PauseScreen : MonoBehaviour
         {
             AudioManager.instance.PlaySFX(pressButtonSound);
             EventSystem.current.SetSelectedGameObject(buttons[0]);
+            canPressQuit = true;
+            canPressOptions = true;
+            canPressOptionsReturn = true;
         }
     }
 
+
+    private bool canPressQuit = true;
     public void DoQuit()
     {
+        if (!canPressQuit) return;
+        canPressQuit = false;
         SceneController.instance.SwitchScene(0);
         AudioManager.instance.PlaySFX(pressButtonSound);
     }
 
+    private bool canPressOptions = true;
     public void DoOptions()
     {
+        if (!canPressOptions) return;
+        canPressOptions = true;
         nav.SetActive(false);
         LevelTitle.gameObject.SetActive(false);
         options.gameObject.SetActive(true);
@@ -62,8 +72,12 @@ public class PauseScreen : MonoBehaviour
         AudioManager.instance.PlaySFX(pressButtonSound);
     }
 
+    private bool canPressOptionsReturn = true;
     public void DoOptionsReturn()
     {
+        if (!canPressOptionsReturn) return;
+        canPressOptionsReturn = false;
+
         nav.SetActive(true);
         LevelTitle.gameObject.SetActive(true);
         options.gameObject.SetActive(false);

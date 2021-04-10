@@ -23,6 +23,7 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
     private Sprite baseCursor;
     private bool hover;
     private bool isEnabled;
+    public bool alreadyPressed = false;
 
     void Awake()
     {
@@ -39,6 +40,7 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
         baseCursor = cursor.sprite;
 
         button.onClick.AddListener(OnClick);
+        alreadyPressed = false;
     }
 
     private void OnClick()
@@ -51,7 +53,6 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
         isEnabled = true;
         image.sprite = baseImage;
         cursor.sprite = baseCursor;
-
         if (gameObject == EventSystem.current.currentSelectedGameObject)
         {
             cursor.gameObject.SetActive(true);
@@ -124,6 +125,8 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
     public void OnSubmit(BaseEventData eventData)
     {
         if (!isEnabled) return;
+
+        isEnabled = false;
 
         image.sprite = pressImage;
         cursor.sprite = pressCursor;

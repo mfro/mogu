@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d24823aeb5ab742a6bdbfd1d18601f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 
   start: {fileID: 5817021908283671168}
-  exitOrientation: {x: 0, y: -1}
 --- !u!1001 &4009097779937972311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53,17 +53,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3494262569976773967}
     m_Modifications:
-    - target: {fileID: 1181704925682767159, guid: a124bb9fd1c76374d86ff7865a8b4b64,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 7676717241755033369, guid: a124bb9fd1c76374d86ff7865a8b4b64,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7761651323481732239, guid: a124bb9fd1c76374d86ff7865a8b4b64,
         type: 3}
       propertyPath: m_SortingOrder
       value: -1

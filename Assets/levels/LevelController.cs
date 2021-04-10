@@ -293,6 +293,7 @@ public class LevelController : MonoBehaviour
         if (undoStack.Any())
         {
             player.gameObject.SetActive(true);
+
             foreach (var item in deathScreen) item.SetActive(false);
 
             var state = undoStack.Pop();

@@ -50,6 +50,9 @@ public class LevelController : MonoBehaviour
         {
             FlipPanel.cancelFlip?.Invoke();
 
+            controller.player.GetComponent<Animator>().SetBool("dead", false);
+            controller.player.isDead = false;
+
             controller.playerPhysics.position = position;
             controller.playerPhysics.velocity = Vector2.zero;
             controller.playerPhysics.remainder = Vector2.zero;
@@ -160,7 +163,7 @@ public class LevelController : MonoBehaviour
             playerFlip.down = Util.Round(currentLevel.start.transform.rotation * Vector2.down);
 
             playerPhysics.velocity = Vector2.zero;
-            playerPhysics.position = Physics.FromUnity(currentLevel.start.transform.position) + playerFlip.down;
+            playerPhysics.position = Physics.FromUnity(currentLevel.start.transform.position);
             playerPhysics.UpdatePosition();
             levelScreen.alpha = 1;
         }
@@ -182,21 +185,25 @@ public class LevelController : MonoBehaviour
 
         UpdateColliders();
 
-        var end = Time.time + 2f;
-        while (Time.time < end) await Task.Yield();
+        await Util.Seconds(2, false);
 
         var t0 = Time.time;
         var t1 = t0 + CameraTime;
 
-        while (Time.time < t1)
+        await Util.EveryFrame(() =>
         {
-            levelScreen.alpha = 1 - (Time.time - t0) / CameraTime;
-            await Task.Yield();
-            if (currentIndex != index || !Physics.IsEnabled) return;
-        }
+            if (Time.time >= t1 || currentIndex != index || !Physics.IsEnabled) return false;
 
-        levelScreen.alpha = 0;
-        levelScreen.gameObject.SetActive(false);
+            levelScreen.alpha = 1 - (Time.time - t0) / CameraTime;
+
+            return true;
+        });
+
+        if (Physics.IsEnabled)
+        {
+            levelScreen.alpha = 0;
+            levelScreen.gameObject.SetActive(false);
+        }
     }
 
     private void UpdateColliders()
@@ -224,12 +231,15 @@ public class LevelController : MonoBehaviour
         var t0 = Time.time;
         var t1 = t0 + CameraTime;
 
-        while (Time.time < t1)
+        await Util.EveryFrame(() =>
         {
+            if (Time.time >= t1) return false;
+
             levelScreen.alpha = (Time.time - t0) / CameraTime;
             camera.transform.position = Vector3.Lerp(p0, p1, (Time.time - t0) / CameraTime);
-            await Task.Yield();
-        }
+
+            return true;
+        });
 
         camera.transform.position = p1;
         levelScreen.alpha = 1;
@@ -255,7 +265,10 @@ public class LevelController : MonoBehaviour
     {
         if (moving) return;
 
-        player.gameObject.SetActive(false);
+        player.GetComponent<Animator>().SetBool("dead", true);
+        player.isDead = true;
+        playerPhysics.enabled = false;
+
         foreach (var item in deathScreen)
         {
             item.SetActive(true);

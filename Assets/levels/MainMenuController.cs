@@ -39,15 +39,14 @@ public class MainMenuController : MonoBehaviour
         skyBackground.transform.position -= new Vector3(0, -12, 0);
         userInterface.transform.localPosition -= new Vector3(0, -384, 0);
 
-        var t1 = Animate(gameObject, new Vector2(0, -384), 4, EaseInOutQuadratic);
-        var t2 = Animate(camera, new Vector2(0, 12), 4, EaseInOutQuadratic);
-        var t3 = Animate(userInterface, new Vector2(0, -384), 4, EaseInOutQuadratic);
-        var t4 = Animate(skyBackground, new Vector2(0, -12), 4, EaseInOutQuadratic);
+        var tasks = new[] {
+            Animate(camera, new Vector2(0, 12), 4, EaseInOutQuadratic),
+            Animate(skyBackground, new Vector2(0, -12), 4, EaseInOutQuadratic),
+            Animate(gameObject, new Vector2(0, -384), 4, EaseInOutQuadratic),
+            Animate(userInterface, new Vector2(0, -384), 4, EaseInOutQuadratic),
+        };
 
-        await t1;
-        await t2;
-        await t3;
-        await t4;
+        await Task.WhenAll(tasks);
 
         Physics.IsEnabled = true;
         nav.gameObject.SetActive(false);
@@ -103,12 +102,15 @@ public class MainMenuController : MonoBehaviour
         var t0 = Time.time;
         var t1 = t0 + (animationTime * timeMultiplier);
 
-        while (Time.time < t1)
+        await Util.EveryFrame(() =>
         {
+            if (Time.time >= t1) return false;
+
             var t = (Time.time - t0) / (animationTime * timeMultiplier);
             target.transform.localPosition = Vector3.Lerp(p0, p1, timing(t));
-            await Task.Yield();
-        }
+
+            return true;
+        });
 
         target.transform.localPosition = p1;
     }

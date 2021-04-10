@@ -22,7 +22,7 @@ public class LevelBorder : MonoBehaviour
 
     public async void UpdateBorder()
     {
-        await Task.Yield();
+        await Util.NextFixedUpdate();
 
         up.enabled = player.down != Vector2.up;
         down.enabled = player.down != Vector2.down;

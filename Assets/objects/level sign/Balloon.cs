@@ -37,13 +37,9 @@ public class Balloon : MonoBehaviour
             var delay = 2.0f + 2.0f * Random.value;
             var t0 = Time.time;
 
-            anim.SetBool("bob", true);
+            anim.SetTrigger("bob");
 
-            await Task.Yield();
-
-            anim.SetBool("bob", false);
-
-            while (this != null && !released && Time.time - t0 < delay) await Task.Yield();
+            await Util.Seconds(delay, true);
         }
     }
 

@@ -18,20 +18,13 @@ public class BirdSpawner : MonoBehaviour
 
         playerOrientation = player.gameObject.GetComponent<Flippable>();
 
-        StartCoroutine(SpawnBird());
+        SpawnBirds();
     }
 
-    private IEnumerator SpawnBird()
+    private async void SpawnBirds()
     {
-        while (true)
+        while (this != null)
         {
-            float delay = Random.Range(spawnDelayRange.x, spawnDelayRange.y);
-
-            yield return new WaitForSeconds(delay);
-            print($"wait {delay}");
-
-            if (!Physics.IsEnabled) continue;
-
             float speed = Random.Range(speedRange.x, speedRange.y);
 
             if (Random.Range(0f, 1f) < 0.5f)
@@ -53,11 +46,9 @@ public class BirdSpawner : MonoBehaviour
             renderer.flipX = speed >= 0;
             bird.transform.localRotation = orientation;
             controller.velocity = playerOrientation.down.y != 0 ? new Vector2(speed, 0) : new Vector2(0, speed);
-        }
-    }
 
-    private void OnDestroy()
-    {
-        StopCoroutine(SpawnBird());
+            float delay = Random.Range(spawnDelayRange.x, spawnDelayRange.y);
+            await Util.Seconds(delay, true);
+        }
     }
 }

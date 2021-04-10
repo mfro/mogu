@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Util
+public static partial class Util
 {
     public static Vector2 Round(Vector2 v)
     {

@@ -34,17 +34,15 @@ public class Dissolve : MonoBehaviour
     private async void DoDissolve()
     {
         dissolveStarted = true;
-        float elapsedTime = 0f;
 
-        while (elapsedTime < dissolveTime)
-        {
-            if (elapsedTime < dissolveTime / 3) rend.material = Cheese1;
-            else if (elapsedTime < (2 * dissolveTime) / 3) rend.material = Cheese2;
-            else rend.material = Cheese3;
-            await Task.Yield();
-            if (physics.enabled) elapsedTime += Time.deltaTime;
-        }
+        await Util.Seconds(dissolveTime / 3, true);
+        rend.material = Cheese2;
 
+
+        await Util.Seconds(dissolveTime / 3, true);
+        rend.material = Cheese3;
+
+        await Util.Seconds(dissolveTime / 3, true);
         Destroy(gameObject);
     }
 }

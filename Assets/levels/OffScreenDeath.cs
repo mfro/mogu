@@ -23,8 +23,7 @@ public class OffScreenDeath : MonoBehaviour
         var visible = Util.RectFromCenterSize(Physics.FromUnity(camera.transform.position), Physics.FromUnity(new Vector2(12, 12)));
 
         var overlap = Physics.Overlap(visible, physics.bounds);
-
-        if (overlap == null)
+        if (overlap != physics.bounds)
         {
             controller.DoDeath();
         }

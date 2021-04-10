@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     //public bool encumbered;
     public Vector2 facing;
 
+    [NonSerialized] public bool isDead;
+
     [NonSerialized] public Flippable flip;
     private SpriteRenderer sprite;
     private PlayerMovement movement;
@@ -54,7 +56,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         anim.SetBool("grounded", dyn.grounded);
-        anim.speed = dyn.enabled ? 1 : 0;
+        anim.speed = (isDead || dyn.enabled) ? 1 : 0;
 
         previouslyGrounded = dyn.grounded;
         previouslyJumping = movement.jumping;

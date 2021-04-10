@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2625764091687724347}
   - component: {fileID: 3708917833596251055}
   m_Layer: 5
-  m_Name: Options Screen
+  m_Name: options menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,11 +52,11 @@ MonoBehaviour:
   masterVolumeSlider: {fileID: 7014102985852745796}
   sfxVolumeSlider: {fileID: 1640537912871677573}
   musicVolumeSlider: {fileID: 8099511507257020881}
-  masterVolumeText: {fileID: 6241277789348341653}
-  sfxVolumeText: {fileID: 2381907352507920724}
-  musicVolumeText: {fileID: 5164888087084961280}
+  masterVolumeText: {fileID: 7324878868357041494}
+  sfxVolumeText: {fileID: 1311804849476295575}
+  musicVolumeText: {fileID: 8401207581956367555}
   animationSpeedSlider: {fileID: 4020131807059999816}
-  animationSpeedText: {fileID: 90809241}
+  animationSpeedText: {fileID: 3691345932686903642}
   audioMixer: {fileID: 24100000, guid: 60d5009f46bde5d4a8ffcdd82728847a, type: 2}
   pressButtonSound:
     audioClip: {fileID: 8300000, guid: d23623208aa7e2b428880ad53a2ce8d3, type: 3}
@@ -267,6 +267,11 @@ PrefabInstance:
       propertyPath: _text
       value: Animation Speed
       objectReference: {fileID: 0}
+    - target: {fileID: 9119348268720791636, guid: 27f3a944887d4a44fa654e70d4c59192,
+        type: 3}
+      propertyPath: _text
+      value: Animation Speed
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27f3a944887d4a44fa654e70d4c59192, type: 3}
 --- !u!224 &2769212765742981420 stripped
@@ -287,9 +292,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &90809241 stripped
+--- !u!114 &3691345932686903642 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 553642990127459181, guid: 27f3a944887d4a44fa654e70d4c59192,
+  m_CorrespondingSourceObject: {fileID: 3788834386085265838, guid: 27f3a944887d4a44fa654e70d4c59192,
     type: 3}
   m_PrefabInstance: {fileID: 553642990070335732}
   m_PrefabAsset: {fileID: 0}
@@ -451,6 +456,11 @@ PrefabInstance:
       propertyPath: _text
       value: SFX Volume
       objectReference: {fileID: 0}
+    - target: {fileID: 9119348268720791636, guid: 27f3a944887d4a44fa654e70d4c59192,
+        type: 3}
+      propertyPath: _text
+      value: SFX Volume
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27f3a944887d4a44fa654e70d4c59192, type: 3}
 --- !u!1 &4503047958664221750 stripped
@@ -477,9 +487,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2381907352507920724 stripped
+--- !u!114 &1311804849476295575 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 553642990127459181, guid: 27f3a944887d4a44fa654e70d4c59192,
+  m_CorrespondingSourceObject: {fileID: 3788834386085265838, guid: 27f3a944887d4a44fa654e70d4c59192,
     type: 3}
   m_PrefabInstance: {fileID: 2783456857598892601}
   m_PrefabAsset: {fileID: 0}
@@ -641,6 +651,11 @@ PrefabInstance:
       propertyPath: _text
       value: Music Volume
       objectReference: {fileID: 0}
+    - target: {fileID: 9119348268720791636, guid: 27f3a944887d4a44fa654e70d4c59192,
+        type: 3}
+      propertyPath: _text
+      value: Music Volume
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27f3a944887d4a44fa654e70d4c59192, type: 3}
 --- !u!1 &6403388616608983906 stripped
@@ -667,9 +682,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5164888087084961280 stripped
+--- !u!114 &8401207581956367555 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 553642990127459181, guid: 27f3a944887d4a44fa654e70d4c59192,
+  m_CorrespondingSourceObject: {fileID: 3788834386085265838, guid: 27f3a944887d4a44fa654e70d4c59192,
     type: 3}
   m_PrefabInstance: {fileID: 4612725074258437485}
   m_PrefabAsset: {fileID: 0}
@@ -836,6 +851,11 @@ PrefabInstance:
       propertyPath: _text
       value: Master Volume
       objectReference: {fileID: 0}
+    - target: {fileID: 9119348268720791636, guid: 27f3a944887d4a44fa654e70d4c59192,
+        type: 3}
+      propertyPath: _text
+      value: Master Volume
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27f3a944887d4a44fa654e70d4c59192, type: 3}
 --- !u!1 &5327001106889179895 stripped
@@ -862,9 +882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6241277789348341653 stripped
+--- !u!114 &7324878868357041494 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 553642990127459181, guid: 27f3a944887d4a44fa654e70d4c59192,
+  m_CorrespondingSourceObject: {fileID: 3788834386085265838, guid: 27f3a944887d4a44fa654e70d4c59192,
     type: 3}
   m_PrefabInstance: {fileID: 5851185582575324408}
   m_PrefabAsset: {fileID: 0}

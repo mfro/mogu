@@ -18,44 +18,30 @@ public class NavMenu : MonoBehaviour
 
     void OnEnable()
     {
-        SetAllButtonsEnabled(true);
         EventSystem.current.SetSelectedGameObject(selected ?? buttons[0]);
     }
 
     public void DoPlay()
     {
         Play?.Invoke();
-        // SceneController.instance.SwitchScene(1);
         selected = buttons[0];
-        SetAllButtonsEnabled(false);
     }
 
     public void DoOptions()
     {
         Options?.Invoke();
         selected = buttons[1];
-        SetAllButtonsEnabled(false);
     }
 
     public void DoCredits()
     {
         Credits?.Invoke();
         selected = buttons[2];
-        SetAllButtonsEnabled(false);
     }
 
     public void DoQuit()
     {
         Application.Quit();
         selected = buttons[3];
-        SetAllButtonsEnabled(false);
-    }
-
-    public void SetAllButtonsEnabled(bool enabled)
-    {
-        foreach (var button in buttons)
-        {
-            button.GetComponent<Button>().interactable = enabled;
-        }
     }
 }

@@ -38,7 +38,6 @@ public class OptionsMenu : MonoBehaviour
         animationSpeedText.text = $"{FlipPanel.FlipTime:0.##}s";
 
         EventSystem.current.SetSelectedGameObject(buttons[0]);
-        SetAllButtonsEnabled(true);
     }
 
     public void SetAnimationSpeed(float value)
@@ -74,15 +73,6 @@ public class OptionsMenu : MonoBehaviour
 
     public void DoClose()
     {
-        SetAllButtonsEnabled(false);
         Close?.Invoke();
-    }
-
-    public void SetAllButtonsEnabled(bool enabled)
-    {
-        foreach (var button in buttons)
-        {
-            button.GetComponent<Selectable>().interactable = enabled;
-        }
     }
 }

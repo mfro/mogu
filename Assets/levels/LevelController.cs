@@ -15,8 +15,8 @@ public class LevelController : MonoBehaviour
     [SerializeField] public LevelBorder border;
     [SerializeField] public PlayerController player;
     [SerializeField] public GameObject[] deathScreen;
-    [SerializeField] public Text levelNumber;
-    [SerializeField] public Text levelName;
+    [SerializeField] public Text[] levelNumber;
+    [SerializeField] public Text[] levelName;
     [SerializeField] public CanvasGroup levelScreen;
     [SerializeField] public float CameraTime;
     [SerializeField] public AudioClip LevelTransitionSound;
@@ -141,8 +141,8 @@ public class LevelController : MonoBehaviour
 
         levels[index].start.MarkReached();
         levelScreen.alpha = 1;
-        levelNumber.text = $"{World}-{index + 1}";
-        levelName.text = levels[index].title;
+        foreach (var t in levelNumber) t.text = $"{World}-{index + 1}";
+        foreach (var t in levelName) t.text = levels[index].title;
         levelScreen.gameObject.SetActive(true);
 
         if (transition)
@@ -199,7 +199,7 @@ public class LevelController : MonoBehaviour
             return true;
         });
 
-        if (currentIndex == index && Physics.IsEnabled)
+        if (currentIndex == index)
         {
             levelScreen.alpha = 0;
             levelScreen.gameObject.SetActive(false);

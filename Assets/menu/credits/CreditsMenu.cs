@@ -14,15 +14,11 @@ public class CreditsMenu : MonoBehaviour
 
     void OnEnable()
     {
-        canPressClose = true;
         EventSystem.current.SetSelectedGameObject(button);
     }
 
-    private bool canPressClose = true;
     public void DoClose()
     {
-        if (!canPressClose) return;
-        canPressClose = false;
         Close?.Invoke();
     }
 }

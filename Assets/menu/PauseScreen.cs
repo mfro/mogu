@@ -10,16 +10,18 @@ public class PauseScreen : MonoBehaviour
 {
     [SerializeField] GameObject nav;
     [SerializeField] OptionsMenu options;
-    [SerializeField] GameObject optionsScreenBackdrop;
+    [SerializeField] GameObject carousel;
+    [SerializeField] float animationTime = 0.3f;
 
     [SerializeField] Audio pressButtonSound;
 
-    [SerializeField] public CanvasGroup LevelTitle;
-
+    [SerializeField] public Text LevelNumber;
+    [SerializeField] public Text LevelTitle;
 
     [SerializeField] GameObject[] buttons;
 
     private bool isPaused = false;
+    private bool animating = false;
 
     void Start()
     {
@@ -33,56 +35,39 @@ public class PauseScreen : MonoBehaviour
         isPaused = !isPaused;
 
         Physics.IsEnabled = !isPaused;
-        gameObject.SetActive(isPaused);
         nav.SetActive(isPaused);
-        LevelTitle.alpha = 1;
-        LevelTitle.gameObject.SetActive(isPaused);
+        gameObject.SetActive(isPaused);
         options.gameObject.SetActive(false);
-        optionsScreenBackdrop.gameObject.SetActive(false);
 
         if (isPaused)
         {
             AudioManager.instance.PlaySFX(pressButtonSound);
             EventSystem.current.SetSelectedGameObject(buttons[0]);
-            canPressQuit = true;
-            canPressOptions = true;
-            canPressOptionsReturn = true;
         }
     }
 
-
-    private bool canPressQuit = true;
     public void DoQuit()
     {
-        if (!canPressQuit) return;
-        canPressQuit = false;
         SceneController.instance.SwitchScene(0);
-        AudioManager.instance.PlaySFX(pressButtonSound);
     }
 
-    private bool canPressOptions = true;
-    public void DoOptions()
+    public void DoOptions() => EnterMenu(options.gameObject);
+    public void DoOptionsReturn() => LeaveMenu(options.gameObject);
+
+    private async void EnterMenu(GameObject target)
     {
-        if (!canPressOptions) return;
-        canPressOptions = true;
-        nav.SetActive(false);
-        LevelTitle.gameObject.SetActive(false);
-        options.gameObject.SetActive(true);
-        optionsScreenBackdrop.gameObject.SetActive(true);
-        AudioManager.instance.PlaySFX(pressButtonSound);
+        while (animating) await Util.NextFrame();
+        target.SetActive(true);
+        await Animate(carousel, new Vector2(-384, 0), 1, EaseInOutCubic);
+        nav.gameObject.SetActive(false);
     }
 
-    private bool canPressOptionsReturn = true;
-    public void DoOptionsReturn()
+    private async void LeaveMenu(GameObject target)
     {
-        if (!canPressOptionsReturn) return;
-        canPressOptionsReturn = false;
-
-        nav.SetActive(true);
-        LevelTitle.gameObject.SetActive(true);
-        options.gameObject.SetActive(false);
-        optionsScreenBackdrop.gameObject.SetActive(false);
-        AudioManager.instance.PlaySFX(pressButtonSound);
+        while (animating) await Util.NextFrame();
+        nav.gameObject.SetActive(true);
+        await Animate(carousel, new Vector2(384, 0), 1, EaseInOutCubic);
+        target.SetActive(false);
 
         EventSystem.current.SetSelectedGameObject(buttons[0]);
     }
@@ -95,4 +80,33 @@ public class PauseScreen : MonoBehaviour
 
         _onPause = c.ReadValueAsButton();
     }
+
+    private async Task Animate(GameObject target, Vector2 delta, float timeMultiplier, Func<float, float> timing)
+    {
+        animating = true;
+
+        var p0 = target.transform.localPosition;
+        var p1 = p0 + (Vector3)delta;
+
+        var t0 = Time.time;
+        var t1 = t0 + (animationTime * timeMultiplier);
+
+        var cancelled = false;
+
+        await Util.EveryFrame(() =>
+        {
+            if (Time.time >= t1 || cancelled) return false;
+
+            var t = (Time.time - t0) / (animationTime * timeMultiplier);
+            target.transform.localPosition = Vector3.Lerp(p0, p1, timing(t));
+
+            return true;
+        });
+
+        target.transform.localPosition = p1;
+
+        animating = false;
+    }
+
+    private static float EaseInOutCubic(float t) => t < 0.5 ? (Mathf.Pow(2 * t, 3) / 2) : (Mathf.Pow(2 * t - 2, 3) / 2 + 1);
 }

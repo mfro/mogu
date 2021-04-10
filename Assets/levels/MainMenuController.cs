@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 using System.Threading.Tasks;
 using System;
 
@@ -20,6 +17,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] Audio mainMenuMusic;
 
     [SerializeField] float animationTime = 0.3f;
+
+    private bool animating;
 
     void Start()
     {
@@ -53,58 +52,43 @@ public class MainMenuController : MonoBehaviour
         levelController.GetComponent<LevelController>().GoToLevel(0, false);
     }
 
-    public async void DoOptions()
+    public void DoOptions() => EnterMenu(options.gameObject);
+    public void DoCredits() => EnterMenu(credits.gameObject);
+
+    public void DoOptionsReturn() => LeaveMenu(options.gameObject);
+    public void DoCreditsReturn() => LeaveMenu(credits.gameObject);
+
+    private async void EnterMenu(GameObject target)
     {
-        options.gameObject.SetActive(true);
-
-        await AnimateCarousel(new Vector2(-384, 0));
-
+        while (animating) await Util.NextFrame();
+        target.SetActive(true);
+        await Animate(carousel, new Vector2(-384, 0), 1, EaseInOutCubic);
         nav.gameObject.SetActive(false);
     }
 
-    public async void DoOptionsReturn()
+    private async void LeaveMenu(GameObject target)
     {
+        while (animating) await Util.NextFrame();
         nav.gameObject.SetActive(true);
-
-        await AnimateCarousel(new Vector2(384, 0));
-
-        options.gameObject.SetActive(false);
-    }
-
-    public async void DoCredits()
-    {
-        credits.gameObject.SetActive(true);
-
-        await AnimateCarousel(new Vector2(-384, 0));
-
-        nav.gameObject.SetActive(false);
-    }
-
-    public async void DoCreditsReturn()
-    {
-        nav.gameObject.SetActive(true);
-
-        await AnimateCarousel(new Vector2(384, 0));
-
-        credits.gameObject.SetActive(false);
-    }
-
-    private async Task AnimateCarousel(Vector2 delta)
-    {
-        await Animate(carousel, delta, 1, EaseInOutCubic);
+        await Animate(carousel, new Vector2(384, 0), 1, EaseInOutCubic);
+        target.SetActive(false);
     }
 
     private async Task Animate(GameObject target, Vector2 delta, float timeMultiplier, Func<float, float> timing)
     {
+        animating = true;
+
         var p0 = target.transform.localPosition;
         var p1 = p0 + (Vector3)delta;
 
         var t0 = Time.time;
         var t1 = t0 + (animationTime * timeMultiplier);
 
+        var cancelled = false;
+
         await Util.EveryFrame(() =>
         {
-            if (Time.time >= t1) return false;
+            if (Time.time >= t1 || cancelled) return false;
 
             var t = (Time.time - t0) / (animationTime * timeMultiplier);
             target.transform.localPosition = Vector3.Lerp(p0, p1, timing(t));
@@ -113,6 +97,8 @@ public class MainMenuController : MonoBehaviour
         });
 
         target.transform.localPosition = p1;
+
+        animating = false;
     }
 
     private static float EaseInOutCubic(float t) => t < 0.5 ? (Mathf.Pow(2 * t, 3) / 2) : (Mathf.Pow(2 * t - 2, 3) / 2 + 1);

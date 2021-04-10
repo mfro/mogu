@@ -278,6 +278,12 @@ public class LevelController : MonoBehaviour
                 hint.ReRender();
             }
         }
+
+        if (CameraShake.cameraShake != null)
+        {
+            CameraShake.cameraShake.DoShake();
+            print("shaking");
+        }
     }
 
     public void DoUndo()

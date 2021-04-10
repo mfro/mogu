@@ -279,9 +279,9 @@ public class LevelController : MonoBehaviour
             }
         }
 
-        if (CameraShake.cameraShake != null)
+        if (CameraShake.instance != null)
         {
-            CameraShake.cameraShake.DoShake();
+            CameraShake.instance.DoShake(CameraShake.Death);
             print("shaking");
         }
     }

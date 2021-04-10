@@ -6,13 +6,13 @@ public class CameraShake : MonoBehaviour
 {
     public bool shaking = false;
 
-    public static CameraShake cameraShake;
+    public static CameraShake instance;
 
     void Awake()
     {
-        if (cameraShake == null)
+        if (instance == null)
         {
-            cameraShake = this;
+            instance = this;
         }
         else
         {
@@ -22,7 +22,16 @@ public class CameraShake : MonoBehaviour
         shaking = false;
     }
 
-    private static Vector3[] offsets = {
+    public static Vector3[] FlipError = {
+        new Vector2(1, 0),
+        new Vector2(1, 0),
+        new Vector2(0, 0),
+        new Vector2(0, 0),
+        new Vector2(-1, 0),
+        new Vector2(-1, 0),
+    };
+
+    public static Vector3[] Death = {
         new Vector2(1, 0),
         // new Vector2(2, 0),
         // new Vector2(2, 0),
@@ -34,12 +43,14 @@ public class CameraShake : MonoBehaviour
         new Vector2(-1, 0),
         new Vector2(0, 0),
         new Vector2(1, 0),
+        new Vector2(1, 0),
         new Vector2(0, 0),
+        new Vector2(-1, 0),
         new Vector2(-1, 0),
         new Vector2(0, 0),
     };
 
-    public async void DoShake()
+    public async void DoShake(Vector3[] timing)
     {
         if (shaking) return;
         shaking = true;
@@ -47,9 +58,9 @@ public class CameraShake : MonoBehaviour
         var player = FindObjectOfType<PlayerController>();
         var orientation = Quaternion.FromToRotation(Vector2.down, player.flip.down);
 
-        for (var i = 0; i < offsets.Length; ++i)
+        for (var i = 0; i < timing.Length; ++i)
         {
-            transform.position = startPosition + orientation * offsets[i] / 32;
+            transform.position = startPosition + orientation * timing[i] / 32;
 
             await Util.NextFixedUpdate();
         }

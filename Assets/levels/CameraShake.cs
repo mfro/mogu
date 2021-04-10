@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public bool shaking = false;
-
-    [SerializeField] float duration, strength, decay;
 
     public static CameraShake cameraShake;
 
@@ -43,8 +39,9 @@ public class CameraShake : MonoBehaviour
         new Vector2(0, 0),
     };
 
-    private async void Shake(float strength)
+    public async void DoShake()
     {
+        if (shaking) return;
         shaking = true;
         Vector3 startPosition = transform.position;
         var player = FindObjectOfType<PlayerController>();
@@ -55,18 +52,9 @@ public class CameraShake : MonoBehaviour
             transform.position = startPosition + orientation * offsets[i] / 32;
 
             await Util.NextFixedUpdate();
-
-            strength *= decay;
         }
 
         transform.position = startPosition;
         shaking = false;
-    }
-
-    public void DoShake() => DoShake(strength);
-    public void DoShake(float strength)
-    {
-        if (shaking) return;
-        Shake(strength);
     }
 }

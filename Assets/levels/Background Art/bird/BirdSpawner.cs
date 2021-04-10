@@ -35,8 +35,10 @@ public class BirdSpawner : MonoBehaviour
             var orientation = Quaternion.FromToRotation(Vector2.down, playerOrientation.down);
             var spawnHeight = Random.Range(-5.5f, 5.5f);
             var spawnPos = new Vector2(speed >= 0 ? -7 : 7, spawnHeight);
+            var velocity = new Vector2(speed, 0);
 
             spawnPos = orientation * spawnPos;
+            velocity = orientation * velocity;
 
             var bird = Instantiate(birdSpawn, (Vector2)Camera.main.transform.position + spawnPos, Quaternion.identity);
 
@@ -45,7 +47,7 @@ public class BirdSpawner : MonoBehaviour
 
             renderer.flipX = speed >= 0;
             bird.transform.localRotation = orientation;
-            controller.velocity = playerOrientation.down.y != 0 ? new Vector2(speed, 0) : new Vector2(0, speed);
+            controller.velocity = velocity;
 
             float delay = Random.Range(spawnDelayRange.x, spawnDelayRange.y);
             await Util.Seconds(delay, true);

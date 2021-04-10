@@ -31,6 +31,10 @@ public class TilingStuff
                 mat1.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
                 mat1.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
                 mat1.SetInt("_ZWrite", 1);
+                mat1.SetFloat("_GlossyReflections", 0);
+                mat1.SetFloat("_SpecularHighlights", 0);
+                mat1.EnableKeyword("_GLOSSYREFLECTIONS_OFF");
+                mat1.EnableKeyword("_SPECULARHIGHLIGHTS_OFF");
                 mat1.EnableKeyword("_ALPHATEST_ON");
                 mat1.DisableKeyword("_ALPHABLEND_ON");
                 mat1.DisableKeyword("_ALPHAPREMULTIPLY_ON");
@@ -48,6 +52,10 @@ public class TilingStuff
                 mat2.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
                 mat2.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
                 mat2.SetInt("_ZWrite", 1);
+                mat2.SetFloat("_GlossyReflections", 0);
+                mat2.SetFloat("_SpecularHighlights", 0);
+                mat2.EnableKeyword("_GLOSSYREFLECTIONS_OFF");
+                mat2.EnableKeyword("_SPECULARHIGHLIGHTS_OFF");
                 mat2.EnableKeyword("_ALPHATEST_ON");
                 mat2.DisableKeyword("_ALPHABLEND_ON");
                 mat2.DisableKeyword("_ALPHAPREMULTIPLY_ON");

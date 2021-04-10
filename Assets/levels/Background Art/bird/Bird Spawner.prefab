@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   birdSpawn: {fileID: 2772920342942566109, guid: b2b3aa7eb211df7449bebd60e8703233,
     type: 3}
-  speedRange: {x: 0.8, y: 2}
-  spawnDelayRange: {x: 5, y: 10}
+  speedRange: {x: 1, y: 1.5}
+  spawnDelayRange: {x: 6, y: 12}

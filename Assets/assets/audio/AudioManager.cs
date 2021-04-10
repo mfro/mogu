@@ -42,9 +42,9 @@ public class AudioGroup
 public class AudioManager : MonoBehaviour
 {
     public static AudioGroup
-        Master = new AudioGroup("MasterVolume", -35, 0, 100),
-        Effects = new AudioGroup("SFXVolume", -35, 0, 100),
-        Music = new AudioGroup("MusicVolume", -35, 0, 50);
+        Master = new AudioGroup("MasterVolume", -35, 0, 1),
+        Effects = new AudioGroup("SFXVolume", -35, 0, 1),
+        Music = new AudioGroup("MusicVolume", -35, 0, 0.5f);
 
     public static AudioManager instance;
 

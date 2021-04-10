@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class BirdController : MonoBehaviour
 {
-
     public Vector2 velocity;
-    // Start is called before the first frame update
 
-    // Update is called once per frame
+    private float remaining;
+
+    void Awake()
+    {
+        remaining = 120;
+    }
+
     void FixedUpdate()
     {
-        if (Physics.IsEnabled) transform.position += new Vector3(velocity.x * Time.fixedDeltaTime, velocity.y * Time.fixedDeltaTime, 0);
+        if (remaining <= 0)
+        {
+            Destroy(this);
+        }
+        else if (Physics.IsEnabled)
+        {
+            transform.position += new Vector3(velocity.x * Time.fixedDeltaTime, velocity.y * Time.fixedDeltaTime, 0);
+            remaining -= Time.fixedDeltaTime;
+        }
 
         GetComponent<Animator>().enabled = Physics.IsEnabled;
-
-
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-
-        if (velocity.x >= 0) sr.flipX = true;
-        else sr.flipX = false;
     }
 }

@@ -23,11 +23,14 @@ public class BirdSpawner : MonoBehaviour
 
     private IEnumerator SpawnBird()
     {
-        while(true)
+        while (true)
         {
             float delay = Random.Range(spawnDelayRange.x, spawnDelayRange.y);
 
             yield return new WaitForSeconds(delay);
+            print($"wait {delay}");
+
+            if (!Physics.IsEnabled) continue;
 
             float speed = Random.Range(speedRange.x, speedRange.y);
 
@@ -36,30 +39,22 @@ public class BirdSpawner : MonoBehaviour
                 speed *= -1;
             }
 
-            Vector2 spawnPos;
-            Quaternion rotation = Quaternion.Euler(0,0,0);
+            var orientation = Quaternion.FromToRotation(Vector2.down, playerOrientation.down);
+            var spawnHeight = Random.Range(-5.5f, 5.5f);
+            var spawnPos = new Vector2(speed >= 0 ? -7 : 7, spawnHeight);
 
-            float spawnHeight = Random.Range(-5.5f, 5.5f);
+            spawnPos = orientation * spawnPos;
 
-            if (playerOrientation.down.y != 0)
-            {
-                spawnPos = speed >= 0 ? new Vector2(-6, spawnHeight) : new Vector2(6, spawnHeight);
-            }
-            else
-            {
-                spawnPos = speed >= 0 ? new Vector2(spawnHeight, -6) : new Vector2(spawnHeight, 6);
-                rotation = Quaternion.Euler(0, 0, speed >= 0 ? 90 : -90);
-            }
+            var bird = Instantiate(birdSpawn, (Vector2)Camera.main.transform.position + spawnPos, Quaternion.identity);
 
+            var controller = bird.GetComponent<BirdController>();
+            var renderer = bird.GetComponent<SpriteRenderer>();
 
-            var bird = Instantiate(birdSpawn, (Vector2) Camera.main.transform.position + spawnPos, Quaternion.identity);
-
-            BirdController controller = bird.GetComponent<BirdController>();
-
+            renderer.flipX = speed >= 0;
+            bird.transform.localRotation = orientation;
             controller.velocity = playerOrientation.down.y != 0 ? new Vector2(speed, 0) : new Vector2(0, speed);
         }
     }
-
 
     private void OnDestroy()
     {

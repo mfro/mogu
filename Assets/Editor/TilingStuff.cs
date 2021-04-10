@@ -113,45 +113,41 @@ public class TilingStuff
                 Undo.RecordObject(botLeft, "fix");
                 Undo.RecordObject(botRight, "fix");
 
-                if (!up && !left) topLeft.material = mBase[0, 0];
-                else if (!down && !left && !upleft) topLeft.material = mBase[0, 4];
-                else if (!down && !left) topLeft.material = mTerminal[0, 4];
-                else if (!left && !upleft) topLeft.material = mBase[0, 2];
-                else if (!left) topLeft.material = mTerminal[0, 2];
-                else if (!up && !right) topLeft.material = mBase[4, 0];
-                else if (!up) topLeft.material = mBase[2, 0];
-                else if (!upleft) topLeft.material = mBase[2, 2];
-                else topLeft.material = mBase[1, 1];
+                topLeft.material =
+                    !up && !left /*     corner      */ ? mBase[0, 0] :
+                    !down && !left /*   corner edge */ ? (upleft ? mTerminal[0, 4] : mBase[0, 4]) :
+                    !left /*            left edge   */ ? (upleft ? mTerminal[0, 2] : mBase[0, 2]) :
+                    !up && !right /*    top edge    */ ? mBase[4, 0] :
+                    !up /*              corner edge */ ? mBase[2, 0] :
+                    !upleft /*          in corner   */ ? mBase[2, 2] :
+                    mBase[1, 1];
 
-                if (!up && !right) topRight.material = mBase[5, 0];
-                else if (!down && !right && !upright) topRight.material = mBase[5, 4];
-                else if (!down && !right) topRight.material = mTerminal[5, 4];
-                else if (!right && !upright) topRight.material = mBase[5, 2];
-                else if (!right) topRight.material = mTerminal[5, 2];
-                else if (!up && !left) topRight.material = mBase[1, 0];
-                else if (!up) topRight.material = mBase[3, 0];
-                else if (!upright) topRight.material = mBase[3, 2];
-                else topRight.material = mBase[1, 1];
+                topRight.material =
+                    !up && !right /*    corner      */ ? mBase[5, 0] :
+                    !down && !right /*  corner edge */ ? (upright ? mTerminal[5, 4] : mBase[5, 4]) :
+                    !right /*           right edge  */ ? (upright ? mTerminal[5, 2] : mBase[5, 2]) :
+                    !up && !left /*     top edge    */ ? mBase[1, 0] :
+                    !up /*              corner edge */ ? mBase[3, 0] :
+                    !upright /*         in corner   */ ? mBase[3, 2] :
+                    mBase[1, 1];
 
-                if (!down && !right) botRight.material = mBase[5, 5];
-                else if (!up && !right && !downright) botRight.material = mBase[5, 1];
-                else if (!up && !right) botRight.material = mTerminal[5, 1];
-                else if (!right && !downright) botRight.material = mBase[5, 3];
-                else if (!right) botRight.material = mTerminal[5, 3];
-                else if (!down && !left) botRight.material = mBase[1, 5];
-                else if (!down) botRight.material = mBase[3, 5];
-                else if (!downright) botRight.material = mBase[3, 3];
-                else botRight.material = mBase[1, 1];
+                botLeft.material =
+                    !down && !left /*   corner      */ ? mBase[0, 5] :
+                    !up && !left /*     corner edge */ ? (downleft ? mTerminal[0, 1] : mBase[0, 1]) :
+                    !left /*            left edge   */ ? (downleft ? mTerminal[0, 3] : mBase[0, 3]) :
+                    !down && !right /*  bottom edge */ ? mBase[4, 5] :
+                    !down /*            corner edge */ ? mBase[2, 5] :
+                    !downleft /*        in corner   */ ? mBase[2, 3] :
+                    mBase[1, 1];
 
-                if (!down && !left) botLeft.material = mBase[0, 5];
-                else if (!up && !left && !downleft) botLeft.material = mBase[0, 1];
-                else if (!up && !left) botLeft.material = mTerminal[0, 1];
-                else if (!left && !downleft) botLeft.material = mBase[0, 3];
-                else if (!left) botLeft.material = mTerminal[0, 3];
-                else if (!down && !right) botLeft.material = mBase[4, 5];
-                else if (!down) botLeft.material = mBase[2, 5];
-                else if (!downleft) botLeft.material = mBase[2, 3];
-                else botLeft.material = mBase[1, 1];
+                botRight.material =
+                    !down && !right /*  corner      */ ? mBase[5, 5] :
+                    !up && !right /*    corner edge */ ? (downright ? mTerminal[5, 1] : mBase[5, 1]) :
+                    !right /*           right edge  */ ? (downright ? mTerminal[5, 3] : mBase[5, 3]) :
+                    !down && !left /*   bottom edge */ ? mBase[1, 5] :
+                    !down /*            corner edge */ ? mBase[3, 5] :
+                    !downright /*       in corner   */ ? mBase[3, 3] :
+                    mBase[1, 1];
             }
         }
     }

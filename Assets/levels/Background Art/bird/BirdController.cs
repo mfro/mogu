@@ -37,6 +37,6 @@ public class BirdController : MonoBehaviour
 
     private void OnParallax(Vector2 delta)
     {
-        transform.position += (Vector3)(delta * 0.8f);
+        transform.position += (Vector3)(delta * 0.6f);
     }
 }

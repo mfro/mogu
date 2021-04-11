@@ -22,10 +22,12 @@ public class PauseScreen : MonoBehaviour
 
     private bool isPaused = false;
     private bool animating = false;
+    private Vector3 carouselOrigin;
 
-    void Start()
+    void Awake()
     {
         options.Close += DoOptionsReturn;
+        carouselOrigin = carousel.transform.localPosition;
     }
 
     public void TogglePause()
@@ -38,6 +40,7 @@ public class PauseScreen : MonoBehaviour
         nav.SetActive(isPaused);
         gameObject.SetActive(isPaused);
         options.gameObject.SetActive(false);
+        carousel.transform.localPosition = carouselOrigin;
 
         if (isPaused)
         {

@@ -185,7 +185,13 @@ public class LevelController : MonoBehaviour
 
         UpdateColliders();
 
-        await Util.Seconds(2, false);
+        var endTime = Time.time + 2;
+
+        await Util.EveryFrame(() =>
+        {
+            if (Time.time >= endTime || !Physics.IsEnabled) return false;
+            return true;
+        });
 
         var t0 = Time.time;
         var t1 = t0 + CameraTime;

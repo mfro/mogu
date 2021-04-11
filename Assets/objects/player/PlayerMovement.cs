@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!dyn.enabled) return;
+        if (!dyn.IsEnabled) return;
 
         if (dyn.grounded) jumping = false;
 

@@ -61,7 +61,7 @@ public class PauseScreen : MonoBehaviour
     {
         while (animating) await Util.NextFrame();
         target.SetActive(true);
-        await Animate(carousel, new Vector2(-384, 0), 1, EaseInOutCubic);
+        await Animate(carousel, new Vector2(-384, 0), 1, Animations.EaseInOutCubic);
         nav.gameObject.SetActive(false);
     }
 
@@ -69,7 +69,7 @@ public class PauseScreen : MonoBehaviour
     {
         while (animating) await Util.NextFrame();
         nav.gameObject.SetActive(true);
-        await Animate(carousel, new Vector2(384, 0), 1, EaseInOutCubic);
+        await Animate(carousel, new Vector2(384, 0), 1, Animations.EaseInOutCubic);
         target.SetActive(false);
 
         EventSystem.current.SetSelectedGameObject(buttons[0]);
@@ -78,7 +78,7 @@ public class PauseScreen : MonoBehaviour
     private bool _onPause = false;
     public void OnPause(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onPause && FlipPanel.isFlipping == null)
+        if (c.ReadValueAsButton() && !_onPause)
             TogglePause();
 
         _onPause = c.ReadValueAsButton();
@@ -110,6 +110,4 @@ public class PauseScreen : MonoBehaviour
 
         animating = false;
     }
-
-    private static float EaseInOutCubic(float t) => t < 0.5 ? (Mathf.Pow(2 * t, 3) / 2) : (Mathf.Pow(2 * t - 2, 3) / 2 + 1);
 }

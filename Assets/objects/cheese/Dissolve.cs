@@ -23,7 +23,7 @@ public class Dissolve : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (dissolveStarted || !physics.enabled) return;
+        if (dissolveStarted || !physics.IsEnabled) return;
 
         if (physics.touching.Any(c => c is MyDynamic))
         {

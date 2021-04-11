@@ -254,8 +254,8 @@ public class LevelController : MonoBehaviour
         });
 
         camera.transform.position = p1;
-        levelScreen.alpha = 1;
         PlayerController.Frozen = false;
+        levelScreen.alpha = 1;
         moving = false;
     }
 

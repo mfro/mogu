@@ -13,7 +13,7 @@ public class HintController : MonoBehaviour
 
     void Update()
     {
-        if (!player.enabled) return;
+        if (!player.IsEnabled) return;
 
         var bounds = player.bounds;
         var panel = Physics.AllOverlaps(bounds, CollisionMask.Flipping)

@@ -33,7 +33,7 @@ public class PressurePlate : Switch
 
     void FixedUpdate()
     {
-        if (!hitbox.enabled) return;
+        if (!hitbox.IsEnabled) return;
 
         var overlapping = Physics.AllOverlaps(hitbox);
         IsActive = overlapping.Any();

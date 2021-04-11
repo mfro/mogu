@@ -126,8 +126,7 @@ public class FlipPanel : MonoBehaviour
         var q0 = transform.rotation;
         var q1 = delta * q0;
 
-        float t0 = Time.time;
-        float t1 = t0 + FlipTime;
+        var elapsed = 0f;
 
         await Util.EveryFrame(() =>
         {
@@ -137,12 +136,16 @@ public class FlipPanel : MonoBehaviour
                 return false;
             }
 
-            if (Time.time >= t1) return false;
+            if (elapsed >= FlipTime) return false;
+            if (!Physics.IsEnabled) return true;
 
-            transform.rotation = Quaternion.Lerp(q0, q1, (Time.time - t0) / FlipTime);
+            elapsed += Time.deltaTime;
+            transform.rotation = Quaternion.Lerp(q0, q1, elapsed / FlipTime);
 
             return true;
         });
+
+        if (cancelled) return;
 
         transform.rotation = q1;
         transform.position = originalPos;

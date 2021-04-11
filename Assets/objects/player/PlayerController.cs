@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
             foreach (var player in FindObjectsOfType<PlayerController>())
             {
                 var dyn = player.GetComponent<MyDynamic>();
-                dyn.enabled = Physics.IsEnabled && !isFrozen;
+                dyn.enabled = !isFrozen;
             }
         }
     }
@@ -71,12 +71,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         anim.SetBool("grounded", dyn.grounded);
-        anim.speed = (isDead || dyn.enabled) ? 1 : 0;
+        anim.speed = (isDead || dyn.IsEnabled) ? 1 : 0;
 
         previouslyGrounded = dyn.grounded;
         previouslyJumping = movement.jumping;
 
-        if (dyn.enabled)
+        if (dyn.IsEnabled)
         {
             // Debug.DrawLine(transform.position, transform.position + (transform.rotation * Vector2.right), Color.red);
             // Debug.DrawLine(transform.position, transform.position + (Vector3)facing, Color.blue);
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
             anim.SetFloat("running speed", Mathf.Abs(movement.input_running));
         }
 
-        if (dyn.enabled && dyn.grounded)
+        if (dyn.IsEnabled && dyn.grounded)
         {
             if (!previouslyGrounded)
             {
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
 
     public void DoFlip(int input)
     {
-        if (!dyn.enabled || !dyn.grounded)
+        if (!dyn.IsEnabled || !dyn.grounded)
             return;
 
         foreach (var cell in FindObjectsOfType<FlipPanel>())

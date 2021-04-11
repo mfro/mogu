@@ -43,10 +43,10 @@ public class MainMenuController : MonoBehaviour
         userInterface.transform.localPosition -= new Vector3(0, -384, 0);
 
         var tasks = new[] {
-            Animate(camera, new Vector2(0, 12), 4, EaseInOutQuadratic),
-            Animate(skyBackground, new Vector2(0, -12), 4, EaseInOutQuadratic),
-            Animate(gameObject, new Vector2(0, -384), 4, EaseInOutQuadratic),
-            Animate(userInterface, new Vector2(0, -384), 4, EaseInOutQuadratic),
+            Animate(camera, new Vector2(0, 12), 4, Animations.EaseInOutQuadratic),
+            Animate(skyBackground, new Vector2(0, -12), 4, Animations.EaseInOutQuadratic),
+            Animate(gameObject, new Vector2(0, -384), 4, Animations.EaseInOutQuadratic),
+            Animate(userInterface, new Vector2(0, -384), 4, Animations.EaseInOutQuadratic),
         };
 
         await Task.WhenAll(tasks);
@@ -68,7 +68,7 @@ public class MainMenuController : MonoBehaviour
         if (inMenu) return;
         inMenu = true;
         target.SetActive(true);
-        await Animate(carousel, new Vector2(-384, 0), 1, EaseInOutCubic);
+        await Animate(carousel, new Vector2(-384, 0), 1, Animations.EaseInOutCubic);
         nav.gameObject.SetActive(false);
     }
 
@@ -78,7 +78,7 @@ public class MainMenuController : MonoBehaviour
         if (!inMenu) return;
         inMenu = false;
         nav.gameObject.SetActive(true);
-        await Animate(carousel, new Vector2(384, 0), 1, EaseInOutCubic);
+        await Animate(carousel, new Vector2(384, 0), 1, Animations.EaseInOutCubic);
         target.SetActive(false);
     }
 
@@ -108,8 +108,4 @@ public class MainMenuController : MonoBehaviour
 
         animating = false;
     }
-
-    private static float EaseInOutCubic(float t) => t < 0.5 ? (Mathf.Pow(2 * t, 3) / 2) : (Mathf.Pow(2 * t - 2, 3) / 2 + 1);
-    private static float EaseInOutQuadratic(float t) => t < 0.5 ? (2 * Mathf.Pow(t, 2)) : (1 - Mathf.Pow(-2 * t + 2, 2) / 2);
-    private static float EaseInOutSine(float t) => (-Mathf.Cos(Mathf.PI * t) + 1) / 2;
 }

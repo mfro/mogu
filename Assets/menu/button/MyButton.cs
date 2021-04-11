@@ -52,6 +52,7 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
         isEnabled = true;
         image.sprite = baseImage;
         cursor.sprite = baseCursor;
+
         if (gameObject == EventSystem.current.currentSelectedGameObject)
         {
             cursor.gameObject.SetActive(true);
@@ -67,22 +68,26 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
     void OnDisable()
     {
         isEnabled = false;
+        button.interactable = true;
+
         if (image.sprite == pressImage)
         {
             image.sprite = baseImage;
             cursor.sprite = baseCursor;
             animator.SetTrigger("isUnPressed");
             text.transform.position -= new Vector3(0, -4 * transform.lossyScale.y, 0);
-            button.interactable = true;
         }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        image.sprite = pressImage;
-        cursor.sprite = pressCursor;
-        animator.SetTrigger("isPressed");
-        text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+        if (isEnabled && image.sprite != pressImage)
+        {
+            image.sprite = pressImage;
+            cursor.sprite = pressCursor;
+            animator.SetTrigger("isPressed");
+            text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -93,7 +98,6 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
             cursor.sprite = baseCursor;
             animator.SetTrigger("isUnPressed");
             text.transform.position -= new Vector3(0, -4 * transform.lossyScale.y, 0);
-            button.interactable = true;
         }
     }
 
@@ -125,11 +129,12 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
 
     public void OnSubmit(BaseEventData eventData)
     {
-        if (!isEnabled) return;
-
-        image.sprite = pressImage;
-        cursor.sprite = pressCursor;
-        animator.SetTrigger("isPressed");
-        text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+        if (isEnabled && image.sprite != pressImage)
+        {
+            image.sprite = pressImage;
+            cursor.sprite = pressCursor;
+            animator.SetTrigger("isPressed");
+            text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+        }
     }
 }

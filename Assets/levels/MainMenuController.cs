@@ -19,6 +19,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] float animationTime = 0.3f;
 
     private bool animating;
+    private bool inMenu;
 
     void Start()
     {
@@ -61,6 +62,8 @@ public class MainMenuController : MonoBehaviour
     private async void EnterMenu(GameObject target)
     {
         while (animating) await Util.NextFrame();
+        if (inMenu) return;
+        inMenu = true;
         target.SetActive(true);
         await Animate(carousel, new Vector2(-384, 0), 1, EaseInOutCubic);
         nav.gameObject.SetActive(false);
@@ -69,6 +72,8 @@ public class MainMenuController : MonoBehaviour
     private async void LeaveMenu(GameObject target)
     {
         while (animating) await Util.NextFrame();
+        if (!inMenu) return;
+        inMenu = false;
         nav.gameObject.SetActive(true);
         await Animate(carousel, new Vector2(384, 0), 1, EaseInOutCubic);
         target.SetActive(false);

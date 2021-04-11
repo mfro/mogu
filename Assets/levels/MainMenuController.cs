@@ -19,6 +19,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] float animationTime = 0.3f;
 
     private bool animating;
+    private bool inMenu;
 
     void Start()
     {
@@ -29,11 +30,14 @@ public class MainMenuController : MonoBehaviour
         options.Close += DoOptionsReturn;
         credits.Close += DoCreditsReturn;
 
+        PlayerController.Frozen = true;
         Physics.IsEnabled = false;
     }
 
     public async void DoPlay()
     {
+        Physics.IsEnabled = true;
+
         camera.transform.position -= new Vector3(0, 12, 0);
         skyBackground.transform.position -= new Vector3(0, -12, 0);
         userInterface.transform.localPosition -= new Vector3(0, -384, 0);
@@ -47,7 +51,7 @@ public class MainMenuController : MonoBehaviour
 
         await Task.WhenAll(tasks);
 
-        Physics.IsEnabled = true;
+        PlayerController.Frozen = false;
         nav.gameObject.SetActive(false);
         levelController.GetComponent<LevelController>().GoToLevel(0, false);
     }
@@ -61,6 +65,8 @@ public class MainMenuController : MonoBehaviour
     private async void EnterMenu(GameObject target)
     {
         while (animating) await Util.NextFrame();
+        if (inMenu) return;
+        inMenu = true;
         target.SetActive(true);
         await Animate(carousel, new Vector2(-384, 0), 1, EaseInOutCubic);
         nav.gameObject.SetActive(false);
@@ -69,6 +75,8 @@ public class MainMenuController : MonoBehaviour
     private async void LeaveMenu(GameObject target)
     {
         while (animating) await Util.NextFrame();
+        if (!inMenu) return;
+        inMenu = false;
         nav.gameObject.SetActive(true);
         await Animate(carousel, new Vector2(384, 0), 1, EaseInOutCubic);
         target.SetActive(false);

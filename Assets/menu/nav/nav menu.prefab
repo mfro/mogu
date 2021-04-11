@@ -24,7 +24,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9026517110011482654}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -55,7 +55,6 @@ MonoBehaviour:
   - {fileID: 9026517109402442766}
   - {fileID: 5982274372328725551}
   - {fileID: 5982274373616673632}
-  animationTime: 0.5
 --- !u!1 &9026517110748940394
 GameObject:
   m_ObjectHideFlags: 0

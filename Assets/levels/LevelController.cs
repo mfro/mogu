@@ -166,15 +166,17 @@ public class LevelController : MonoBehaviour
             playerPhysics.position = Physics.FromUnity(currentLevel.start.transform.position);
             playerPhysics.UpdatePosition();
             levelScreen.alpha = 1;
+
+            Parallax.parallax?.Invoke(currentLevel.transform.position - camera.transform.position);
+
+            var pos = currentLevel.transform.position;
+            pos.z = camera.transform.position.z;
+            camera.transform.position = pos;
         }
 
         CurrentLevel = currentLevel;
 
         player.UpdateMovement();
-
-        var pos = currentLevel.transform.position;
-        pos.z = camera.transform.position.z;
-        camera.transform.position = pos;
 
         border.Move(currentLevel.transform.position);
 
@@ -230,7 +232,7 @@ public class LevelController : MonoBehaviour
     private async Task MoveCamera(Vector3 delta)
     {
         moving = true;
-        Physics.IsEnabled = false;
+        PlayerController.Frozen = true;
         var p0 = camera.transform.position;
         var p1 = p0 + delta;
 
@@ -241,15 +243,19 @@ public class LevelController : MonoBehaviour
         {
             if (Time.time >= t1) return false;
 
+            var lastPos = camera.transform.position;
+            var nextPos = Vector3.Lerp(p0, p1, (Time.time - t0) / CameraTime);
+
             levelScreen.alpha = (Time.time - t0) / CameraTime;
-            camera.transform.position = Vector3.Lerp(p0, p1, (Time.time - t0) / CameraTime);
+            camera.transform.position = nextPos;
+            Parallax.parallax?.Invoke(nextPos - lastPos);
 
             return true;
         });
 
         camera.transform.position = p1;
         levelScreen.alpha = 1;
-        Physics.IsEnabled = true;
+        PlayerController.Frozen = false;
         moving = false;
     }
 

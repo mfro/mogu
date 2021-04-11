@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,12 @@ public class BirdController : MonoBehaviour
     void Awake()
     {
         remaining = 120;
+        Parallax.parallax += OnParallax;
+    }
+
+    void OnDestroy()
+    {
+        Parallax.parallax -= OnParallax;
     }
 
     void FixedUpdate()
@@ -26,5 +33,10 @@ public class BirdController : MonoBehaviour
         }
 
         GetComponent<Animator>().enabled = Physics.IsEnabled;
+    }
+
+    private void OnParallax(Vector2 delta)
+    {
+        transform.position += (Vector3)(delta * 0.8f);
     }
 }

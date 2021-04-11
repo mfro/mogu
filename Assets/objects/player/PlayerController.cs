@@ -8,6 +8,21 @@ using System;
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
 {
+    private static bool isFrozen;
+    public static bool Frozen
+    {
+        get => isFrozen;
+        set
+        {
+            isFrozen = value;
+            foreach (var player in FindObjectsOfType<PlayerController>())
+            {
+                var dyn = player.GetComponent<MyDynamic>();
+                dyn.enabled = Physics.IsEnabled && !isFrozen;
+            }
+        }
+    }
+
     //public bool encumbered;
     public Vector2 facing;
 
@@ -102,7 +117,6 @@ public class PlayerController : MonoBehaviour
         walkAudioSource.pitch = isPushing ? 0.6f : 1;
 
     }
-
 
     public void PlayJumpSound()
     {

@@ -30,11 +30,14 @@ public class MainMenuController : MonoBehaviour
         options.Close += DoOptionsReturn;
         credits.Close += DoCreditsReturn;
 
+        PlayerController.Frozen = true;
         Physics.IsEnabled = false;
     }
 
     public async void DoPlay()
     {
+        Physics.IsEnabled = true;
+
         camera.transform.position -= new Vector3(0, 12, 0);
         skyBackground.transform.position -= new Vector3(0, -12, 0);
         userInterface.transform.localPosition -= new Vector3(0, -384, 0);
@@ -48,7 +51,7 @@ public class MainMenuController : MonoBehaviour
 
         await Task.WhenAll(tasks);
 
-        Physics.IsEnabled = true;
+        PlayerController.Frozen = false;
         nav.gameObject.SetActive(false);
         levelController.GetComponent<LevelController>().GoToLevel(0, false);
     }

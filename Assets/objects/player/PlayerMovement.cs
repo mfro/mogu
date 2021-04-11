@@ -26,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (input_jumping && dyn.grounded)
         {
+
+            controller.PlayJumpSound();
+
             input_jumping = false;
             if (flip.down.x != 0)
             {

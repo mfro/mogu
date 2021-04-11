@@ -99,13 +99,15 @@ public class PlayerController : MonoBehaviour
             if (walkAudioSource.isPlaying) walkAudioSource.Pause();
         }
 
-        if (movement.jumping && !previouslyJumping)
-        {
-            OneShotAudioSource.PlayOneShot(JumpSound);
-        }
-
         walkAudioSource.pitch = isPushing ? 0.6f : 1;
 
+    }
+
+
+    public void PlayJumpSound()
+    {
+        OneShotAudioSource.Stop();
+        OneShotAudioSource.PlayOneShot(JumpSound);
     }
 
     private static Vector2 MatchFacing(float value, Vector2 negative, Vector2 positive)

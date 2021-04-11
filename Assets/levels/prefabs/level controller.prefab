@@ -156,7 +156,7 @@ MonoBehaviour:
   walkAudioSource: {fileID: 7859667613027173241}
   OneShotAudioSource: {fileID: 2329712980903698157}
   LandSound: {fileID: 8300000, guid: 73cfc3c4eb925c240b9bcbdcf20885fb, type: 3}
-  JumpSound: {fileID: 8300000, guid: c46faec6eb3ff164994558ae97ea9fc1, type: 3}
+  JumpSound: {fileID: 8300000, guid: b21ce43d2322cc14a8152cb85267bb46, type: 3}
 --- !u!114 &1413353433
 MonoBehaviour:
   m_ObjectHideFlags: 0

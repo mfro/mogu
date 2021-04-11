@@ -16,22 +16,27 @@ public interface IAwaiter : INotifyCompletion
 
 public static partial class Util
 {
-    public static async Task NextFrame()
+    public static async Task<float> NextFrame()
     {
-        await (AsyncHelper.instance.update ?? (AsyncHelper.instance.update = new CallbackTask()));
+        var t0 = Time.time;
+        await (AsyncHelper.instance.nextFrame ?? (AsyncHelper.instance.nextFrame = new CallbackTask()));
+        return Time.time - t0;
     }
 
-    public static async Task NextFixedUpdate()
+    public static async Task<float> NextFixedUpdate()
     {
-        await (AsyncHelper.instance.fixedUpdate ?? (AsyncHelper.instance.fixedUpdate = new CallbackTask()));
+        var t0 = Time.time;
+        await (AsyncHelper.instance.nextFixedUpdate ?? (AsyncHelper.instance.nextFixedUpdate = new CallbackTask()));
+        return Time.time - t0;
     }
 
-    public static async Task EveryFrame(Func<bool> callback)
+    public static async Task EveryFrame(Func<float, bool> callback)
     {
+        var deltaT = 0f;
         while (true)
         {
-            if (!callback()) break;
-            await NextFrame();
+            if (!callback(deltaT)) break;
+            deltaT = await NextFrame();
         }
     }
 
@@ -41,14 +46,13 @@ public static partial class Util
         {
             if (obeyPhysics)
             {
-                await NextFixedUpdate();
-
-                if (Physics.IsEnabled) seconds -= Time.fixedDeltaTime;
+                var deltaT = await NextFixedUpdate();
+                if (Physics.IsEnabled) seconds -= deltaT;
             }
             else
             {
-                await NextFrame();
-                seconds -= Time.deltaTime;
+                var deltaT = await NextFrame();
+                seconds -= deltaT;
             }
         }
     }
@@ -101,25 +105,25 @@ public static partial class Util
             }
         }
 
-        public CallbackTask update;
-        public CallbackTask fixedUpdate;
+        public CallbackTask nextFrame;
+        public CallbackTask nextFixedUpdate;
 
         void Update()
         {
-            if (update != null)
+            if (nextFrame != null)
             {
-                var awaiter = update.Awaiter;
-                update = null;
+                var awaiter = nextFrame.Awaiter;
+                nextFrame = null;
                 awaiter.Complete();
             }
         }
 
         void FixedUpdate()
         {
-            if (fixedUpdate != null)
+            if (nextFixedUpdate != null)
             {
-                var awaiter = fixedUpdate.Awaiter;
-                fixedUpdate = null;
+                var awaiter = nextFixedUpdate.Awaiter;
+                nextFixedUpdate = null;
                 awaiter.Complete();
             }
         }

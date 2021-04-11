@@ -84,29 +84,17 @@ public class PauseScreen : MonoBehaviour
         _onPause = c.ReadValueAsButton();
     }
 
-    private async Task Animate(GameObject target, Vector2 delta, float timeMultiplier, Func<float, float> timing)
+    private async Task Animate(GameObject target, Vector2 delta, float timeMultiplier, TimingFunction timing)
     {
         animating = true;
 
         var p0 = target.transform.localPosition;
         var p1 = p0 + (Vector3)delta;
 
-        var t0 = Time.time;
-        var t1 = t0 + (animationTime * timeMultiplier);
-
-        var cancelled = false;
-
-        await Util.EveryFrame(() =>
+        await Animations.Animate(animationTime * timeMultiplier, false, timing, progress =>
         {
-            if (Time.time >= t1 || cancelled) return false;
-
-            var t = (Time.time - t0) / (animationTime * timeMultiplier);
-            target.transform.localPosition = Vector3.Lerp(p0, p1, timing(t));
-
-            return true;
+            target.transform.localPosition = Vector3.Lerp(p0, p1, progress);
         });
-
-        target.transform.localPosition = p1;
 
         animating = false;
     }

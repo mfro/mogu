@@ -126,28 +126,13 @@ public class FlipPanel : MonoBehaviour
         var q0 = transform.rotation;
         var q1 = delta * q0;
 
-        var elapsed = 0f;
-
-        await Util.EveryFrame(() =>
+        await Animations.Animate(FlipTime, true, Animations.EaseInOutSine, progress =>
         {
-            if (cancelled)
-            {
-                isFlipping = null;
-                return false;
-            }
-
-            if (elapsed >= FlipTime) return false;
-            if (!Physics.IsEnabled) return true;
-
-            elapsed += Time.deltaTime;
-            transform.rotation = Quaternion.Lerp(q0, q1, elapsed / FlipTime);
-
-            return true;
+            transform.rotation = Quaternion.Lerp(q0, q1, progress);
         });
 
         if (cancelled) return;
 
-        transform.rotation = q1;
         transform.position = originalPos;
         cancelFlip();
 

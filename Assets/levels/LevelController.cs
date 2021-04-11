@@ -187,23 +187,24 @@ public class LevelController : MonoBehaviour
 
         UpdateColliders();
 
-        var endTime = Time.time + 2;
-
-        await Util.EveryFrame(() =>
+        var remaining = 2f;
+        await Util.EveryFrame(deltaT =>
         {
-            if (Time.time >= endTime || !Physics.IsEnabled) return false;
+            if (!Physics.IsEnabled) return false;
+            remaining -= deltaT;
+            if (remaining <= 0) return false;
+
             return true;
         });
 
-        var t0 = Time.time;
-        var t1 = t0 + CameraTime;
-
-        await Util.EveryFrame(() =>
+        var elapsed = 0f;
+        await Util.EveryFrame(deltaT =>
         {
-            if (Time.time >= t1 || currentIndex != index || !Physics.IsEnabled) return false;
+            if (currentIndex != index || !Physics.IsEnabled) return false;
+            elapsed += deltaT;
+            if (elapsed >= CameraTime) return false;
 
-            levelScreen.alpha = 1 - (Time.time - t0) / CameraTime;
-
+            levelScreen.alpha = 1 - elapsed / CameraTime;
             return true;
         });
 
@@ -236,26 +237,18 @@ public class LevelController : MonoBehaviour
         var p0 = camera.transform.position;
         var p1 = p0 + delta;
 
-        var t0 = Time.time;
-        var t1 = t0 + CameraTime;
-
-        await Util.EveryFrame(() =>
+        await Animations.Animate(CameraTime, true, Animations.EaseInOutQuadratic, progress =>
         {
-            if (Time.time >= t1) return false;
-
             var lastPos = camera.transform.position;
-            var nextPos = Vector3.Lerp(p0, p1, (Time.time - t0) / CameraTime);
+            var nextPos = Vector3.Lerp(p0, p1, progress);
 
-            levelScreen.alpha = (Time.time - t0) / CameraTime;
             camera.transform.position = nextPos;
             Parallax.parallax?.Invoke(nextPos - lastPos);
 
-            return true;
+            levelScreen.alpha = progress;
         });
 
-        camera.transform.position = p1;
         PlayerController.Frozen = false;
-        levelScreen.alpha = 1;
         moving = false;
     }
 

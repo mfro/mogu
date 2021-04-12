@@ -128,7 +128,7 @@ public class Text : MonoBehaviour
             }
             else
             {
-                obj.transform.localPosition = new Vector3(origin + pair.pos / 32f, -2 / 32f, 0);
+                obj.transform.localPosition = new Vector3((origin + pair.pos) / 32f, -2 / 32f, 0);
 
                 var renderer = obj.AddComponent<SpriteRenderer>();
                 renderer.sprite = sprite;

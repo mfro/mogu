@@ -321,7 +321,7 @@ public class LevelController : MonoBehaviour
     private bool _onRestart = false;
     public void OnRestart(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onRestart)
+        if (c.ReadValueAsButton() && !_onRestart && playerPhysics.IsEnabled)
             DoRestart();
 
         _onRestart = c.ReadValueAsButton();
@@ -330,7 +330,7 @@ public class LevelController : MonoBehaviour
     private bool _onUndo = false;
     public void OnUndo(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onUndo)
+        if (c.ReadValueAsButton() && !_onUndo && playerPhysics.IsEnabled)
             DoUndo();
 
         _onUndo = c.ReadValueAsButton();
@@ -339,7 +339,7 @@ public class LevelController : MonoBehaviour
     private bool _onCheat1 = false;
     public void OnCheat1(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onCheat1 && !moving)
+        if (c.ReadValueAsButton() && !_onCheat1 && !moving && playerPhysics.IsEnabled)
             GoToLevel(currentIndex + 1, false);
 
         _onCheat1 = c.ReadValueAsButton();
@@ -348,7 +348,7 @@ public class LevelController : MonoBehaviour
     private bool _onCheat2 = false;
     public void OnCheat2(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onCheat2 && !moving)
+        if (c.ReadValueAsButton() && !_onCheat2 && !moving && playerPhysics.IsEnabled)
             GoToLevel(currentIndex - 1, false);
 
         _onCheat2 = c.ReadValueAsButton();

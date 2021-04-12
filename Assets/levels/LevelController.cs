@@ -154,6 +154,7 @@ public class LevelController : MonoBehaviour
 
             var delta = currentLevel.transform.position - from.transform.position;
             await MoveCamera(delta);
+            if (this == null) return;
         }
         else
         {
@@ -187,32 +188,26 @@ public class LevelController : MonoBehaviour
 
         UpdateColliders();
 
-        var remaining = 2f;
-        await Util.EveryFrame(deltaT =>
+        var delay = Animations.Animate(2f, Animations.Linear);
+        while (!delay.isComplete)
         {
-            if (!Physics.IsEnabled) return false;
-            remaining -= deltaT;
-            if (remaining <= 0) return false;
-
-            return true;
-        });
-
-        var elapsed = 0f;
-        await Util.EveryFrame(deltaT =>
-        {
-            if (currentIndex != index || !Physics.IsEnabled) return false;
-            elapsed += deltaT;
-            if (elapsed >= CameraTime) return false;
-
-            levelScreen.alpha = 1 - elapsed / CameraTime;
-            return true;
-        });
-
-        if (currentIndex == index)
-        {
-            levelScreen.alpha = 0;
-            levelScreen.gameObject.SetActive(false);
+            if (!Physics.IsEnabled) { levelScreen.alpha = 0; return; }
+            await delay.NextFrame();
+            if (this == null || index != currentIndex) return;
         }
+
+        var fadeOut = Animations.Animate(CameraTime, Animations.Linear);
+        while (!fadeOut.isComplete)
+        {
+            if (!Physics.IsEnabled) { levelScreen.alpha = 0; return; }
+            await fadeOut.NextFrame();
+            if (this == null || index != currentIndex) return;
+
+            levelScreen.alpha = 1 - fadeOut.progress;
+        }
+
+        levelScreen.alpha = 0;
+        levelScreen.gameObject.SetActive(false);
     }
 
     private void UpdateColliders()
@@ -237,16 +232,21 @@ public class LevelController : MonoBehaviour
         var p0 = camera.transform.position;
         var p1 = p0 + delta;
 
-        await Animations.Animate(CameraTime, true, Animations.EaseInOutQuadratic, progress =>
+        var move = Animations.Animate(CameraTime, Animations.EaseInOutQuadratic);
+        while (!move.isComplete)
         {
+            if (!Physics.IsEnabled) { await Util.NextFrame(); continue; }
+            await move.NextFrame();
+            if (this == null) return;
+
             var lastPos = camera.transform.position;
-            var nextPos = Vector3.Lerp(p0, p1, progress);
+            var nextPos = Vector3.Lerp(p0, p1, move.progress);
 
             camera.transform.position = nextPos;
             Parallax.parallax?.Invoke(nextPos - lastPos);
 
-            levelScreen.alpha = progress;
-        });
+            levelScreen.alpha = move.progress;
+        }
 
         PlayerController.Frozen = false;
         moving = false;
@@ -287,7 +287,6 @@ public class LevelController : MonoBehaviour
         if (CameraShake.instance != null)
         {
             CameraShake.instance.DoShake(CameraShake.Death);
-            print("shaking");
         }
     }
 
@@ -321,7 +320,7 @@ public class LevelController : MonoBehaviour
     private bool _onRestart = false;
     public void OnRestart(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onRestart && playerPhysics.IsEnabled)
+        if (c.ReadValueAsButton() && !_onRestart && !moving && Physics.IsEnabled)
             DoRestart();
 
         _onRestart = c.ReadValueAsButton();
@@ -330,7 +329,7 @@ public class LevelController : MonoBehaviour
     private bool _onUndo = false;
     public void OnUndo(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onUndo && playerPhysics.IsEnabled)
+        if (c.ReadValueAsButton() && !_onUndo && !moving && Physics.IsEnabled)
             DoUndo();
 
         _onUndo = c.ReadValueAsButton();

@@ -89,10 +89,12 @@ public class MainMenuController : MonoBehaviour
         var p0 = target.transform.localPosition;
         var p1 = p0 + (Vector3)delta;
 
-        await Animations.Animate(animationTime * timeMultiplier, false, timing, progress =>
+        var anim = Animations.Animate(animationTime * timeMultiplier, timing);
+        while (!anim.isComplete)
         {
-            target.transform.localPosition = Vector3.Lerp(p0, p1, progress);
-        });
+            await anim.NextFrame();
+            target.transform.localPosition = Vector3.Lerp(p0, p1, anim.progress);
+        }
 
         animating = false;
     }

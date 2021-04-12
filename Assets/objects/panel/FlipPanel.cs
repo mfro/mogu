@@ -49,6 +49,8 @@ public class FlipPanel : MonoBehaviour
 
     public async void DoFlip(Vector2 down, int input)
     {
+        if (isFlipping != null) return;
+
         FlipKind flip;
         if (input == 1)
             flip = flip1;
@@ -56,26 +58,17 @@ public class FlipPanel : MonoBehaviour
             flip = flip2;
 
         Quaternion delta;
-        if (flip == FlipKind.CW)
+        switch (flip)
         {
-            delta = Quaternion.AngleAxis(90, Vector3.back);
+            case FlipKind.CW: delta = Quaternion.AngleAxis(90, Vector3.back); break;
+            case FlipKind.CCW: delta = Quaternion.AngleAxis(-90, Vector3.back); break;
+            case FlipKind.Horizontal: delta = Quaternion.AngleAxis(-180, down); break;
+            case FlipKind.Vertical:
+                var axis = Quaternion.AngleAxis(90, Vector3.back) * down;
+                delta = Quaternion.AngleAxis(-180, axis);
+                break;
+            default: return;
         }
-        else if (flip == FlipKind.CCW)
-        {
-            delta = Quaternion.AngleAxis(-90, Vector3.back);
-        }
-        else if (flip == FlipKind.Horizontal)
-        {
-            delta = Quaternion.AngleAxis(-180, down);
-        }
-        else if (flip == FlipKind.Vertical)
-        {
-            var axis = Quaternion.AngleAxis(90, Vector3.back) * down;
-            delta = Quaternion.AngleAxis(-180, axis);
-        }
-        else return;
-
-        if (isFlipping != null) return;
 
         var overlaps = Physics.AllOverlaps(physics)
             .Select(o => (o.Item1, o.Item2, o.Item1.GetComponent<Flippable>()))
@@ -126,12 +119,15 @@ public class FlipPanel : MonoBehaviour
         var q0 = transform.rotation;
         var q1 = delta * q0;
 
-        await Animations.Animate(FlipTime, true, Animations.EaseInOutSine, progress =>
+        var anim = Animations.Animate(FlipTime, Animations.EaseInOutSine);
+        while (!anim.isComplete)
         {
-            transform.rotation = Quaternion.Lerp(q0, q1, progress);
-        });
+            if (!Physics.IsEnabled) { await Util.NextFrame(); continue; }
+            await anim.NextFrame();
+            if (cancelled || this == null) return;
 
-        if (cancelled) return;
+            transform.rotation = Quaternion.Lerp(q0, q1, anim.progress);
+        }
 
         transform.position = originalPos;
         cancelFlip();

@@ -173,7 +173,7 @@ public class Text : MonoBehaviour
 #if UNITY_EDITOR
     void OnValidate()
     {
-        if (!enabled) return;
+        if (!enabled || UnityEditor.PrefabUtility.IsPartOfPrefabAsset(this)) return;
 
         UnityEditor.EditorApplication.delayCall += () => ReDraw();
     }

@@ -23,7 +23,6 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
     private Sprite baseCursor;
     private bool hover;
     private bool isEnabled;
-    public bool alreadyPressed = false;
 
     void Awake()
     {
@@ -40,12 +39,12 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
         baseCursor = cursor.sprite;
 
         button.onClick.AddListener(OnClick);
-        alreadyPressed = false;
     }
 
     private void OnClick()
     {
         AudioManager.instance?.PlaySFX(pressSound);
+        if (isEnabled) button.interactable = false;
     }
 
     void OnEnable()
@@ -53,6 +52,7 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
         isEnabled = true;
         image.sprite = baseImage;
         cursor.sprite = baseCursor;
+
         if (gameObject == EventSystem.current.currentSelectedGameObject)
         {
             cursor.gameObject.SetActive(true);
@@ -68,6 +68,8 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
     void OnDisable()
     {
         isEnabled = false;
+        button.interactable = true;
+
         if (image.sprite == pressImage)
         {
             image.sprite = baseImage;
@@ -79,10 +81,13 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        image.sprite = pressImage;
-        cursor.sprite = pressCursor;
-        animator.SetTrigger("isPressed");
-        text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+        if (isEnabled && image.sprite != pressImage)
+        {
+            image.sprite = pressImage;
+            cursor.sprite = pressCursor;
+            animator.SetTrigger("isPressed");
+            text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -124,13 +129,12 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
 
     public void OnSubmit(BaseEventData eventData)
     {
-        if (!isEnabled) return;
-
-        isEnabled = false;
-
-        image.sprite = pressImage;
-        cursor.sprite = pressCursor;
-        animator.SetTrigger("isPressed");
-        text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+        if (isEnabled && image.sprite != pressImage)
+        {
+            image.sprite = pressImage;
+            cursor.sprite = pressCursor;
+            animator.SetTrigger("isPressed");
+            text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+        }
     }
 }

@@ -15,8 +15,8 @@ public class LevelController : MonoBehaviour
     [SerializeField] public LevelBorder border;
     [SerializeField] public PlayerController player;
     [SerializeField] public GameObject[] deathScreen;
-    [SerializeField] public Text levelNumber;
-    [SerializeField] public Text levelName;
+    [SerializeField] public Text[] levelNumber;
+    [SerializeField] public Text[] levelName;
     [SerializeField] public CanvasGroup levelScreen;
     [SerializeField] public float CameraTime;
     [SerializeField] public AudioClip LevelTransitionSound;
@@ -141,8 +141,8 @@ public class LevelController : MonoBehaviour
 
         levels[index].start.MarkReached();
         levelScreen.alpha = 1;
-        levelNumber.text = $"{World}-{index + 1}";
-        levelName.text = levels[index].title;
+        foreach (var t in levelNumber) t.text = $"{World}-{index + 1}";
+        foreach (var t in levelName) t.text = levels[index].title;
         levelScreen.gameObject.SetActive(true);
 
         if (transition)
@@ -154,6 +154,7 @@ public class LevelController : MonoBehaviour
 
             var delta = currentLevel.transform.position - from.transform.position;
             await MoveCamera(delta);
+            if (this == null) return;
         }
         else
         {
@@ -166,15 +167,17 @@ public class LevelController : MonoBehaviour
             playerPhysics.position = Physics.FromUnity(currentLevel.start.transform.position);
             playerPhysics.UpdatePosition();
             levelScreen.alpha = 1;
+
+            Parallax.parallax?.Invoke(currentLevel.transform.position - camera.transform.position);
+
+            var pos = currentLevel.transform.position;
+            pos.z = camera.transform.position.z;
+            camera.transform.position = pos;
         }
 
         CurrentLevel = currentLevel;
 
         player.UpdateMovement();
-
-        var pos = currentLevel.transform.position;
-        pos.z = camera.transform.position.z;
-        camera.transform.position = pos;
 
         border.Move(currentLevel.transform.position);
 
@@ -185,25 +188,26 @@ public class LevelController : MonoBehaviour
 
         UpdateColliders();
 
-        await Util.Seconds(2, false);
-
-        var t0 = Time.time;
-        var t1 = t0 + CameraTime;
-
-        await Util.EveryFrame(() =>
+        var delay = Animations.Animate(2f, Animations.Linear);
+        while (!delay.isComplete)
         {
-            if (Time.time >= t1 || currentIndex != index || !Physics.IsEnabled) return false;
-
-            levelScreen.alpha = 1 - (Time.time - t0) / CameraTime;
-
-            return true;
-        });
-
-        if (currentIndex == index && Physics.IsEnabled)
-        {
-            levelScreen.alpha = 0;
-            levelScreen.gameObject.SetActive(false);
+            if (!Physics.IsEnabled) { levelScreen.alpha = 0; return; }
+            await delay.NextFrame();
+            if (this == null || index != currentIndex) return;
         }
+
+        var fadeOut = Animations.Animate(CameraTime, Animations.Linear);
+        while (!fadeOut.isComplete)
+        {
+            if (!Physics.IsEnabled) { levelScreen.alpha = 0; return; }
+            await fadeOut.NextFrame();
+            if (this == null || index != currentIndex) return;
+
+            levelScreen.alpha = 1 - fadeOut.progress;
+        }
+
+        levelScreen.alpha = 0;
+        levelScreen.gameObject.SetActive(false);
     }
 
     private void UpdateColliders()
@@ -224,26 +228,27 @@ public class LevelController : MonoBehaviour
     private async Task MoveCamera(Vector3 delta)
     {
         moving = true;
-        Physics.IsEnabled = false;
+        PlayerController.Frozen = true;
         var p0 = camera.transform.position;
         var p1 = p0 + delta;
 
-        var t0 = Time.time;
-        var t1 = t0 + CameraTime;
-
-        await Util.EveryFrame(() =>
+        var move = Animations.Animate(CameraTime, Animations.EaseInOutQuadratic);
+        while (!move.isComplete)
         {
-            if (Time.time >= t1) return false;
+            if (!Physics.IsEnabled) { await Util.NextFrame(); continue; }
+            await move.NextFrame();
+            if (this == null) return;
 
-            levelScreen.alpha = (Time.time - t0) / CameraTime;
-            camera.transform.position = Vector3.Lerp(p0, p1, (Time.time - t0) / CameraTime);
+            var lastPos = camera.transform.position;
+            var nextPos = Vector3.Lerp(p0, p1, move.progress);
 
-            return true;
-        });
+            camera.transform.position = nextPos;
+            Parallax.parallax?.Invoke(nextPos - lastPos);
 
-        camera.transform.position = p1;
-        levelScreen.alpha = 1;
-        Physics.IsEnabled = true;
+            levelScreen.alpha = move.progress;
+        }
+
+        PlayerController.Frozen = false;
         moving = false;
     }
 
@@ -282,7 +287,6 @@ public class LevelController : MonoBehaviour
         if (CameraShake.instance != null)
         {
             CameraShake.instance.DoShake(CameraShake.Death);
-            print("shaking");
         }
     }
 
@@ -316,7 +320,7 @@ public class LevelController : MonoBehaviour
     private bool _onRestart = false;
     public void OnRestart(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onRestart)
+        if (c.ReadValueAsButton() && !_onRestart && !moving && Physics.IsEnabled)
             DoRestart();
 
         _onRestart = c.ReadValueAsButton();
@@ -325,7 +329,7 @@ public class LevelController : MonoBehaviour
     private bool _onUndo = false;
     public void OnUndo(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onUndo)
+        if (c.ReadValueAsButton() && !_onUndo && !moving && Physics.IsEnabled)
             DoUndo();
 
         _onUndo = c.ReadValueAsButton();
@@ -334,7 +338,7 @@ public class LevelController : MonoBehaviour
     private bool _onCheat1 = false;
     public void OnCheat1(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onCheat1 && !moving)
+        if (c.ReadValueAsButton() && !_onCheat1 && !moving && playerPhysics.IsEnabled)
             GoToLevel(currentIndex + 1, false);
 
         _onCheat1 = c.ReadValueAsButton();
@@ -343,7 +347,7 @@ public class LevelController : MonoBehaviour
     private bool _onCheat2 = false;
     public void OnCheat2(InputAction.CallbackContext c)
     {
-        if (c.ReadValueAsButton() && !_onCheat2 && !moving)
+        if (c.ReadValueAsButton() && !_onCheat2 && !moving && playerPhysics.IsEnabled)
             GoToLevel(currentIndex - 1, false);
 
         _onCheat2 = c.ReadValueAsButton();

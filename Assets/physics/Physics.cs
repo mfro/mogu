@@ -62,33 +62,11 @@ public static class Physics
         return rect;
     }
 
-    private static List<MyCollider> paused;
-    public static bool IsEnabled
-    {
-        get => paused == null;
-        set
-        {
-            if (value == IsEnabled) return;
-
-            if (value)
-            {
-                foreach (var item in paused)
-                    item.enabled = true;
-                allColliders = new HashSet<MyCollider>(paused);
-                paused = null;
-            }
-            else
-            {
-                paused = allColliders.ToList();
-                foreach (var item in paused)
-                    item.enabled = false;
-            }
-        }
-    }
+    public static bool IsEnabled { get; set; }
 
     static Physics()
     {
-        SceneController.SceneChanged += () => paused = null;
+        SceneController.SceneChanged += () => IsEnabled = true;
     }
 
     public static void Enable(MyCollider collider)

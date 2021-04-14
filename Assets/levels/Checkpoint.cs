@@ -20,7 +20,7 @@ public class Checkpoint : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!physics.enabled) return;
+        if (!physics.IsEnabled) return;
 
         var down = (Vector2)Util.Round(transform.rotation * Vector3.down);
 

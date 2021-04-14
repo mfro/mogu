@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class MyCollider : MonoBehaviour
 {
+    public bool IsEnabled => enabled && Physics.IsEnabled;
+
     public Vector2 scale = new Vector2(1, 1);
     public Vector2 offset;
 

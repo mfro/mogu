@@ -63,6 +63,7 @@ public class CameraShake : MonoBehaviour
             transform.position = startPosition + orientation * timing[i] / 32;
 
             await Util.NextFixedUpdate();
+            if (this == null) return;
         }
 
         transform.position = startPosition;

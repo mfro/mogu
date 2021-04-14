@@ -16,7 +16,7 @@ public class OffScreenDeath : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!physics.enabled) return;
+        if (!physics.IsEnabled) return;
 
         var camera = controller.camera;
 

@@ -20,12 +20,15 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!dyn.enabled) return;
+        if (!dyn.IsEnabled) return;
 
         if (dyn.grounded) jumping = false;
 
         if (input_jumping && dyn.grounded)
         {
+
+            controller.PlayJumpSound();
+
             input_jumping = false;
             if (flip.down.x != 0)
             {

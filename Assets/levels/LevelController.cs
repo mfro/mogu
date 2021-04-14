@@ -131,7 +131,7 @@ public class LevelController : MonoBehaviour
         }
         else
         {
-            SceneController.instance.SwitchScene(SceneController.NextLevel);
+            SceneController.instance.SwitchScene(SceneController.CurrentScene + 1);
         }
     }
 

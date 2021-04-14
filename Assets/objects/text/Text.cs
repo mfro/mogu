@@ -153,7 +153,7 @@ public class Text : MonoBehaviour
 
     public void ReDraw()
     {
-        if (!enabled) return;
+        if (this == null || !enabled) return;
 
         Clean();
         Draw();
@@ -169,4 +169,13 @@ public class Text : MonoBehaviour
     {
         Clean();
     }
+
+#if UNITY_EDITOR
+    void OnValidate()
+    {
+        if (!enabled) return;
+
+        UnityEditor.EditorApplication.delayCall += () => ReDraw();
+    }
+#endif
 }

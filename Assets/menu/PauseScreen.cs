@@ -51,7 +51,7 @@ public class PauseScreen : MonoBehaviour
 
     public void DoQuit()
     {
-        SceneController.instance.SwitchScene(0);
+        SceneController.instance.SwitchScene(1);
     }
 
     public void DoOptions() => EnterMenu(options.gameObject);

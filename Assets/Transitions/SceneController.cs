@@ -10,7 +10,7 @@ public class SceneController : MonoBehaviour
 
     public static SceneController instance;
 
-    public static int NextLevel => SceneManager.GetActiveScene().buildIndex + 1;
+    public static int CurrentScene => SceneManager.GetActiveScene().buildIndex;
 
     public Animator transitionAnim;
 

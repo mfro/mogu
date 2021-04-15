@@ -31884,7 +31884,7 @@ MonoBehaviour:
   skyBackground: {fileID: 170530330}
   mainMenuMusic:
     audioClip: {fileID: 8300000, guid: f1c96da66f05f5242a4ffd2a0576eb7d, type: 3}
-    volume: 0.45
+    volume: 0.3
     looping: 1
     mixerGroup: {fileID: -8837534004785020105, guid: 60d5009f46bde5d4a8ffcdd82728847a,
       type: 2}

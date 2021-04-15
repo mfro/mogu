@@ -7149,6 +7149,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: nav menu
       objectReference: {fileID: 0}
+    - target: {fileID: 9026517110748940394, guid: 255399f0a7d4af146aefd285dc8ac2a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 255399f0a7d4af146aefd285dc8ac2a7, type: 3}
 --- !u!224 &414268366 stripped
@@ -10000,6 +10005,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50442bc6a163c54cb33a91334ba6584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  amplitude: 0.075
+  frequency: 0.2
 --- !u!1001 &523369050
 PrefabInstance:
   m_ObjectHideFlags: 0

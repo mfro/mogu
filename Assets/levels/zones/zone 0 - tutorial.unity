@@ -31883,8 +31883,14 @@ MonoBehaviour:
   userInterface: {fileID: 1600503456}
   skyBackground: {fileID: 170530330}
   mainMenuMusic:
+    audioClip: {fileID: 8300000, guid: f1c96da66f05f5242a4ffd2a0576eb7d, type: 3}
+    volume: 0.45
+    looping: 1
+    mixerGroup: {fileID: -8837534004785020105, guid: 60d5009f46bde5d4a8ffcdd82728847a,
+      type: 2}
+  gameMusic:
     audioClip: {fileID: 8300000, guid: c6d73e34faf4f9b46ba495b5a68fcb59, type: 3}
-    volume: 1
+    volume: 0.5
     looping: 1
     mixerGroup: {fileID: -8837534004785020105, guid: 60d5009f46bde5d4a8ffcdd82728847a,
       type: 2}

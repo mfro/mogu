@@ -15,6 +15,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] GameObject skyBackground;
 
     [SerializeField] Audio mainMenuMusic;
+    [SerializeField] Audio gameMusic;
 
     [SerializeField] float animationTime = 0.3f;
 
@@ -53,6 +54,7 @@ public class MainMenuController : MonoBehaviour
 
         PlayerController.Frozen = false;
         nav.gameObject.SetActive(false);
+        AudioManager.instance?.PlayMusic(gameMusic);
         levelController.GetComponent<LevelController>().GoToLevel(0, false);
     }
 

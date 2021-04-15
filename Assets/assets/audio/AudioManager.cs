@@ -53,6 +53,8 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] AudioMixer audioMixer;
 
+    [SerializeField] float fadeDuration;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -79,11 +81,52 @@ public class AudioManager : MonoBehaviour
     {
         if (audio.audioClip == musicSource.clip && musicSource.isPlaying) return;
 
+        StopAllCoroutines();
+
+        if (musicSource.isPlaying)
+        {
+            StartCoroutine(MusicTransition(audio));
+        } 
+        else
+        {
+            musicSource.clip = audio.audioClip;
+            musicSource.loop = audio.looping;
+            musicSource.volume = audio.volume;
+            musicSource.outputAudioMixerGroup = audio.mixerGroup;
+            musicSource.Play();
+        }
+
+    }
+
+
+    IEnumerator MusicTransition(Audio audio)
+    {
+        float currTime = 0f;
+        float origVolume = musicSource.volume;
+
+        while(currTime < fadeDuration)
+        {
+            musicSource.volume = Mathf.Lerp(origVolume, 0f, currTime / fadeDuration);
+            print(musicSource.volume);
+            currTime += Time.deltaTime;
+            yield return null;
+        }
+
         musicSource.clip = audio.audioClip;
         musicSource.loop = audio.looping;
-        musicSource.volume = audio.volume;
+        musicSource.volume = 0f;
         musicSource.outputAudioMixerGroup = audio.mixerGroup;
         musicSource.Play();
+
+        currTime = 0f;
+        while(currTime < fadeDuration)
+        {
+            musicSource.volume = Mathf.Lerp(0f, audio.volume, currTime / fadeDuration);
+            currTime += Time.deltaTime;
+            yield return null;
+        }
+
+        musicSource.volume = audio.volume;
     }
 
     public void PlaySFX(Audio audio)

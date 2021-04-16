@@ -39,6 +39,8 @@ public class MainMenuController : MonoBehaviour
     {
         Physics.IsEnabled = true;
 
+        AudioManager.instance?.PlayMusic(gameMusic);
+
         camera.transform.position -= new Vector3(0, 12, 0);
         skyBackground.transform.position -= new Vector3(0, -12, 0);
         userInterface.transform.localPosition -= new Vector3(0, -384, 0);
@@ -54,7 +56,6 @@ public class MainMenuController : MonoBehaviour
 
         PlayerController.Frozen = false;
         nav.gameObject.SetActive(false);
-        AudioManager.instance?.PlayMusic(gameMusic);
         levelController.GetComponent<LevelController>().GoToLevel(0, false);
     }
 

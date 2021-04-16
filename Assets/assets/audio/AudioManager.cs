@@ -86,7 +86,7 @@ public class AudioManager : MonoBehaviour
         if (musicSource.isPlaying)
         {
             StartCoroutine(MusicTransition(audio));
-        } 
+        }
         else
         {
             musicSource.clip = audio.audioClip;
@@ -95,19 +95,16 @@ public class AudioManager : MonoBehaviour
             musicSource.outputAudioMixerGroup = audio.mixerGroup;
             musicSource.Play();
         }
-
     }
-
 
     IEnumerator MusicTransition(Audio audio)
     {
         float currTime = 0f;
         float origVolume = musicSource.volume;
 
-        while(currTime < fadeDuration)
+        while (currTime < fadeDuration)
         {
             musicSource.volume = Mathf.Lerp(origVolume, 0f, currTime / fadeDuration);
-            print(musicSource.volume);
             currTime += Time.deltaTime;
             yield return null;
         }
@@ -119,7 +116,7 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
 
         currTime = 0f;
-        while(currTime < fadeDuration)
+        while (currTime < fadeDuration)
         {
             musicSource.volume = Mathf.Lerp(0f, audio.volume, currTime / fadeDuration);
             currTime += Time.deltaTime;

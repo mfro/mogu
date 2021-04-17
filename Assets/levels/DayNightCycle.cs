@@ -7,7 +7,7 @@ public class DayNightCycle : MonoBehaviour
     public float SunriseTime = 8;
     public float SunsetTime = 20;
     public static float TimeOfDay = 16;
-    public float LengthOfDay = 300;
+    public float LengthOfCycle = 300;
     public float DayNightTransitionLength = 4;
 
     [SerializeField]
@@ -55,7 +55,7 @@ public class DayNightCycle : MonoBehaviour
 
         Color Transparent = new Color(0, 0, 0, 0);
         float PreviousTimeOfDay = TimeOfDay;
-        TimeOfDay += (Time.deltaTime / LengthOfDay) * 24;
+        TimeOfDay += (Time.deltaTime / LengthOfCycle) * 24;
         TimeOfDay %= 24;
         // If Night and was Day
         if ((TimeOfDay < SunriseTime || TimeOfDay >= SunsetTime) && (PreviousTimeOfDay >= SunriseTime && PreviousTimeOfDay < SunsetTime))

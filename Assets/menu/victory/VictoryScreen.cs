@@ -23,7 +23,7 @@ public class VictoryScreen : MonoBehaviour
 
     public void DoPlayAgain()
     {
-        SceneController.instance.SwitchScene(1);
+        SceneController.instance.SwitchScene(2);
     }
 
     private async Task Animate(GameObject target, Vector2 delta, TimingFunction timing)

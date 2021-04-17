@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/menu/SplashScreen.unity
     guid: 3bad7668e597f824ea8456f72e754d30
   - enabled: 1
+    path: Assets/menu/opening/Opening Scene.unity
+    guid: a8bcb4270edd2694e803bd325e15dfe5
+  - enabled: 1
     path: Assets/levels/zones/zone 0 - tutorial.unity
     guid: 7d76114abfd55d44f922fdd8575154ae
   - enabled: 1

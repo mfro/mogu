@@ -15,7 +15,6 @@ public class ScreenBlur : MonoBehaviour
 
     void OnRenderImage(RenderTexture src, RenderTexture dst)
     {
-        print("shi");
         int width = src.width >> DownRes;
         int height = src.height >> DownRes;
 

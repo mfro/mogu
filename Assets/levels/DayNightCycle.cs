@@ -6,10 +6,12 @@ public class DayNightCycle : MonoBehaviour
 {
     public float SunriseTime = 8;
     public float SunsetTime = 20;
-    public float TimeOfDay = 12;
+    public static float TimeOfDay = 19;
     public float LengthOfDay = 300;
     public float DayNightTransitionLength = 4;
 
+    [SerializeField]
+    float TimeOfDayView = 0;
 
     [SerializeField]
     GameObject Sun;
@@ -92,5 +94,6 @@ public class DayNightCycle : MonoBehaviour
         Sun.transform.position = new Vector3(-5 * Mathf.Cos(t), 10 * Mathf.Sin(t) - 6, 0);
         Sun.transform.position += Sun.transform.parent.position;
 
+        TimeOfDayView = TimeOfDay;
     }
 }

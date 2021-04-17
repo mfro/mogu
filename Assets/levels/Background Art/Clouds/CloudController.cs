@@ -8,12 +8,10 @@ public class CloudController : MonoBehaviour
 
     [SerializeField] float amplitude, frequency;
 
-
     void Awake()
     {
         Parallax.parallax += OnParallax;
     }
-
     void OnDestroy()
     {
         Parallax.parallax -= OnParallax;

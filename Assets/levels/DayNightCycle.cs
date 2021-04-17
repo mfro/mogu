@@ -6,7 +6,7 @@ public class DayNightCycle : MonoBehaviour
 {
     public float SunriseTime = 8;
     public float SunsetTime = 20;
-    public static float TimeOfDay = 19;
+    public static float TimeOfDay = 12;
     public float LengthOfDay = 300;
     public float DayNightTransitionLength = 4;
 
@@ -49,25 +49,27 @@ public class DayNightCycle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!Physics.IsEnabled) return;
+
         Color Transparent = new Color(0, 0, 0, 0);
         float PreviousTimeOfDay = TimeOfDay;
         TimeOfDay += (Time.deltaTime / LengthOfDay) * 24;
         TimeOfDay %= 24;
         // If Night and was Day
-        if((TimeOfDay < SunriseTime || TimeOfDay >= SunsetTime) && (PreviousTimeOfDay >= SunriseTime && PreviousTimeOfDay < SunsetTime))
+        if ((TimeOfDay < SunriseTime || TimeOfDay >= SunsetTime) && (PreviousTimeOfDay >= SunriseTime && PreviousTimeOfDay < SunsetTime))
         {
 
             Night.color = Color.white;
             Day.color = Transparent;
         }
         // If Dan and was Night
-        else if((PreviousTimeOfDay < SunriseTime || PreviousTimeOfDay >= SunsetTime) && (TimeOfDay >= SunriseTime && TimeOfDay < SunsetTime))
+        else if ((PreviousTimeOfDay < SunriseTime || PreviousTimeOfDay >= SunsetTime) && (TimeOfDay >= SunriseTime && TimeOfDay < SunsetTime))
         {
             Night.color = Transparent;
             Day.color = Color.white;
         }
 
-        if(TimeOfDay > SunriseTime - DayNightTransitionLength / 2 && TimeOfDay < SunriseTime + DayNightTransitionLength / 2)
+        if (TimeOfDay > SunriseTime - DayNightTransitionLength / 2 && TimeOfDay < SunriseTime + DayNightTransitionLength / 2)
         {
             float CurvePosition = (TimeOfDay - (SunriseTime - DayNightTransitionLength / 2)) / DayNightTransitionLength;
             float CurveAlpha = DayNightTransitionCurve.Evaluate((TimeOfDay - (SunriseTime - DayNightTransitionLength / 2)) / DayNightTransitionLength);
@@ -79,7 +81,7 @@ public class DayNightCycle : MonoBehaviour
             Sunrise.color = Transparent;
         }
 
-        if(TimeOfDay > SunsetTime - DayNightTransitionLength / 2 && TimeOfDay < SunsetTime + DayNightTransitionLength / 2)
+        if (TimeOfDay > SunsetTime - DayNightTransitionLength / 2 && TimeOfDay < SunsetTime + DayNightTransitionLength / 2)
         {
             float CurvePosition = (TimeOfDay - (SunsetTime - DayNightTransitionLength / 2)) / DayNightTransitionLength;
             float CurveAlpha = DayNightTransitionCurve.Evaluate((TimeOfDay - (SunsetTime - DayNightTransitionLength / 2)) / DayNightTransitionLength);

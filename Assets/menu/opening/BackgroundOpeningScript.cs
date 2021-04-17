@@ -10,6 +10,7 @@ public class BackgroundOpeningScript : MonoBehaviour
     private Animator animator;
 
     [SerializeField] FamilyOpeningScript family;
+    [SerializeField] PlayerOpeningScript player;
 
     // Start is called before the first frame update
     void Start()
@@ -37,5 +38,10 @@ public class BackgroundOpeningScript : MonoBehaviour
     public void TriggerFamilyWakeup()
     {
         family.WakeupFamily();
+    }
+
+    public void TriggerPlayerWakeup()
+    {
+        player.AwakenPlayer();
     }
 }

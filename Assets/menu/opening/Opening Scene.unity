@@ -511,6 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialDelay: 1
   family: {fileID: 1672009773}
+  player: {fileID: 993732776}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1576,6 +1577,7 @@ MonoBehaviour:
   - {fileID: 620576971}
   - {fileID: 1331082227}
   - {fileID: 1638155609}
+  backgroundAnim: {fileID: 501859640}
 --- !u!1 &1679878286
 GameObject:
   m_ObjectHideFlags: 0

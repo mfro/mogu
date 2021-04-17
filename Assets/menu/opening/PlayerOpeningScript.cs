@@ -29,6 +29,7 @@ public class PlayerOpeningScript : MonoBehaviour
     public void PlayerFinishedWalkingOff()
     {
         print("scene done");
+        SceneController.instance.SwitchScene(2);
     }
 
     public void PlayerFinishedWakingUp()

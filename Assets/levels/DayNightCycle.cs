@@ -16,6 +16,8 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField]
     GameObject Sun;
     [SerializeField]
+    GameObject Moon;
+    [SerializeField]
     SpriteRenderer Sunrise;
     [SerializeField]
     SpriteRenderer Day;
@@ -92,9 +94,17 @@ public class DayNightCycle : MonoBehaviour
         {
             Sunset.color = Transparent;
         }
+
         float t = Mathf.Lerp(-0.05f, 1.05f, (TimeOfDay - (SunriseTime - DayNightTransitionLength / 2)) / (SunsetTime - SunriseTime + DayNightTransitionLength)) * Mathf.PI;
-        Sun.transform.position = new Vector3(-5 * Mathf.Cos(t), 10 * Mathf.Sin(t) - 6, 0);
+        Sun.transform.position = new Vector3(-5.5f * Mathf.Cos(t), 10 * Mathf.Sin(t) - 6, 0);
         Sun.transform.position += Sun.transform.parent.position;
+        float LengthOfNight = 24 - (SunsetTime - SunriseTime) - DayNightTransitionLength;
+        float TimeSinceSunset = (TimeOfDay - (SunsetTime + DayNightTransitionLength / 2));
+        if (TimeSinceSunset < 0)
+            TimeSinceSunset += 24;
+        t = Mathf.Lerp(0.05f, 0.95f, TimeSinceSunset / LengthOfNight) * Mathf.PI;
+        Moon.transform.position = new Vector3(-7 * Mathf.Cos(t) + 0.3f, 8 * Mathf.Sin(t) - 5, 0);
+        Moon.transform.position += Moon.transform.parent.position;
 
         TimeOfDayView = TimeOfDay;
     }

@@ -40,7 +40,9 @@ public class PauseScreen : MonoBehaviour
         nav.SetActive(isPaused);
         gameObject.SetActive(isPaused);
         options.gameObject.SetActive(false);
-        carousel.transform.localPosition = carouselOrigin;
+        //carousel.transform.localPosition = carouselOrigin;
+
+        BlurController.instance?.SetBlursEnabled(!BlurController.instance.GetScreenBlurred());
 
         if (isPaused)
         {

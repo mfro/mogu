@@ -1,5 +1,9 @@
 Main Menu and Level Complete sound effects by Lucas Hardy, a student from MSU.
 
+Main Menu music from Andrew Varghese
+
+Shader scripts from http://danjohnmoran.com/
+
 Rest of the Sound effects obtained from https://www.zapsplat.com
 
 Background music made by Lucas Hardy, a student from MSU.

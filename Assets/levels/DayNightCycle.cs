@@ -90,6 +90,7 @@ public class DayNightCycle : MonoBehaviour
         }
         float t = Mathf.Lerp(-0.05f, 1.05f, (TimeOfDay - (SunriseTime - DayNightTransitionLength / 2)) / (SunsetTime - SunriseTime + DayNightTransitionLength)) * Mathf.PI;
         Sun.transform.position = new Vector3(-5 * Mathf.Cos(t), 10 * Mathf.Sin(t) - 6, 0);
+        Sun.transform.position += Sun.transform.parent.position;
 
     }
 }

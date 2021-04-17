@@ -786,7 +786,7 @@ Transform:
   m_GameObject: {fileID: 95179605281640117}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3365832393706013759}
   m_RootOrder: 5
@@ -965,7 +965,7 @@ Transform:
   m_GameObject: {fileID: 549997246199075179}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3365832393706013759}
   m_RootOrder: 6
@@ -1959,7 +1959,7 @@ Transform:
   m_GameObject: {fileID: 4319479814324709002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3365832393706013759}
   m_RootOrder: 3
@@ -2289,7 +2289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SunriseTime: 8
   SunsetTime: 20
-  TimeOfDay: 7
+  TimeOfDay: 3
   LengthOfDay: 300
   DayNightTransitionLength: 1
   Sun: {fileID: 8235276750815591844}
@@ -3045,7 +3045,7 @@ Transform:
   m_GameObject: {fileID: 8235276750815591844}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3365832393706013759}
   m_RootOrder: 7
@@ -3730,7 +3730,7 @@ PrefabInstance:
     - target: {fileID: 3333208687659453371, guid: 695e17d7a90760944b904dd8f2621f2f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -47.33333
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3333208687659453371, guid: 695e17d7a90760944b904dd8f2621f2f,
         type: 3}

@@ -7,7 +7,7 @@ public class DayNightCycle : MonoBehaviour
 {
     public float TransitionDuration = 1;
 
-    public static float TimeOfDay = 16;
+    public static float TimeOfDay = 12;
     public float SunriseTime = 8;
     public float SunsetTime = 20;
     public float LengthOfCycle = 300;

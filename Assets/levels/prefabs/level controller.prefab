@@ -2273,7 +2273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 4967719782318681430}
   border: {fileID: 1150523557216655155}
-  dayNightCycle: {fileID: 0}
+  dayNightCycle: {fileID: 3386366596637857038}
   player: {fileID: 1413353432}
   deathScreen:
   - {fileID: 2218924677133246224}

@@ -23471,18 +23471,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4811372267555918093}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1245622076 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3386366596637857038, guid: a1ded91701baf864cb93c8355436f9f7,
-    type: 3}
-  m_PrefabInstance: {fileID: 4811372267555918093}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245622072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c85b5f4e3668734ba3b85bb1b51279a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1248741019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38400,16 +38388,6 @@ PrefabInstance:
       propertyPath: _text
       value: to restart
       objectReference: {fileID: 0}
-    - target: {fileID: 3386366596637857038, guid: a1ded91701baf864cb93c8355436f9f7,
-        type: 3}
-      propertyPath: IsPassive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3386366596637857038, guid: a1ded91701baf864cb93c8355436f9f7,
-        type: 3}
-      propertyPath: DayNightTransitionLength
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 3447267418368327890, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -38615,11 +38593,6 @@ PrefabInstance:
       propertyPath: World
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4811372266002696957, guid: a1ded91701baf864cb93c8355436f9f7,
-        type: 3}
-      propertyPath: dayNightCycle
-      value: 
-      objectReference: {fileID: 1245622076}
     - target: {fileID: 5243805611618560064, guid: a1ded91701baf864cb93c8355436f9f7,
         type: 3}
       propertyPath: m_AnchoredPosition.x

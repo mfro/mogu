@@ -236,8 +236,6 @@ public class LevelController : MonoBehaviour
         var t0 = DayNightCycle.TimeOfDay;
         var t1 = t0 + 4;
 
-        print($"{t0} {t1}");
-
         var move = Animations.Animate(CameraTime, Animations.EaseInOutQuadratic);
         while (!move.isComplete)
         {

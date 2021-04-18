@@ -92,7 +92,7 @@ public class Text : MonoBehaviour
         if (alignment == TextAlignment.Left)
             origin = ui != null ? ui.rect.xMin : 0;
         else if (alignment == TextAlignment.Center)
-            origin = ui != null ? ui.rect.center.x - x / 2 : -x / 2;
+            origin = ui != null ? ui.rect.center.x - x / 2f : -x / 2f;
         else if (alignment == TextAlignment.Right)
             origin = ui != null ? ui.rect.xMax - x : -x;
         else

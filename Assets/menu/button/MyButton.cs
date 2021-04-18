@@ -75,7 +75,7 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
             image.sprite = baseImage;
             cursor.sprite = baseCursor;
             animator.SetTrigger("isUnPressed");
-            text.transform.position -= new Vector3(0, -4 * transform.lossyScale.y, 0);
+            // text.transform.position -= new Vector3(0, -4 * transform.lossyScale.y, 0);
         }
     }
 
@@ -86,7 +86,7 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
             image.sprite = pressImage;
             cursor.sprite = pressCursor;
             animator.SetTrigger("isPressed");
-            text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+            // text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
         }
     }
 
@@ -97,7 +97,7 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
             image.sprite = hover ? hoverImage : baseImage;
             cursor.sprite = baseCursor;
             animator.SetTrigger("isUnPressed");
-            text.transform.position -= new Vector3(0, -4 * transform.lossyScale.y, 0);
+            // text.transform.position -= new Vector3(0, -4 * transform.lossyScale.y, 0);
         }
     }
 
@@ -134,7 +134,7 @@ public class MyButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
             image.sprite = pressImage;
             cursor.sprite = pressCursor;
             animator.SetTrigger("isPressed");
-            text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
+            // text.transform.position += new Vector3(0, -4 * transform.lossyScale.y, 0);
         }
     }
 }

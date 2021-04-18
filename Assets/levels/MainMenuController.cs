@@ -12,7 +12,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] new GameObject camera;
     [SerializeField] GameObject levelController;
     [SerializeField] GameObject userInterface;
-    [SerializeField] GameObject skyBackground;
+    [SerializeField] GameObject background;
 
     [SerializeField] Audio mainMenuMusic;
     [SerializeField] Audio gameMusic;
@@ -33,6 +33,8 @@ public class MainMenuController : MonoBehaviour
 
         PlayerController.Frozen = true;
         Physics.IsEnabled = false;
+
+        camera.transform.position = new Vector3(0, -15.59375f, 0);
     }
 
     public async void DoPlay()
@@ -41,15 +43,13 @@ public class MainMenuController : MonoBehaviour
 
         AudioManager.instance?.PlayMusic(gameMusic);
 
-        camera.transform.position -= new Vector3(0, 12, 0);
-        skyBackground.transform.position -= new Vector3(0, -12, 0);
-        userInterface.transform.localPosition -= new Vector3(0, -384, 0);
+        var ratio = (16.1875f - 19 / 32f) / 12f;
+        userInterface.transform.localPosition -= new Vector3(0, -384 * ratio, 0);
 
         var tasks = new[] {
-            Animate(camera, new Vector2(0, 12), 4, Animations.EaseInOutQuadratic),
-            Animate(skyBackground, new Vector2(0, -12), 4, Animations.EaseInOutQuadratic),
-            Animate(gameObject, new Vector2(0, -384), 4, Animations.EaseInOutQuadratic),
-            Animate(userInterface, new Vector2(0, -384), 4, Animations.EaseInOutQuadratic),
+            Animate(camera, new Vector2(0, 12 * ratio), 4, Animations.EaseInOutQuadratic),
+            Animate(gameObject, new Vector2(0, -384 * ratio), 4, Animations.EaseInOutQuadratic),
+            Animate(userInterface, new Vector2(0, -384 * ratio), 4, Animations.EaseInOutQuadratic),
         };
 
         await Task.WhenAll(tasks);
@@ -71,7 +71,16 @@ public class MainMenuController : MonoBehaviour
         if (inMenu) return;
         inMenu = true;
         target.SetActive(true);
-        await Animate(carousel, new Vector2(-384, 0), 1, Animations.EaseInOutCubic);
+
+        var tasks = new[] {
+            Animate(carousel, new Vector2(-384, 0), 1, Animations.EaseInOutCubic),
+            Animate(background, new Vector2(-12, 0), 1, Animations.EaseInOutCubic),
+        };
+
+        await Util.Seconds(animationTime / 2, false);
+        BlurController.instance?.SetBlursEnabled(true);
+        await Task.WhenAll(tasks);
+
         nav.gameObject.SetActive(false);
     }
 
@@ -81,7 +90,16 @@ public class MainMenuController : MonoBehaviour
         if (!inMenu) return;
         inMenu = false;
         nav.gameObject.SetActive(true);
-        await Animate(carousel, new Vector2(384, 0), 1, Animations.EaseInOutCubic);
+
+        var tasks = new[] {
+            Animate(carousel, new Vector2(384, 0), 1, Animations.EaseInOutCubic),
+            Animate(background, new Vector2(12, 0), 1, Animations.EaseInOutCubic),
+        };
+
+        await Util.Seconds(animationTime / 2, false);
+        BlurController.instance?.SetBlursEnabled(false);
+        await Task.WhenAll(tasks);
+
         target.SetActive(false);
     }
 

@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CloudController : MonoBehaviour
+public class TestThing : MonoBehaviour
 {
     void Awake()
     {
@@ -17,6 +17,6 @@ public class CloudController : MonoBehaviour
 
     private void OnParallax(Vector2 delta)
     {
-        transform.position += (Vector3)(delta * 0.8f);
+        transform.position -= (Vector3)(delta * 0.2f);
     }
 }

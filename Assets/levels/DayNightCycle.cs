@@ -7,7 +7,7 @@ public class DayNightCycle : MonoBehaviour
 {
     public float TransitionDuration = 1;
 
-    public static float TimeOfDay = 12;
+    public static float TimeOfDay = 11;
     public float SunriseTime = 8;
     public float SunsetTime = 20;
     public float LengthOfCycle = 300;
@@ -15,6 +15,8 @@ public class DayNightCycle : MonoBehaviour
     public bool IsPassive = false;
 
     private float lastTimeOfDay = 0;
+    private float velocity = 0;
+    private float advancing;
 
     [SerializeField] GameObject Sun;
     [SerializeField] GameObject SunriseSun;
@@ -31,7 +33,6 @@ public class DayNightCycle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         if ((TimeOfDay < SunriseTime || TimeOfDay >= SunsetTime))
         {
 
@@ -60,6 +61,28 @@ public class DayNightCycle : MonoBehaviour
         {
             Color Transparent = new Color(0, 0, 0, 0);
             TimeOfDay += (Time.deltaTime / LengthOfCycle) * 24;
+            TimeOfDay %= 24;
+        }
+        else if (advancing > 0)
+        {
+            if (velocity < 0.5f)
+                velocity += 0.5f * Time.deltaTime;
+
+            if (advancing < 0.25f)
+                velocity = 2 * advancing;
+
+            if (velocity * Time.deltaTime > advancing)
+            {
+                velocity = 0;
+                advancing = 0;
+                TimeOfDay += advancing;
+            }
+            else
+            {
+                advancing -= velocity * Time.deltaTime;
+                TimeOfDay += velocity * Time.deltaTime;
+            }
+
             TimeOfDay %= 24;
         }
 
@@ -121,5 +144,24 @@ public class DayNightCycle : MonoBehaviour
         Moon.transform.localPosition = new Vector3(-7 * Mathf.Cos(t) + 0.3f, 8 * Mathf.Sin(t) - 5, 0);
 
         lastTimeOfDay = TimeOfDay;
+    }
+
+    public void Advance(float hours)
+    {
+        if (IsPassive) return;
+
+        advancing += hours;
+        // var t0 = DayNightCycle.TimeOfDay;
+        // var t1 = t0 + 3;
+
+        // var anim = Animations.Animate(6, Animations.EaseInOutSine);
+        // while (!anim.isComplete)
+        // {
+        //     if (!Physics.IsEnabled) { await Util.NextFrame(); continue; }
+        //     await anim.NextFrame();
+        //     if (this == null) return;
+
+        //     DayNightCycle.TimeOfDay = Mathf.Lerp(t0, t1, anim.progress) % 24;
+        // }
     }
 }

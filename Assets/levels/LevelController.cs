@@ -233,8 +233,7 @@ public class LevelController : MonoBehaviour
         var p0 = camera.transform.position;
         var p1 = p0 + delta;
 
-        var t0 = DayNightCycle.TimeOfDay;
-        var t1 = t0 + 4;
+        dayNightCycle.Advance(3);
 
         var move = Animations.Animate(CameraTime, Animations.EaseInOutQuadratic);
         while (!move.isComplete)
@@ -250,9 +249,6 @@ public class LevelController : MonoBehaviour
             Parallax.parallax?.Invoke(nextPos - lastPos);
 
             levelScreen.alpha = move.progress;
-
-            if (!dayNightCycle.IsPassive)
-                DayNightCycle.TimeOfDay = Mathf.Lerp(t0, t1, move.progress) % 24;
         }
 
         PlayerController.Frozen = false;

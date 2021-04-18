@@ -40,9 +40,4 @@ public class BlurController : MonoBehaviour
         }
         isBlurred = enabled;
     }
-
-    public bool GetScreenBlurred()
-    {
-        return isBlurred;
-    }
 }

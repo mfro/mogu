@@ -1,41 +1,37 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DayNightCycle : MonoBehaviour
 {
+    public float TransitionDuration = 1;
+
+    public static float TimeOfDay = 16;
     public float SunriseTime = 8;
     public float SunsetTime = 20;
-    public static float TimeOfDay = 16;
     public float LengthOfCycle = 300;
     public float DayNightTransitionLength = 4;
+    public bool IsPassive = false;
 
-    [SerializeField]
-    float TimeOfDayView = 0;
+    private float lastTimeOfDay = 0;
 
-    [SerializeField]
-    GameObject Sun;
-    [SerializeField]
-    GameObject SunriseSun;
-    [SerializeField]
-    GameObject SunsetSun;
-    [SerializeField]
-    GameObject Moon;
-    [SerializeField]
-    SpriteRenderer Sunrise;
-    [SerializeField]
-    SpriteRenderer Day;
-    [SerializeField]
-    SpriteRenderer Sunset;
-    [SerializeField]
-    SpriteRenderer Night;
-    [SerializeField]
-    AnimationCurve DayNightTransitionCurve;
+    [SerializeField] GameObject Sun;
+    [SerializeField] GameObject SunriseSun;
+    [SerializeField] GameObject SunsetSun;
+    [SerializeField] GameObject Moon;
+    [SerializeField] SpriteRenderer Sunrise;
+    [SerializeField] SpriteRenderer Day;
+    [SerializeField] SpriteRenderer Sunset;
+    [SerializeField] SpriteRenderer Night;
+    [SerializeField] AnimationCurve DayNightTransitionCurve;
+
+    private static Color Transparent = new Color(0, 0, 0, 0);
 
     // Start is called before the first frame update
     void Start()
     {
-        Color Transparent = new Color(0, 0, 0, 0);
+
         if ((TimeOfDay < SunriseTime || TimeOfDay >= SunsetTime))
         {
 
@@ -48,6 +44,7 @@ public class DayNightCycle : MonoBehaviour
             Night.color = Transparent;
             Day.color = Color.white;
         }
+
         Sunrise.color = Transparent;
         Sunset.color = Transparent;
         SunriseSun.GetComponentInChildren<SpriteRenderer>().color = Transparent;
@@ -59,19 +56,24 @@ public class DayNightCycle : MonoBehaviour
     {
         if (!Physics.IsEnabled) return;
 
-        Color Transparent = new Color(0, 0, 0, 0);
-        float PreviousTimeOfDay = TimeOfDay;
-        TimeOfDay += (Time.deltaTime / LengthOfCycle) * 24;
-        TimeOfDay %= 24;
+        if (IsPassive)
+        {
+            Color Transparent = new Color(0, 0, 0, 0);
+            TimeOfDay += (Time.deltaTime / LengthOfCycle) * 24;
+            TimeOfDay %= 24;
+        }
+
+        if (TimeOfDay == lastTimeOfDay) return;
+
         // If Night and was Day
-        if ((TimeOfDay < SunriseTime || TimeOfDay >= SunsetTime) && (PreviousTimeOfDay >= SunriseTime && PreviousTimeOfDay < SunsetTime))
+        if ((TimeOfDay < SunriseTime || TimeOfDay >= SunsetTime) && (lastTimeOfDay >= SunriseTime && lastTimeOfDay < SunsetTime))
         {
 
             Night.color = Color.white;
             Day.color = Transparent;
         }
         // If Dan and was Night
-        else if ((PreviousTimeOfDay < SunriseTime || PreviousTimeOfDay >= SunsetTime) && (TimeOfDay >= SunriseTime && TimeOfDay < SunsetTime))
+        else if ((lastTimeOfDay < SunriseTime || lastTimeOfDay >= SunsetTime) && (TimeOfDay >= SunriseTime && TimeOfDay < SunsetTime))
         {
             Night.color = Transparent;
             Day.color = Color.white;
@@ -106,19 +108,18 @@ public class DayNightCycle : MonoBehaviour
             SunsetSun.GetComponentInChildren<SpriteRenderer>().color = Transparent;
         }
 
-        float t = Mathf.Lerp(-0.05f, 1.05f, (TimeOfDay - (SunriseTime - DayNightTransitionLength / 2)) / (SunsetTime - SunriseTime + DayNightTransitionLength)) * Mathf.PI;
-        Sun.transform.position = new Vector3(-5.5f * Mathf.Cos(t), 10 * Mathf.Sin(t) - 6, 0);
-        Sun.transform.position += Sun.transform.parent.position;
-        SunriseSun.transform.position = Sun.transform.position;
+        float t = Mathf.Lerp(-0.15f, 1.15f, (TimeOfDay - (SunriseTime - DayNightTransitionLength / 2)) / (SunsetTime - SunriseTime + DayNightTransitionLength)) * Mathf.PI;
+        Sun.transform.localPosition = new Vector3(-5.5f * Mathf.Cos(t), 10 * Mathf.Sin(t) - 6, 0);
         SunsetSun.transform.position = Sun.transform.position;
-        float LengthOfNight = 24 - (SunsetTime - SunriseTime) - DayNightTransitionLength;
-        float TimeSinceSunset = (TimeOfDay - (SunsetTime + DayNightTransitionLength / 2));
+        SunriseSun.transform.position = Sun.transform.position;
+
+        float LengthOfNight = 24 - (SunsetTime - SunriseTime);
+        float TimeSinceSunset = (TimeOfDay - SunsetTime);
         if (TimeSinceSunset < 0)
             TimeSinceSunset += 24;
         t = Mathf.Lerp(0.05f, 0.95f, TimeSinceSunset / LengthOfNight) * Mathf.PI;
-        Moon.transform.position = new Vector3(-7 * Mathf.Cos(t) + 0.3f, 8 * Mathf.Sin(t) - 5, 0);
-        Moon.transform.position += Moon.transform.parent.position;
+        Moon.transform.localPosition = new Vector3(-7 * Mathf.Cos(t) + 0.3f, 8 * Mathf.Sin(t) - 5, 0);
 
-        TimeOfDayView = TimeOfDay;
+        lastTimeOfDay = TimeOfDay;
     }
 }

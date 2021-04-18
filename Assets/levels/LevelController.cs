@@ -13,6 +13,7 @@ public class LevelController : MonoBehaviour
 
     [SerializeField] public new GameObject camera;
     [SerializeField] public LevelBorder border;
+    [SerializeField] public DayNightCycle dayNightCycle;
     [SerializeField] public PlayerController player;
     [SerializeField] public GameObject[] deathScreen;
     [SerializeField] public Text[] levelNumber;
@@ -232,6 +233,11 @@ public class LevelController : MonoBehaviour
         var p0 = camera.transform.position;
         var p1 = p0 + delta;
 
+        var t0 = DayNightCycle.TimeOfDay;
+        var t1 = t0 + 4;
+
+        print($"{t0} {t1}");
+
         var move = Animations.Animate(CameraTime, Animations.EaseInOutQuadratic);
         while (!move.isComplete)
         {
@@ -246,6 +252,9 @@ public class LevelController : MonoBehaviour
             Parallax.parallax?.Invoke(nextPos - lastPos);
 
             levelScreen.alpha = move.progress;
+
+            if (!dayNightCycle.IsPassive)
+                DayNightCycle.TimeOfDay = Mathf.Lerp(t0, t1, move.progress) % 24;
         }
 
         PlayerController.Frozen = false;

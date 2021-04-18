@@ -1085,7 +1085,7 @@ PrefabInstance:
     - target: {fileID: 2699916524686448771, guid: 4f04905a798119b44a7c71f26cf39429,
         type: 3}
       propertyPath: _text
-      value: Lawrence, Michelle
+      value: Lawrence, Michelle,
       objectReference: {fileID: 0}
     - target: {fileID: 2699916524686448771, guid: 4f04905a798119b44a7c71f26cf39429,
         type: 3}

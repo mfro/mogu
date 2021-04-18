@@ -23,7 +23,7 @@ public class CloudDayNight : MonoBehaviour
         dnc = FindObjectOfType<DayNightCycle>();
         DayCloud = GetComponent<SpriteRenderer>();
         NightCloud = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        if(DayCloud.sprite.name == "big")
+        if (DayCloud.sprite.name == "big")
         {
             NightCloud.sprite = BigDark;
         }
@@ -40,7 +40,7 @@ public class CloudDayNight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(dnc)
+        if (dnc)
         {
             Color opaque = new Color(1, 1, 1, 0.7f);
             Color transparent = new Color(0, 0, 0, 0);

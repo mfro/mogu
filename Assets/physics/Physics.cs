@@ -62,7 +62,7 @@ public static class Physics
         return rect;
     }
 
-    public static bool IsEnabled { get; set; }
+    public static bool IsEnabled { get; set; } = true;
 
     static Physics()
     {

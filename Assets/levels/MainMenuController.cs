@@ -35,6 +35,7 @@ public class MainMenuController : MonoBehaviour
         Physics.IsEnabled = false;
 
         camera.transform.position = new Vector3(0, -15.59375f, 0);
+        DayNightCycle.TimeOfDay = 11;
     }
 
     public async void DoPlay()

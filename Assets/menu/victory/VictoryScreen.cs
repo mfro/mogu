@@ -21,9 +21,14 @@ public class VictoryScreen : MonoBehaviour
         await Task.WhenAll(tasks);
     }
 
-    public void DoPlayAgain()
+    public void DoQuit()
     {
         SceneController.instance.SwitchScene(2);
+    }
+
+    public void DoContinue()
+    {
+        SceneController.instance.SwitchScene(SceneController.CurrentScene + 1);
     }
 
     private async Task Animate(GameObject target, Vector2 delta, TimingFunction timing)

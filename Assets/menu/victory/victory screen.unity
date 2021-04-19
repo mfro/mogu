@@ -1018,7 +1018,7 @@ PrefabInstance:
     - target: {fileID: 3333208688961600578, guid: 695e17d7a90760944b904dd8f2621f2f,
         type: 3}
       propertyPath: _text
-      value: Extra
+      value: More
       objectReference: {fileID: 0}
     - target: {fileID: 3333208688961600579, guid: 695e17d7a90760944b904dd8f2621f2f,
         type: 3}
@@ -1183,7 +1183,7 @@ PrefabInstance:
     - target: {fileID: 2699916524686448771, guid: 4f04905a798119b44a7c71f26cf39429,
         type: 3}
       propertyPath: _text
-      value: to menu
+      value: to Menu
       objectReference: {fileID: 0}
     - target: {fileID: 2699916524686448771, guid: 4f04905a798119b44a7c71f26cf39429,
         type: 3}
@@ -1574,7 +1574,7 @@ PrefabInstance:
     - target: {fileID: 2699916524686448771, guid: 4f04905a798119b44a7c71f26cf39429,
         type: 3}
       propertyPath: _text
-      value: Challenge
+      value: Challenges
       objectReference: {fileID: 0}
     - target: {fileID: 2699916524686448771, guid: 4f04905a798119b44a7c71f26cf39429,
         type: 3}

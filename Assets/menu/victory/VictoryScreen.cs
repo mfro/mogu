@@ -11,7 +11,7 @@ public class VictoryScreen : MonoBehaviour
 
     async void Start()
     {
-        await Util.Seconds(8, false);
+        await Util.Seconds(6, false);
 
         var tasks = new[] {
             Animate(camera, new Vector2(0, 12), Animations.EaseInOutSine),

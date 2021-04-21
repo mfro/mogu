@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System.Threading.Tasks;
+using UnityEngine.UI;
 
 public class PauseScreen : MonoBehaviour
 {
@@ -62,19 +63,39 @@ public class PauseScreen : MonoBehaviour
     private async void EnterMenu(GameObject target)
     {
         while (animating) await Util.NextFrame();
+        animating = true;
+
         target.SetActive(true);
-        await Animate(carousel, new Vector2(-384, 0), 1, Animations.EaseInOutCubic);
+
+        var tasks = new[] {
+            Animate(carousel, new Vector2(-384, 0), 1, Animations.EaseInOutCubic),
+        };
+
+        await Task.WhenAll(tasks);
+
         nav.gameObject.SetActive(false);
+
+        animating = false;
     }
 
     private async void LeaveMenu(GameObject target)
     {
         while (animating) await Util.NextFrame();
+        animating = true;
+
         nav.gameObject.SetActive(true);
-        await Animate(carousel, new Vector2(384, 0), 1, Animations.EaseInOutCubic);
+
+        var tasks = new[] {
+            Animate(carousel, new Vector2(384, 0), 1, Animations.EaseInOutCubic),
+        };
+
+        await Task.WhenAll(tasks);
+
         target.SetActive(false);
 
         EventSystem.current.SetSelectedGameObject(buttons[0]);
+
+        animating = false;
     }
 
     private bool _onPause = false;
@@ -88,8 +109,6 @@ public class PauseScreen : MonoBehaviour
 
     private async Task Animate(GameObject target, Vector2 delta, float timeMultiplier, TimingFunction timing)
     {
-        animating = true;
-
         var p0 = target.transform.localPosition;
         var p1 = p0 + (Vector3)delta;
 
@@ -99,7 +118,5 @@ public class PauseScreen : MonoBehaviour
             await anim.NextFrame();
             target.transform.localPosition = Vector3.Lerp(p0, p1, anim.progress);
         }
-
-        animating = false;
     }
 }

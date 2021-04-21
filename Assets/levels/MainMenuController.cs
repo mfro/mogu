@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Threading.Tasks;
 using System;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] OptionsMenu options;
     [SerializeField] CreditsMenu credits;
     [SerializeField] GameObject carousel;
+    [SerializeField] Image carouselImage;
 
     [SerializeField] new GameObject camera;
     [SerializeField] GameObject levelController;
@@ -70,10 +72,13 @@ public class MainMenuController : MonoBehaviour
     {
         while (animating) await Util.NextFrame();
         if (inMenu) return;
+
         inMenu = true;
+        animating = true;
         target.SetActive(true);
 
         var tasks = new[] {
+            Fade(carouselImage, 0.3f, 1, Animations.EaseInOutCubic),
             Animate(carousel, new Vector2(-384, 0), 1, Animations.EaseInOutCubic),
             Animate(background, new Vector2(-12, 0), 1, Animations.EaseInOutCubic),
         };
@@ -83,16 +88,21 @@ public class MainMenuController : MonoBehaviour
         await Task.WhenAll(tasks);
 
         nav.gameObject.SetActive(false);
+
+        animating = false;
     }
 
     private async void LeaveMenu(GameObject target)
     {
         while (animating) await Util.NextFrame();
         if (!inMenu) return;
+
         inMenu = false;
+        animating = true;
         nav.gameObject.SetActive(true);
 
         var tasks = new[] {
+            Fade(carouselImage, 0, 1, Animations.EaseInOutCubic),
             Animate(carousel, new Vector2(384, 0), 1, Animations.EaseInOutCubic),
             Animate(background, new Vector2(12, 0), 1, Animations.EaseInOutCubic),
         };
@@ -102,12 +112,26 @@ public class MainMenuController : MonoBehaviour
         await Task.WhenAll(tasks);
 
         target.SetActive(false);
+
+        animating = false;
+    }
+
+    private async Task Fade(Image target, float alpha, float timeMultiplier, TimingFunction timing)
+    {
+        var c0 = target.color;
+        var c1 = c0;
+        c1.a = alpha;
+
+        var anim = Animations.Animate(animationTime * timeMultiplier, timing);
+        while (!anim.isComplete)
+        {
+            await anim.NextFrame();
+            target.color = Color.Lerp(c0, c1, anim.progress);
+        }
     }
 
     private async Task Animate(GameObject target, Vector2 delta, float timeMultiplier, TimingFunction timing)
     {
-        animating = true;
-
         var p0 = target.transform.localPosition;
         var p1 = p0 + (Vector3)delta;
 
@@ -117,7 +141,5 @@ public class MainMenuController : MonoBehaviour
             await anim.NextFrame();
             target.transform.localPosition = Vector3.Lerp(p0, p1, anim.progress);
         }
-
-        animating = false;
     }
 }

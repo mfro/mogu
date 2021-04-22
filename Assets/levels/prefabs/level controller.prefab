@@ -3108,7 +3108,6 @@ MonoBehaviour:
   nav: {fileID: 3187215957585149165}
   options: {fileID: 2478543927218211094}
   carousel: {fileID: 4944167839632508963}
-  carouselImage: {fileID: 9177972168351918407}
   animationTime: 0.3
   pressButtonSound:
     audioClip: {fileID: 8300000, guid: d23623208aa7e2b428880ad53a2ce8d3, type: 3}
@@ -5140,7 +5139,7 @@ PrefabInstance:
     - target: {fileID: 2699916524686448773, guid: 4f04905a798119b44a7c71f26cf39429,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f04905a798119b44a7c71f26cf39429, type: 3}
@@ -5290,7 +5289,7 @@ PrefabInstance:
     - target: {fileID: 2699916524686448773, guid: 4f04905a798119b44a7c71f26cf39429,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f04905a798119b44a7c71f26cf39429, type: 3}

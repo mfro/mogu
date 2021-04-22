@@ -78,6 +78,37 @@ public class BuildStuff
         return output;
     }
 
+    private static string BuildLinux()
+    {
+        PrepBuild();
+
+        var output = "build/linux";
+
+        BuildPipeline.BuildPlayer(new BuildPlayerOptions
+        {
+            scenes = scenes,
+            locationPathName = $"{output}/mogu",
+            targetGroup = BuildTargetGroup.Standalone,
+            target = BuildTarget.StandaloneLinux64,
+        });
+
+        return output;
+    }
+    [MenuItem("mushroom/build/linux")]
+    private static string BuildLinuxZip()
+    {
+        var output = "build/mogu linux.zip";
+        var input = BuildLinux();
+
+        File.Delete(output);
+        using (var zip = ZipFile.Open(output, ZipArchiveMode.Create))
+        {
+            AddToZip(zip, input, "mogu");
+        }
+
+        return output;
+    }
+
     [MenuItem("mushroom/build/web")]
     private static string WebBuild()
     {
@@ -126,6 +157,13 @@ public class BuildStuff
         BuildMacZip();
     }
 
+    [MenuItem("mushroom/build/release")]
+    private static void BuildRelease()
+    {
+        BuildWindowsZip();
+        BuildMacZip();
+        BuildLinuxZip();
+    }
 
     private static void AddToZip(ZipArchive zip, string src, string dst)
     {
